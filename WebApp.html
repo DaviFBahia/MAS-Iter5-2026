@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FreshSave</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Variables ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a6b4a;
+  --green-light:#2d9c6e;
+  --green-pale:#e8f5ee;
+  --leaf:#6fcf97;
+  --cream:#faf8f3;
+  --sand:#f0ece0;
+  --bark:#2c1f14;
+  --text:#1c1c1c;
+  --muted:#7a7a6e;
+  --white:#ffffff;
+  --red:#c0392b;
+  --orange:#e67e22;
+  --radius:14px;
+  --shadow:0 4px 24px rgba(26,107,74,.10);
+  --shadow-lg:0 12px 48px rgba(26,107,74,.16);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+
+/* ── Pages ─────────────────────────────────────────── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ── NAV ────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--white);
+  border-bottom:1px solid rgba(26,107,74,.12);
+  padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--green);cursor:pointer;display:flex;align-items:center;gap:8px}
+.nav-logo span{font-size:1.4rem}
+.nav-user{display:flex;align-items:center;gap:16px;font-size:.9rem}
+.nav-user strong{color:var(--green);font-weight:600}
+.btn-logout{background:none;border:1.5px solid var(--green);color:var(--green);border-radius:30px;padding:5px 14px;cursor:pointer;font-size:.82rem;font-family:inherit;transition:.2s}
+.btn-logout:hover{background:var(--green);color:#fff}
+
+/* ── LOGIN PAGE ─────────────────────────────────────── */
+#page-login{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 50%,#a8d5b5 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.login-card{
+  background:var(--white);border-radius:24px;
+  padding:48px 40px;width:100%;max-width:420px;
+  box-shadow:var(--shadow-lg);
+}
+.login-brand{text-align:center;margin-bottom:36px}
+.login-brand .logo-icon{font-size:3rem;display:block;margin-bottom:8px}
+.login-brand h1{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--green)}
+.login-brand p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.login-tabs{display:flex;background:var(--sand);border-radius:10px;padding:4px;margin-bottom:28px}
+.tab-btn{flex:1;border:none;background:none;padding:8px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:500;color:var(--muted);transition:.2s}
+.tab-btn.active{background:var(--white);color:var(--green);font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.83rem;font-weight:600;color:var(--bark);margin-bottom:6px;letter-spacing:.02em}
+.form-group input, .form-group select{
+  width:100%;padding:11px 14px;border:1.5px solid #e0ddd4;
+  border-radius:10px;font-family:inherit;font-size:.95rem;
+  background:var(--cream);transition:.2s;
+}
+.form-group input:focus, .form-group select:focus{outline:none;border-color:var(--green-light);background:#fff}
+.btn-primary{
+  width:100%;padding:13px;background:var(--green);color:#fff;
+  border:none;border-radius:12px;font-family:'Syne',sans-serif;
+  font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;
+  letter-spacing:.02em;
+}
+.btn-primary:hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,107,74,.3)}
+.form-panel{display:none}.form-panel.active{display:block}
+.login-error{color:var(--red);font-size:.85rem;text-align:center;margin-top:12px;display:none}
+
+/* ── OFFERS PAGE ────────────────────────────────────── */
+#page-offers{background:var(--cream)}
+.offers-hero{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
+  padding:32px 24px 28px;color:#fff;
+}
+.offers-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:4px}
+.offers-hero p{opacity:.85;font-size:.9rem}
+.search-bar{
+  margin-top:16px;display:flex;gap:8px;
+}
+.search-bar input{
+  flex:1;padding:10px 16px;border:none;border-radius:10px;
+  font-family:inherit;font-size:.9rem;background:rgba(255,255,255,.18);
+  color:#fff;placeholder-color:rgba(255,255,255,.6);
+}
+.search-bar input::placeholder{color:rgba(255,255,255,.65)}
+.search-bar input:focus{outline:none;background:rgba(255,255,255,.28)}
+.search-bar button{
+  padding:10px 18px;background:#fff;color:var(--green);
+  border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;
+  font-size:.88rem;white-space:nowrap;
+}
+
+.filters{
+  padding:16px 20px;display:flex;gap:8px;overflow-x:auto;
+  border-bottom:1px solid rgba(0,0,0,.06);background:#fff;
+  -webkit-overflow-scrolling:touch;
+}
+.filters::-webkit-scrollbar{display:none}
+.filter-chip{
+  flex-shrink:0;padding:6px 16px;border-radius:30px;
+  border:1.5px solid #ddd;background:#fff;
+  font-family:inherit;font-size:.83rem;cursor:pointer;transition:.2s;color:var(--muted);
+}
+.filter-chip.active{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+
+.offers-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:20px;padding:24px 20px;
+}
+.offer-card{
+  background:#fff;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);cursor:pointer;transition:.25s;
+  border:1px solid rgba(0,0,0,.05);
+}
+.offer-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.offer-img{
+  height:160px;display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;position:relative;
+}
+.offer-badge{
+  position:absolute;top:10px;right:10px;
+  background:var(--red);color:#fff;
+  font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:20px;
+  font-family:'Syne',sans-serif;
+}
+.offer-badge.soon{background:var(--orange)}
+.offer-body{padding:14px 16px 16px}
+.offer-partner{font-size:.78rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.offer-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin:4px 0 8px;line-height:1.3}
+.offer-meta{display:flex;align-items:center;justify-content:space-between}
+.offer-price{display:flex;align-items:baseline;gap:6px}
+.offer-price .new{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--green)}
+.offer-price .old{font-size:.82rem;color:var(--muted);text-decoration:line-through}
+.offer-qty{font-size:.78rem;color:var(--muted);background:var(--sand);padding:3px 8px;border-radius:20px}
+.offer-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:20px;background:var(--green-pale);color:var(--green);font-weight:500}
+.tag.allergy{background:#fff3e0;color:#b25c00}
+
+.empty-state{
+  text-align:center;padding:60px 20px;color:var(--muted);
+  grid-column:1/-1;
+}
+.empty-state .icon{font-size:3rem;margin-bottom:12px}
+.empty-state p{font-size:1rem}
+
+/* ── DETAIL PAGE ────────────────────────────────────── */
+#page-detail{background:var(--cream)}
+.detail-hero{
+  background:linear-gradient(135deg,var(--green),var(--green-light));
+  padding:20px 24px 32px;color:#fff;
+  position:relative;
+}
+.btn-back{
+  background:rgba(255,255,255,.18);border:none;color:#fff;
+  padding:7px 16px;border-radius:30px;cursor:pointer;
+  font-family:inherit;font-size:.85rem;margin-bottom:20px;display:inline-flex;align-items:center;gap:6px;
+  transition:.2s;
+}
+.btn-back:hover{background:rgba(255,255,255,.3)}
+.detail-emoji{font-size:4rem;display:block;margin-bottom:12px}
+.detail-partner{font-size:.82rem;opacity:.8;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.detail-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;line-height:1.2;margin:4px 0 8px}
+.detail-loc{font-size:.88rem;opacity:.8;display:flex;align-items:center;gap:4px}
+
+.detail-body{padding:24px 20px;max-width:680px;margin:0 auto}
+.detail-price-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#fff;border-radius:var(--radius);padding:18px 20px;
+  box-shadow:var(--shadow);margin-bottom:20px;
+}
+.detail-price-new{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--green)}
+.detail-price-old{font-size:.9rem;color:var(--muted);text-decoration:line-through}
+.detail-discount{background:var(--red);color:#fff;padding:5px 12px;border-radius:20px;font-weight:700;font-size:.85rem;font-family:'Syne',sans-serif}
+
+.detail-section{background:#fff;border-radius:var(--radius);padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.detail-section h3{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--bark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.detail-desc{font-size:.92rem;line-height:1.65;color:var(--text)}
+.allergy-list{display:flex;flex-wrap:wrap;gap:8px}
+.allergy-pill{
+  padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:600;
+  background:#fff3e0;color:#b25c00;border:1.5px solid #f0c070;
+}
+.allergy-pill.none{background:var(--green-pale);color:var(--green);border-color:#9de0b8}
+.pickup-info{font-size:.9rem;line-height:1.6;color:var(--text)}
+.pickup-info strong{color:var(--green)}
+.qty-row{display:flex;align-items:center;gap:16px;margin-top:4px}
+.qty-btn{
+  width:36px;height:36px;border-radius:50%;border:2px solid var(--green);
+  background:#fff;color:var(--green);font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-weight:700;transition:.2s;
+}
+.qty-btn:hover{background:var(--green);color:#fff}
+.qty-num{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;min-width:28px;text-align:center}
+.qty-max{font-size:.8rem;color:var(--muted)}
+.btn-reserve{
+  width:100%;padding:15px;background:var(--green);color:#fff;
+  border:none;border-radius:14px;font-family:'Syne',sans-serif;
+  font-size:1.05rem;font-weight:700;cursor:pointer;transition:.2s;
+  margin-top:20px;letter-spacing:.02em;
+}
+.btn-reserve:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,74,.35)}
+.btn-reserve:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── CONFIRMATION PAGE ───────────────────────────────── */
+#page-confirm{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--cream);padding:24px;
+}
+.confirm-card{
+  background:#fff;border-radius:24px;padding:40px 32px;
+  max-width:460px;width:100%;text-align:center;box-shadow:var(--shadow-lg);
+}
+.confirm-icon{font-size:4rem;margin-bottom:16px}
+.confirm-card h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--green);margin-bottom:8px}
+.confirm-card p{color:var(--muted);font-size:.92rem;line-height:1.6;margin-bottom:24px}
+.confirm-summary{
+  background:var(--green-pale);border-radius:12px;padding:16px;
+  text-align:left;margin-bottom:24px;font-size:.88rem;line-height:1.8;
+}
+.confirm-summary strong{color:var(--green);font-weight:600}
+.confirm-code{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  color:var(--green);letter-spacing:.1em;background:var(--sand);
+  padding:10px 20px;border-radius:10px;display:inline-block;margin-bottom:24px;
+}
+.btn-secondary{
+  width:100%;padding:13px;background:var(--green-pale);color:var(--green);
+  border:none;border-radius:12px;font-family:'Syne',sans-serif;
+  font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;
+}
+.btn-secondary:hover{background:var(--green);color:#fff}
+
+/* ── RESERVATIONS PAGE ───────────────────────────────── */
+#page-reservations{background:var(--cream)}
+.reservations-header{
+  background:linear-gradient(135deg,var(--green),var(--green-light));
+  padding:28px 24px;color:#fff;
+}
+.reservations-header h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem}
+.reservations-header p{opacity:.8;font-size:.9rem;margin-top:4px}
+.res-list{padding:20px;display:flex;flex-direction:column;gap:14px;max-width:680px;margin:0 auto}
+.res-card{
+  background:#fff;border-radius:var(--radius);padding:16px 18px;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;
+}
+.res-emoji{font-size:2.2rem;flex-shrink:0}
+.res-info{flex:1}
+.res-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem}
+.res-partner{font-size:.8rem;color:var(--green);font-weight:600;margin:2px 0}
+.res-meta{font-size:.78rem;color:var(--muted)}
+.res-code{font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.9rem;background:var(--green-pale);padding:2px 8px;border-radius:6px}
+.res-status{flex-shrink:0;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.res-status.pending{background:#fff3e0;color:#b25c00}
+.res-status.done{background:var(--green-pale);color:var(--green)}
+.no-res{text-align:center;padding:60px 20px;color:var(--muted)}
+.no-res .icon{font-size:2.5rem;margin-bottom:10px}
+
+/* ── Bottom nav (mobile feel) ────────────────────────── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#fff;border-top:1px solid rgba(0,0,0,.08);
+  display:flex;justify-content:space-around;padding:8px 0 10px;
+  z-index:99;box-shadow:0 -4px 20px rgba(0,0,0,.06);
+}
+.bottom-nav button{
+  flex:1;border:none;background:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:.68rem;font-family:inherit;color:var(--muted);padding:4px;
+  transition:.2s;
+}
+.bottom-nav button .icon{font-size:1.3rem}
+.bottom-nav button.active{color:var(--green)}
+.bottom-nav button.active .icon{transform:scale(1.15)}
+
+/* ── Toast ──────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--bark);color:#fff;padding:12px 24px;border-radius:30px;
+  font-size:.88rem;font-weight:500;opacity:0;transition:.35s;z-index:999;white-space:nowrap;
+  pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media(max-width:480px){
+  .offers-grid{grid-template-columns:1fr;padding:16px}
+  .login-card{padding:36px 24px}
+}
+
+/* padding for bottom nav on interior pages */
+.has-bottom-nav{padding-bottom:72px}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ════════════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="login-card">
+    <div class="login-brand">
+      <span class="logo-icon">🌿</span>
+      <h1>FreshSave</h1>
+      <p>Combate o desperdício. Poupa no bolso.</p>
+    </div>
+    <div class="login-tabs">
+      <button class="tab-btn active" onclick="switchTab('login')">Entrar</button>
+      <button class="tab-btn" onclick="switchTab('register')">Registar</button>
+    </div>
+
+    <!-- Login form -->
+    <div class="form-panel active" id="panel-login">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="o.teu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••"/>
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Entrar</button>
+      <p class="login-error" id="login-error">Email ou password incorretos.</p>
+      <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:16px">
+        Demo: <strong>joao@demo.pt</strong> / <strong>1234</strong>
+      </p>
+    </div>
+
+    <!-- Register form -->
+    <div class="form-panel" id="panel-register">
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" id="reg-name" placeholder="O teu nome"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="reg-email" placeholder="o.teu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="reg-password" placeholder="Mínimo 4 caracteres"/>
+      </div>
+      <button class="btn-primary" onclick="doRegister()">Criar conta</button>
+      <p class="login-error" id="reg-error">Preenche todos os campos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ OFFERS ════════════════════════════════════════════ -->
+<div class="page has-bottom-nav" id="page-offers">
+  <nav>
+    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+    <div class="nav-user">
+      <strong id="nav-username">—</strong>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </nav>
+  <div class="offers-hero">
+    <h2>Boas ofertas perto de ti</h2>
+    <p>Rescue Combos a poucos minutos de expirar</p>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Pesquisar restaurante ou produto…" oninput="renderOffers()"/>
+      <button onclick="renderOffers()">🔍 Pesquisar</button>
+    </div>
+  </div>
+  <div class="filters" id="filters-bar"></div>
+  <div class="offers-grid" id="offers-grid"></div>
+</div>
+
+<!-- ══ DETAIL ════════════════════════════════════════════ -->
+<div class="page has-bottom-nav" id="page-detail">
+  <nav>
+    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+    <div class="nav-user">
+      <strong id="nav-username2">—</strong>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </nav>
+  <div class="detail-hero">
+    <button class="btn-back" onclick="showPage('offers')">← Voltar</button>
+    <span class="detail-emoji" id="d-emoji"></span>
+    <div class="detail-partner" id="d-partner"></div>
+    <div class="detail-name" id="d-name"></div>
+    <div class="detail-loc" id="d-loc">📍 <span id="d-loc-text"></span></div>
+  </div>
+  <div class="detail-body">
+    <div class="detail-price-row">
+      <div>
+        <div class="detail-price-new" id="d-price-new"></div>
+        <div class="detail-price-old" id="d-price-old">valor original: <span id="d-price-orig"></span></div>
+      </div>
+      <div class="detail-discount" id="d-discount"></div>
+    </div>
+
+    <div class="detail-section">
+      <h3>📦 Descrição</h3>
+      <p class="detail-desc" id="d-desc"></p>
+    </div>
+
+    <div class="detail-section">
+      <h3>⚠️ Alergénios</h3>
+      <div class="allergy-list" id="d-allergies"></div>
+    </div>
+
+    <div class="detail-section">
+      <h3>🕐 Levantamento</h3>
+      <div class="pickup-info" id="d-pickup"></div>
+    </div>
+
+    <div class="detail-section">
+      <h3>🛒 Quantidade</h3>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-num" id="qty-num">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+        <span class="qty-max" id="qty-max"></span>
+      </div>
+    </div>
+
+    <button class="btn-reserve" id="btn-reserve" onclick="doReserve()">Reservar Combo</button>
+  </div>
+</div>
+
+<!-- ══ CONFIRMATION ══════════════════════════════════════ -->
+<div class="page" id="page-confirm">
+  <div class="confirm-card">
+    <div class="confirm-icon">✅</div>
+    <h2>Reserva confirmada!</h2>
+    <p>Apresenta o código abaixo no estabelecimento para levantar o teu combo.</p>
+    <div class="confirm-code" id="confirm-code">FS-0000</div>
+    <div class="confirm-summary" id="confirm-summary"></div>
+    <button class="btn-primary" onclick="showPage('reservations')" style="margin-bottom:12px">Ver as minhas reservas</button>
+    <button class="btn-secondary" onclick="showPage('offers')">Continuar a explorar</button>
+  </div>
+</div>
+
+<!-- ══ RESERVATIONS ══════════════════════════════════════ -->
+<div class="page has-bottom-nav" id="page-reservations">
+  <nav>
+    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+    <div class="nav-user">
+      <strong id="nav-username3">—</strong>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </nav>
+  <div class="reservations-header">
+    <h2>As minhas reservas</h2>
+    <p>Histórico de Rescue Combos reservados</p>
+  </div>
+  <div class="res-list" id="res-list"></div>
+</div>
+
+<!-- ── Bottom nav ──────────────────────────────────────── -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none">
+  <button id="bnav-offers" onclick="showPage('offers')">
+    <span class="icon">🏪</span>Ofertas
+  </button>
+  <button id="bnav-reservations" onclick="showPage('reservations')">
+    <span class="icon">🎫</span>Reservas
+  </button>
+</nav>
+
+<!-- ── Toast ───────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ JAVASCRIPT ════════════════════════════════════════ -->
+<script>
+// ── Data ──────────────────────────────────────────────
+const OFFERS = [
+  {
+    id:1, emoji:'🥐', name:'Saco Surpresa Padaria',
+    partner:'Padaria Central', category:'Padaria',
+    price:3.50, originalPrice:12.00,
+    location:'Rua do Ouro 14, Porto',
+    desc:'Saco com sortido de pão do dia, croissants, brioches e pastelaria variada. Produto do dia não vendido, em ótimo estado.',
+    allergies:['Glúten','Ovos','Leite'],
+    pickup:'Hoje, 19h00 – 20h30',
+    qty:5, tags:['Padaria','Doce']
+  },
+  {
+    id:2, emoji:'🍱', name:'Rescue Combo Almoço',
+    partner:'Restaurante Sol', category:'Restaurante',
+    price:4.00, originalPrice:11.50,
+    location:'Av. da República 87, Porto',
+    desc:'Refeição completa do dia (prato principal + sopa + sobremesa). Varia diariamente conforme o menu. Sem desperdício, com sabor!',
+    allergies:['Glúten','Peixe'],
+    pickup:'Hoje, 14h30 – 15h30',
+    qty:3, tags:['Almoço','Prato do dia']
+  },
+  {
+    id:3, emoji:'🍕', name:'Pizza do Fim do Dia',
+    partner:'Pizzaria Napoli', category:'Restaurante',
+    price:5.00, originalPrice:14.00,
+    location:'Rua das Flores 31, Porto',
+    desc:'2 metades de pizza variada — as que sobram ao fecho. Pode incluir Margherita, Pepperoni ou Vegetariana. Sempre fresquinha!',
+    allergies:['Glúten','Leite'],
+    pickup:'Hoje, 22h00 – 23h00',
+    qty:2, tags:['Jantar','Pizza'], urgent:true
+  },
+  {
+    id:4, emoji:'🥗', name:'Bowl Vegano',
+    partner:'Green Kitchen', category:'Vegetariano',
+    price:3.00, originalPrice:9.50,
+    location:'Praça da Batalha 5, Porto',
+    desc:'Bowl completo com quinoa, legumes salteados, grão e molho tahini. 100% plant-based, sem glúten.',
+    allergies:['Sésamo'],
+    pickup:'Hoje, 18h00 – 19h30',
+    qty:4, tags:['Vegan','Saudável','Sem glúten']
+  },
+  {
+    id:5, emoji:'🍰', name:'Caixa de Pastelaria',
+    partner:'Confeitaria Doce Lar', category:'Padaria',
+    price:4.50, originalPrice:16.00,
+    location:'Rua Formosa 22, Porto',
+    desc:'Caixa com 6 unidades de pastelaria sortida — bolos, tartes e bolachas artesanais do dia.',
+    allergies:['Glúten','Ovos','Leite','Frutos secos'],
+    pickup:'Hoje, 19h30 – 20h30',
+    qty:6, tags:['Pastelaria','Doce'], urgent:true
+  },
+  {
+    id:6, emoji:'🍜', name:'Sopa + Pão',
+    partner:'Tasca da Avó', category:'Restaurante',
+    price:2.00, originalPrice:5.50,
+    location:'Travessa do Carmo 9, Porto',
+    desc:'Tigela de sopa do dia (caldo verde, sopa de legumes ou canja) + fatia de pão rústico. Reconfortante e caseiro.',
+    allergies:['Glúten'],
+    pickup:'Hoje, 15h00 – 16h00',
+    qty:8, tags:['Sopa','Caseiro']
+  }
+];
+
+const CATEGORIES = ['Todas','Padaria','Restaurante','Vegetariano'];
+
+// ── State ─────────────────────────────────────────────
+let currentUser = null;
+let currentOffer = null;
+let currentQty   = 1;
+let activeFilter = 'Todas';
+
+// ── LocalStorage helpers ──────────────────────────────
+function lsGet(k){ try{return JSON.parse(localStorage.getItem(k))}catch{return null} }
+function lsSet(k,v){ localStorage.setItem(k, JSON.stringify(v)) }
+
+function getUsers(){ return lsGet('fs_users') || [
+  {name:'João Silva', email:'joao@demo.pt', password:'1234'}
+]}
+function saveUsers(u){ lsSet('fs_users', u) }
+function getReservations(){ return lsGet('fs_reservations') || [] }
+function saveReservations(r){ lsSet('fs_reservations', r) }
+
+// ── Auth ──────────────────────────────────────────────
+function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const users = getUsers();
+  const user  = users.find(u => u.email===email && u.password===pass);
+  const err   = document.getElementById('login-error');
+  if(!user){ err.style.display='block'; return }
+  err.style.display='none';
+  currentUser = user;
+  lsSet('fs_session', user.email);
+  enterApp();
+}
+
+function doRegister(){
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-password').value;
+  const err   = document.getElementById('reg-error');
+  if(!name||!email||pass.length<4){ err.style.display='block'; err.textContent='Preenche todos os campos (password ≥ 4 caracteres).'; return }
+  const users = getUsers();
+  if(users.find(u=>u.email===email)){ err.style.display='block'; err.textContent='Email já registado.'; return }
+  const newUser = {name, email, password:pass};
+  users.push(newUser);
+  saveUsers(users);
+  err.style.display='none';
+  currentUser = newUser;
+  lsSet('fs_session', email);
+  showToast('Conta criada com sucesso! Bem-vindo/a 🌿');
+  enterApp();
+}
+
+function doLogout(){
+  currentUser = null;
+  localStorage.removeItem('fs_session');
+  document.getElementById('bottom-nav').style.display='none';
+  showPage('login');
+}
+
+function enterApp(){
+  ['nav-username','nav-username2','nav-username3'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = currentUser.name.split(' ')[0];
+  });
+  document.getElementById('bottom-nav').style.display='flex';
+  buildFilters();
+  renderOffers();
+  showPage('offers');
+}
+
+// ── Page nav ──────────────────────────────────────────
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  // bottom nav highlight
+  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
+  const nb = document.getElementById('bnav-'+name);
+  if(nb) nb.classList.add('active');
+  // hide bottom nav on login/confirm
+  const noNav = ['login','confirm'];
+  document.getElementById('bottom-nav').style.display = noNav.includes(name) ? 'none' : (currentUser?'flex':'none');
+  window.scrollTo(0,0);
+}
+
+// ── Filters ───────────────────────────────────────────
+function buildFilters(){
+  const bar = document.getElementById('filters-bar');
+  bar.innerHTML = CATEGORIES.map(c=>`
+    <button class="filter-chip ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>
+  `).join('');
+}
+
+function setFilter(cat){
+  activeFilter = cat;
+  buildFilters();
+  renderOffers();
+}
+
+// ── Offers list ───────────────────────────────────────
+function renderOffers(){
+  const q = (document.getElementById('search-input')?.value||'').toLowerCase();
+  const grid = document.getElementById('offers-grid');
+  let filtered = OFFERS.filter(o=>{
+    const matchCat = activeFilter==='Todas' || o.category===activeFilter;
+    const matchQ   = !q || o.name.toLowerCase().includes(q) || o.partner.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty-state"><div class="icon">🌿</div><p>Nenhuma oferta encontrada.<br>Tenta outra pesquisa.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(o=>{
+    const disc = Math.round((1 - o.price/o.originalPrice)*100);
+    const bg = categoryBg(o.category);
+    return `
+    <div class="offer-card" onclick="showDetail(${o.id})">
+      <div class="offer-img" style="background:${bg}">
+        ${o.emoji}
+        ${o.urgent ? '<span class="offer-badge">Urgente!</span>' : ''}
+        ${!o.urgent && disc>=60 ? '<span class="offer-badge soon">-'+disc+'%</span>' : ''}
+      </div>
+      <div class="offer-body">
+        <div class="offer-partner">${o.partner}</div>
+        <div class="offer-name">${o.name}</div>
+        <div class="offer-meta">
+          <div class="offer-price">
+            <span class="new">${o.price.toFixed(2)}€</span>
+            <span class="old">${o.originalPrice.toFixed(2)}€</span>
+          </div>
+          <span class="offer-qty">Restam: ${o.qty}</span>
+        </div>
+        <div class="offer-tags">
+          ${o.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+          ${o.allergies.slice(0,2).map(a=>`<span class="tag allergy">⚠️ ${a}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function categoryBg(cat){
+  const m={Padaria:'linear-gradient(135deg,#ffecd2,#fcb69f)',Restaurante:'linear-gradient(135deg,#d4fc79,#96e6a1)',Vegetariano:'linear-gradient(135deg,#a8edea,#fed6e3)'};
+  return m[cat]||'linear-gradient(135deg,#e0f7fa,#b2ebf2)';
+}
+
+// ── Detail ────────────────────────────────────────────
+function showDetail(id){
+  currentOffer = OFFERS.find(o=>o.id===id);
+  if(!currentOffer) return;
+  const o = currentOffer;
+  const disc = Math.round((1 - o.price/o.originalPrice)*100);
+
+  document.getElementById('d-emoji').textContent   = o.emoji;
+  document.getElementById('d-partner').textContent = o.partner;
+  document.getElementById('d-name').textContent    = o.name;
+  document.getElementById('d-loc-text').textContent= o.location;
+  document.getElementById('d-price-new').textContent = o.price.toFixed(2)+'€';
+  document.getElementById('d-price-orig').textContent= o.originalPrice.toFixed(2)+'€';
+  document.getElementById('d-discount').textContent  = '-'+disc+'%';
+  document.getElementById('d-desc').textContent   = o.desc;
+  document.getElementById('d-pickup').innerHTML   = `<strong>⏰ Hoje</strong> — ${o.pickup}<br>📍 ${o.location}`;
+
+  const aList = document.getElementById('d-allergies');
+  if(o.allergies.length){
+    aList.innerHTML = o.allergies.map(a=>`<span class="allergy-pill">${a}</span>`).join('');
+  } else {
+    aList.innerHTML = '<span class="allergy-pill none">✅ Sem alergénios declarados</span>';
+  }
+
+  currentQty = 1;
+  document.getElementById('qty-num').textContent = 1;
+  document.getElementById('qty-max').textContent = `máx. ${o.qty} disponíveis`;
+  document.getElementById('btn-reserve').disabled = o.qty === 0;
+
+  showPage('detail');
+}
+
+function changeQty(delta){
+  if(!currentOffer) return;
+  currentQty = Math.max(1, Math.min(currentOffer.qty, currentQty+delta));
+  document.getElementById('qty-num').textContent = currentQty;
+}
+
+// ── Reserve ───────────────────────────────────────────
+function doReserve(){
+  if(!currentOffer||!currentUser) return;
+  const o = currentOffer;
+  const code = 'FS-'+Math.floor(1000+Math.random()*9000);
+  const total = (o.price * currentQty).toFixed(2);
+
+  const reservation = {
+    id: Date.now(),
+    code, offerId:o.id,
+    offerName:o.name, offerEmoji:o.emoji,
+    partner:o.partner, pickup:o.pickup,
+    qty:currentQty, total,
+    userEmail:currentUser.email,
+    date: new Date().toLocaleDateString('pt-PT'),
+    status:'pending'
+  };
+  const reservations = getReservations();
+  reservations.push(reservation);
+  saveReservations(reservations);
+
+  // show confirm
+  document.getElementById('confirm-code').textContent = code;
+  document.getElementById('confirm-summary').innerHTML =
+    `<strong>Produto:</strong> ${o.emoji} ${o.name}<br>
+     <strong>Parceiro:</strong> ${o.partner}<br>
+     <strong>Quantidade:</strong> ${currentQty} combo(s)<br>
+     <strong>Total:</strong> ${total}€<br>
+     <strong>Levantamento:</strong> ${o.pickup}<br>
+     <strong>Local:</strong> ${o.location}`;
+
+  showPage('confirm');
+  document.getElementById('bottom-nav').style.display='none';
+}
+
+// ── Reservations list ─────────────────────────────────
+function renderReservations(){
+  const all   = getReservations();
+  const mine  = all.filter(r=>r.userEmail===currentUser?.email).reverse();
+  const list  = document.getElementById('res-list');
+  if(!mine.length){
+    list.innerHTML=`<div class="no-res"><div class="icon">🎫</div><p>Ainda não tens reservas.<br>Explora as ofertas disponíveis!</p></div>`;
+    return;
+  }
+  list.innerHTML = mine.map(r=>`
+    <div class="res-card">
+      <div class="res-emoji">${r.offerEmoji}</div>
+      <div class="res-info">
+        <div class="res-name">${r.offerName}</div>
+        <div class="res-partner">${r.partner}</div>
+        <div class="res-meta">${r.date} · ${r.qty}x · ${r.total}€<br>
+          <span class="res-code">${r.code}</span>
+        </div>
+      </div>
+      <span class="res-status ${r.status}">${r.status==='pending'?'Pendente':'Levantado'}</span>
+    </div>
+  `).join('');
+}
+
+// ── Tab switching (login) ─────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register')));
+  document.getElementById('panel-login').classList.toggle('active', tab==='login');
+  document.getElementById('panel-register').classList.toggle('active', tab==='register');
+  document.getElementById('login-error').style.display='none';
+  document.getElementById('reg-error').style.display='none';
+}
+
+// ── Toast ─────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── Page observer for reservations render ─────────────
+const origShow = showPage;
+window.showPage = function(name){
+  origShow(name);
+  if(name==='reservations') renderReservations();
+};
+
+// ── Init: restore session ─────────────────────────────
+(function init(){
+  const email = lsGet('fs_session');
+  if(email){
+    const user = getUsers().find(u=>u.email===email);
+    if(user){ currentUser=user; enterApp(); return; }
+  }
+  showPage('login');
+})();
+</script>
+</body>
+</html>
