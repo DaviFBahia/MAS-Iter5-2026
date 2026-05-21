@@ -1,0 +1,17 @@
+# _config.yml — FreshSave
+title: FreshSave
+description: Plataforma de combate ao desperdício alimentar
+
+url: "https://[o-vosso-user].github.io"
+baseurl: "/freshsave-app"   # nome exato do repositório
+
+lang: pt
+
+# Diz ao Jekyll para não processar o index.html como template
+include:
+  - index.html
+
+# Ficheiros a ignorar no build
+exclude:
+  - README.md
+  - "*.yml"
