@@ -6,59 +6,42 @@
 <title>FreshSave</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
 <style>
-/* ── Reset & Variables ─────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#1a6b4a;
-  --green-light:#2d9c6e;
-  --green-pale:#e8f5ee;
-  --leaf:#6fcf97;
-  --cream:#faf8f3;
-  --sand:#f0ece0;
-  --bark:#2c1f14;
-  --text:#1c1c1c;
-  --muted:#7a7a6e;
-  --white:#ffffff;
-  --red:#c0392b;
-  --orange:#e67e22;
+  --green:#1a6b4a;--green-light:#2d9c6e;--green-pale:#e8f5ee;
+  --eco:#27ae60;--eco-pale:#d5f5e3;
+  --cream:#faf8f3;--sand:#f0ece0;--bark:#2c1f14;
+  --text:#1c1c1c;--muted:#7a7a6e;--white:#fff;
+  --red:#c0392b;--orange:#e67e22;--blue:#2471a3;
+  --gold:#f1c40f;--gold-dark:#d4ac0d;
   --radius:14px;
   --shadow:0 4px 24px rgba(26,107,74,.10);
   --shadow-lg:0 12px 48px rgba(26,107,74,.16);
 }
-html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
 
-/* ── Pages ─────────────────────────────────────────── */
+/* ── Pages ── */
 .page{display:none;min-height:100vh}
 .page.active{display:block}
+#page-login.active{display:flex;align-items:center;justify-content:center}
+#page-confirm.active{display:flex;align-items:center;justify-content:center;min-height:100vh}
 
-/* ── NAV ────────────────────────────────────────────── */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:var(--white);
-  border-bottom:1px solid rgba(26,107,74,.12);
-  padding:0 24px;
-  display:flex;align-items:center;justify-content:space-between;
-  height:60px;
-}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--green);cursor:pointer;display:flex;align-items:center;gap:8px}
-.nav-logo span{font-size:1.4rem}
-.nav-user{display:flex;align-items:center;gap:16px;font-size:.9rem}
+/* ── Nav ── */
+nav.top-nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(26,107,74,.12);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--green);cursor:pointer;display:flex;align-items:center;gap:8px}
+.nav-user{display:flex;align-items:center;gap:10px;font-size:.9rem}
 .nav-user strong{color:var(--green);font-weight:600}
-.btn-logout{background:none;border:1.5px solid var(--green);color:var(--green);border-radius:30px;padding:5px 14px;cursor:pointer;font-size:.82rem;font-family:inherit;transition:.2s}
+.nav-eco-pill{display:flex;align-items:center;gap:4px;background:var(--eco-pale);color:var(--eco);font-weight:700;font-size:.8rem;padding:4px 10px;border-radius:20px;cursor:pointer;border:1.5px solid #a9dfbf;transition:.2s}
+.nav-eco-pill:hover{background:#a9dfbf}
+.nav-eco-pill .leaf{font-size:1rem}
+.btn-logout{background:none;border:1.5px solid var(--green);color:var(--green);border-radius:30px;padding:5px 12px;cursor:pointer;font-size:.78rem;font-family:inherit;transition:.2s}
 .btn-logout:hover{background:var(--green);color:#fff}
+.btn-back{background:rgba(255,255,255,.18);border:none;color:#fff;padding:7px 16px;border-radius:30px;cursor:pointer;font-family:inherit;font-size:.85rem;margin-bottom:16px;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-back:hover{background:rgba(255,255,255,.3)}
 
-/* ── LOGIN PAGE ─────────────────────────────────────── */
-#page-login{
-  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 50%,#a8d5b5 100%);
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-}
-.login-card{
-  background:var(--white);border-radius:24px;
-  padding:48px 40px;width:100%;max-width:420px;
-  box-shadow:var(--shadow-lg);
-}
+/* ── Login ── */
+#page-login{background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 50%,#a8d5b5 100%);padding:24px}
+.login-card{background:var(--white);border-radius:24px;padding:48px 40px;width:100%;max-width:420px;box-shadow:var(--shadow-lg)}
 .login-brand{text-align:center;margin-bottom:36px}
 .login-brand .logo-icon{font-size:3rem;display:block;margin-bottom:8px}
 .login-brand h1{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--green)}
@@ -67,755 +50,2805 @@ nav{
 .tab-btn{flex:1;border:none;background:none;padding:8px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:500;color:var(--muted);transition:.2s}
 .tab-btn.active{background:var(--white);color:var(--green);font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:.83rem;font-weight:600;color:var(--bark);margin-bottom:6px;letter-spacing:.02em}
-.form-group input, .form-group select{
-  width:100%;padding:11px 14px;border:1.5px solid #e0ddd4;
-  border-radius:10px;font-family:inherit;font-size:.95rem;
-  background:var(--cream);transition:.2s;
-}
-.form-group input:focus, .form-group select:focus{outline:none;border-color:var(--green-light);background:#fff}
-.btn-primary{
-  width:100%;padding:13px;background:var(--green);color:#fff;
-  border:none;border-radius:12px;font-family:'Syne',sans-serif;
-  font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;
-  letter-spacing:.02em;
-}
+.form-group label{display:block;font-size:.83rem;font-weight:600;color:var(--bark);margin-bottom:6px}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid #e0ddd4;border-radius:10px;font-family:inherit;font-size:.95rem;background:var(--cream);transition:.2s}
+.form-group input:focus{outline:none;border-color:var(--green-light);background:#fff}
+.btn-primary{width:100%;padding:13px;background:var(--green);color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s}
 .btn-primary:hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,107,74,.3)}
 .form-panel{display:none}.form-panel.active{display:block}
 .login-error{color:var(--red);font-size:.85rem;text-align:center;margin-top:12px;display:none}
 
-/* ── OFFERS PAGE ────────────────────────────────────── */
-#page-offers{background:var(--cream)}
-.offers-hero{
-  background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);
-  padding:32px 24px 28px;color:#fff;
-}
-.offers-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:4px}
-.offers-hero p{opacity:.85;font-size:.9rem}
-.search-bar{
-  margin-top:16px;display:flex;gap:8px;
-}
-.search-bar input{
-  flex:1;padding:10px 16px;border:none;border-radius:10px;
-  font-family:inherit;font-size:.9rem;background:rgba(255,255,255,.18);
-  color:#fff;placeholder-color:rgba(255,255,255,.6);
-}
+/* ── Home ── */
+#page-home{background:var(--cream)}
+.home-hero{background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);padding:28px 20px 24px;color:#fff}
+.home-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.55rem;margin-bottom:4px}
+.home-hero p{opacity:.85;font-size:.88rem}
+.search-bar{margin-top:14px;display:flex;gap:8px}
+.search-bar input{flex:1;padding:10px 14px;border:none;border-radius:10px;font-family:inherit;font-size:.9rem;background:rgba(255,255,255,.2);color:#fff}
 .search-bar input::placeholder{color:rgba(255,255,255,.65)}
-.search-bar input:focus{outline:none;background:rgba(255,255,255,.28)}
-.search-bar button{
-  padding:10px 18px;background:#fff;color:var(--green);
-  border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;
-  font-size:.88rem;white-space:nowrap;
-}
+.search-bar input:focus{outline:none;background:rgba(255,255,255,.3)}
+.search-bar button{padding:10px 16px;background:#fff;color:var(--green);border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.88rem}
 
-.filters{
-  padding:16px 20px;display:flex;gap:8px;overflow-x:auto;
-  border-bottom:1px solid rgba(0,0,0,.06);background:#fff;
-  -webkit-overflow-scrolling:touch;
-}
-.filters::-webkit-scrollbar{display:none}
-.filter-chip{
-  flex-shrink:0;padding:6px 16px;border-radius:30px;
-  border:1.5px solid #ddd;background:#fff;
-  font-family:inherit;font-size:.83rem;cursor:pointer;transition:.2s;color:var(--muted);
-}
-.filter-chip.active{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.filter-bar{background:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(0,0,0,.06);}
+.filter-bar-label{font-size:.78rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.cat-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{flex-shrink:0;padding:5px 14px;border-radius:30px;border:1.5px solid #ddd;background:#fff;font-family:inherit;font-size:.8rem;cursor:pointer;transition:.2s;color:var(--muted)}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
 
-.offers-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
-  gap:20px;padding:24px 20px;
-}
-.offer-card{
-  background:#fff;border-radius:var(--radius);overflow:hidden;
-  box-shadow:var(--shadow);cursor:pointer;transition:.25s;
-  border:1px solid rgba(0,0,0,.05);
-}
-.offer-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.offer-img{
-  height:160px;display:flex;align-items:center;justify-content:center;
-  font-size:3.5rem;position:relative;
-}
-.offer-badge{
-  position:absolute;top:10px;right:10px;
-  background:var(--red);color:#fff;
-  font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:20px;
-  font-family:'Syne',sans-serif;
-}
-.offer-badge.soon{background:var(--orange)}
-.offer-body{padding:14px 16px 16px}
-.offer-partner{font-size:.78rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.offer-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin:4px 0 8px;line-height:1.3}
-.offer-meta{display:flex;align-items:center;justify-content:space-between}
-.offer-price{display:flex;align-items:baseline;gap:6px}
-.offer-price .new{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--green)}
-.offer-price .old{font-size:.82rem;color:var(--muted);text-decoration:line-through}
-.offer-qty{font-size:.78rem;color:var(--muted);background:var(--sand);padding:3px 8px;border-radius:20px}
-.offer-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
-.tag{font-size:.72rem;padding:2px 8px;border-radius:20px;background:var(--green-pale);color:var(--green);font-weight:500}
-.tag.allergy{background:#fff3e0;color:#b25c00}
+.allergen-dropdown-wrap{position:relative;margin-left:auto}
+.allergen-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:30px;border:1.5px solid #ddd;background:#fff;font-family:inherit;font-size:.8rem;cursor:pointer;color:var(--muted);transition:.2s;white-space:nowrap;}
+.allergen-btn.has-filter{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:600}
+.allergen-panel{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);padding:16px;min-width:240px;z-index:200;border:1px solid rgba(0,0,0,.08);}
+.allergen-panel.open{display:block}
+.allergen-panel h4{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--bark);margin-bottom:10px}
+.allergen-list{display:flex;flex-direction:column;gap:7px}
+.allergen-item{display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 6px;border-radius:8px;transition:.15s}
+.allergen-item:hover{background:var(--cream)}
+.allergen-item input[type=checkbox]{accent-color:var(--orange);width:15px;height:15px;cursor:pointer}
+.allergen-item label{font-size:.85rem;cursor:pointer;color:var(--text)}
+.allergen-clear{width:100%;margin-top:12px;padding:7px;border:none;border-radius:8px;background:var(--sand);color:var(--bark);font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s}
+.allergen-clear:hover{background:var(--orange);color:#fff}
 
-.empty-state{
-  text-align:center;padding:60px 20px;color:var(--muted);
-  grid-column:1/-1;
-}
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;padding:20px 18px}
+.partner-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border:1px solid rgba(0,0,0,.05);}
+.partner-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.partner-hero{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;position:relative}
+.partner-body{padding:14px 16px 16px}
+.partner-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:3px}
+.partner-category{font-size:.75rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.partner-meta{display:flex;align-items:center;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+.partner-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.p-badge{font-size:.72rem;padding:3px 9px;border-radius:20px;font-weight:600}
+.p-badge.rescue{background:var(--green-pale);color:var(--green)}
+.p-badge.surprise{background:#eaf2f8;color:var(--blue)}
+.p-badge.urgent{background:#fdecea;color:var(--red)}
+.partner-location{font-size:.78rem;color:var(--muted);margin-top:6px}
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
 .empty-state .icon{font-size:3rem;margin-bottom:12px}
-.empty-state p{font-size:1rem}
 
-/* ── DETAIL PAGE ────────────────────────────────────── */
-#page-detail{background:var(--cream)}
-.detail-hero{
-  background:linear-gradient(135deg,var(--green),var(--green-light));
-  padding:20px 24px 32px;color:#fff;
-  position:relative;
-}
-.btn-back{
-  background:rgba(255,255,255,.18);border:none;color:#fff;
-  padding:7px 16px;border-radius:30px;cursor:pointer;
-  font-family:inherit;font-size:.85rem;margin-bottom:20px;display:inline-flex;align-items:center;gap:6px;
-  transition:.2s;
-}
-.btn-back:hover{background:rgba(255,255,255,.3)}
-.detail-emoji{font-size:4rem;display:block;margin-bottom:12px}
-.detail-partner{font-size:.82rem;opacity:.8;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
-.detail-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;line-height:1.2;margin:4px 0 8px}
-.detail-loc{font-size:.88rem;opacity:.8;display:flex;align-items:center;gap:4px}
+/* ── Partner page ── */
+#page-partner{background:var(--cream)}
+.partner-page-hero{background:linear-gradient(135deg,var(--green),var(--green-light));padding:20px 20px 28px;color:#fff;}
+.partner-page-emoji{font-size:3.5rem;display:block;margin-bottom:10px}
+.partner-page-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;line-height:1.2;margin-bottom:4px}
+.partner-page-cat{font-size:.82rem;opacity:.8;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.partner-page-loc{font-size:.85rem;opacity:.8;margin-top:6px}
+.partner-page-pickup{font-size:.82rem;opacity:.85;margin-top:4px}
+.partner-page-body{padding:20px 18px;max-width:720px;margin:0 auto}
+.offer-type-section{margin-bottom:24px}
+.offer-type-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--sand);}
+.offer-type-header h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--bark)}
+.offer-type-header p{font-size:.78rem;color:var(--muted);margin-top:2px}
+.type-icon{font-size:1.4rem}
+.rescue-builder{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.rescue-builder-top{padding:14px 16px 10px;border-bottom:1px solid var(--sand)}
+.rescue-slots-info{font-size:.82rem;color:var(--muted)}
+.rescue-slots-info strong{color:var(--green)}
+.montra-items{display:flex;flex-direction:column;gap:0}
+.montra-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--sand);cursor:pointer;transition:.15s;}
+.montra-item.out-of-stock,.montra-item.allergen-blocked{cursor:not-allowed;}
+.montra-item:last-child{border-bottom:none}
+.montra-item:hover{background:var(--green-pale)}
+.montra-item.selected{background:var(--green-pale)}
+.montra-item.out-of-stock{opacity:.45;pointer-events:none}
+.mi-emoji{font-size:1.6rem;flex-shrink:0}
+.mi-info{flex:1}
+.mi-name{font-weight:600;font-size:.9rem}
+.mi-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.mi-tag{font-size:.68rem;padding:1px 6px;border-radius:10px;background:var(--sand);color:var(--muted)}
+.mi-tag.allergy{background:#fff3e0;color:#b25c00}
+.mi-price{font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.95rem;flex-shrink:0;margin-right:8px}
+.mi-check{width:24px;height:24px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;transition:.2s;}
+.montra-item.selected .mi-check{background:var(--green);border-color:var(--green);color:#fff}
+.combo-total-bar{background:var(--green-pale);border-top:2px solid var(--green);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.combo-total-label{font-size:.85rem;color:var(--muted)}
+.combo-total-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--green)}
+.combo-total-saving{font-size:.75rem;color:var(--green);margin-top:1px}
+.btn-reserve-combo{padding:11px 22px;background:var(--green);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:.2s;}
+.btn-reserve-combo:disabled{background:#ccc;cursor:not-allowed}
+.btn-reserve-combo:not(:disabled):hover{background:var(--green-light)}
+.surprise-bags-grid{display:flex;flex-direction:column;gap:12px}
+.surprise-bag-card{background:#fff;border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;cursor:pointer;transition:.2s;border:2px solid transparent;}
+.surprise-bag-card:hover,.surprise-bag-card.selected{border-color:var(--blue)}
+.surprise-bag-icon{font-size:2.4rem;flex-shrink:0}
+.surprise-bag-info{flex:1}
+.surprise-bag-size{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem}
+.surprise-bag-desc{font-size:.8rem;color:var(--muted);margin-top:2px;line-height:1.5}
+.surprise-bag-allergies{font-size:.75rem;color:#b25c00;margin-top:4px}
+.surprise-bag-right{text-align:right;flex-shrink:0}
+.surprise-bag-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--blue)}
+.surprise-bag-original{font-size:.78rem;color:var(--muted);text-decoration:line-through}
+.surprise-bag-discount{font-size:.72rem;font-weight:700;color:var(--red)}
+.surprise-bag-qty{font-size:.72rem;color:var(--muted);margin-top:2px}
+.surprise-notice{background:#eaf2f8;border-radius:10px;padding:12px 14px;font-size:.82rem;line-height:1.6;color:var(--blue);margin-bottom:14px;border-left:3px solid var(--blue);}
+.qty-row{display:flex;align-items:center;gap:14px;margin-top:12px}
+.qty-btn{width:34px;height:34px;border-radius:50%;border:2px solid var(--blue);background:#fff;color:var(--blue);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:.2s}
+.qty-btn:hover{background:var(--blue);color:#fff}
+.qty-num{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;min-width:24px;text-align:center}
+.btn-reserve-surprise{width:100%;margin-top:14px;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;}
+.btn-reserve-surprise:disabled{background:#ccc;cursor:not-allowed}
+.btn-reserve-surprise:not(:disabled):hover{background:#1a5e8a;transform:translateY(-1px)}
+/* eco notice on partner page */
+.eco-notice-partner{background:var(--eco-pale);border-radius:10px;padding:12px 14px;font-size:.82rem;line-height:1.65;color:var(--eco);margin-bottom:16px;border-left:3px solid var(--eco);display:flex;align-items:flex-start;gap:8px;}
 
-.detail-body{padding:24px 20px;max-width:680px;margin:0 auto}
-.detail-price-row{
-  display:flex;align-items:center;justify-content:space-between;
-  background:#fff;border-radius:var(--radius);padding:18px 20px;
-  box-shadow:var(--shadow);margin-bottom:20px;
-}
-.detail-price-new{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--green)}
-.detail-price-old{font-size:.9rem;color:var(--muted);text-decoration:line-through}
-.detail-discount{background:var(--red);color:#fff;padding:5px 12px;border-radius:20px;font-weight:700;font-size:.85rem;font-family:'Syne',sans-serif}
+/* ── Checkout ── */
+#page-checkout{background:var(--cream)}
+.checkout-hero{background:linear-gradient(135deg,var(--green),var(--green-light));padding:20px 20px 28px;color:#fff}
+.checkout-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:4px}
+.checkout-hero p{opacity:.85;font-size:.88rem}
+.checkout-body{padding:20px 18px;max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px;padding-bottom:32px}
+.checkout-card{background:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.checkout-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--bark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ck-summary-line{display:flex;justify-content:space-between;font-size:.88rem;padding:5px 0;border-bottom:1px solid var(--sand)}
+.ck-summary-line:last-child{border-bottom:none}
+.ck-summary-line.total{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--green);padding-top:10px;border-top:2px solid var(--green);margin-top:4px}
+.ck-summary-line.discount-line{color:var(--eco);font-weight:600}
+.ck-items-list{font-size:.8rem;color:var(--muted);margin:4px 0 0 0;padding-left:14px}
+.ck-items-list li{line-height:1.7}
 
-.detail-section{background:#fff;border-radius:var(--radius);padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.detail-section h3{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--bark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.detail-desc{font-size:.92rem;line-height:1.65;color:var(--text)}
-.allergy-list{display:flex;flex-wrap:wrap;gap:8px}
-.allergy-pill{
-  padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:600;
-  background:#fff3e0;color:#b25c00;border:1.5px solid #f0c070;
-}
-.allergy-pill.none{background:var(--green-pale);color:var(--green);border-color:#9de0b8}
-.pickup-info{font-size:.9rem;line-height:1.6;color:var(--text)}
-.pickup-info strong{color:var(--green)}
-.qty-row{display:flex;align-items:center;gap:16px;margin-top:4px}
-.qty-btn{
-  width:36px;height:36px;border-radius:50%;border:2px solid var(--green);
-  background:#fff;color:var(--green);font-size:1.2rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-weight:700;transition:.2s;
-}
-.qty-btn:hover{background:var(--green);color:#fff}
-.qty-num{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;min-width:28px;text-align:center}
-.qty-max{font-size:.8rem;color:var(--muted)}
-.btn-reserve{
-  width:100%;padding:15px;background:var(--green);color:#fff;
-  border:none;border-radius:14px;font-family:'Syne',sans-serif;
-  font-size:1.05rem;font-weight:700;cursor:pointer;transition:.2s;
-  margin-top:20px;letter-spacing:.02em;
-}
-.btn-reserve:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,74,.35)}
-.btn-reserve:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+/* eco discount coupons in checkout */
+.eco-no-discounts{font-size:.85rem;color:var(--muted);padding:10px 0;line-height:1.6}
+.eco-no-discounts strong{color:var(--eco)}
+.eco-discount-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.eco-discount-option{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;border:2px solid #e0ddd4;cursor:pointer;transition:.2s;background:#fff}
+.eco-discount-option:hover{border-color:var(--eco);background:var(--eco-pale)}
+.eco-discount-option.selected{border-color:var(--eco);background:var(--eco-pale)}
+.eco-discount-option input[type=radio]{accent-color:var(--eco);width:17px;height:17px;flex-shrink:0;cursor:pointer}
+.eco-disc-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--eco);flex-shrink:0;min-width:46px;text-align:center}
+.eco-disc-info{flex:1}
+.eco-disc-label{font-weight:600;font-size:.88rem}
+.eco-disc-expiry{font-size:.72rem;color:var(--muted);margin-top:2px}
+.eco-disc-expiry.urgent{color:var(--orange)}
+.eco-none-option{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;border:2px solid #e0ddd4;cursor:pointer;transition:.2s;background:#fff;margin-top:4px}
+.eco-none-option:hover{border-color:#ccc}
+.eco-none-option.selected{border-color:#999;background:var(--sand)}
+.eco-none-option input[type=radio]{accent-color:var(--muted);width:17px;height:17px;flex-shrink:0}
+.eco-none-option label{font-size:.85rem;color:var(--muted);cursor:pointer}
 
-/* ── CONFIRMATION PAGE ───────────────────────────────── */
-#page-confirm{
-  display:flex;align-items:center;justify-content:center;
-  background:var(--cream);padding:24px;
-}
-.confirm-card{
-  background:#fff;border-radius:24px;padding:40px 32px;
-  max-width:460px;width:100%;text-align:center;box-shadow:var(--shadow-lg);
-}
-.confirm-icon{font-size:4rem;margin-bottom:16px}
-.confirm-card h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--green);margin-bottom:8px}
-.confirm-card p{color:var(--muted);font-size:.92rem;line-height:1.6;margin-bottom:24px}
-.confirm-summary{
-  background:var(--green-pale);border-radius:12px;padding:16px;
-  text-align:left;margin-bottom:24px;font-size:.88rem;line-height:1.8;
-}
+/* wallet available discounts */
+.wallet-discounts-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.wallet-disc-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--sand)}
+.wallet-disc-item:last-child{border-bottom:none}
+.wallet-disc-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--eco);min-width:52px;text-align:center}
+.wallet-disc-info{flex:1}
+.wallet-disc-label{font-weight:600;font-size:.88rem}
+.wallet-disc-expiry{font-size:.73rem;margin-top:2px}
+.wallet-disc-expiry.valid{color:var(--eco)}
+.wallet-disc-expiry.urgent{color:var(--orange)}
+.wallet-disc-expiry.expired{color:var(--red)}
+.wallet-disc-status{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0}
+.wallet-disc-status.available{background:var(--eco-pale);color:var(--eco)}
+.wallet-disc-status.used{background:var(--sand);color:var(--muted)}
+.wallet-disc-status.expired{background:#fdecea;color:var(--red)}
+.no-discounts-msg{text-align:center;padding:24px;color:var(--muted);font-size:.85rem}
+
+/* cycle progress in wallet */
+.cycle-info{background:var(--eco-pale);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:.82rem;color:#1e8449;line-height:1.6}
+.cycle-info strong{color:var(--eco);font-weight:700}
+
+.payment-methods{display:flex;flex-direction:column;gap:10px}
+.payment-option{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;border:2px solid #e0ddd4;cursor:pointer;transition:.2s;background:#fff}
+.payment-option:hover{border-color:var(--green-light);background:var(--green-pale)}
+.payment-option.selected{border-color:var(--green);background:var(--green-pale)}
+.payment-option input[type=radio]{accent-color:var(--green);width:18px;height:18px;flex-shrink:0;cursor:pointer}
+.payment-option-icon{font-size:1.6rem;flex-shrink:0}
+.payment-option-info{flex:1}
+.payment-option-name{font-weight:600;font-size:.92rem}
+.payment-option-desc{font-size:.75rem;color:var(--muted);margin-top:2px}
+.card-form{margin-top:14px;display:none;flex-direction:column;gap:12px}
+.card-form.visible{display:flex}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card-input-group label{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.card-input-group input{width:100%;padding:10px 12px;border:1.5px solid #e0ddd4;border-radius:9px;font-family:inherit;font-size:.9rem;background:var(--cream);transition:.2s}
+.card-input-group input:focus{outline:none;border-color:var(--green-light);background:#fff}
+.mbway-form{margin-top:14px;display:none;flex-direction:column;gap:10px}
+.mbway-form.visible{display:flex}
+.btn-pay{width:100%;padding:15px;background:var(--green);color:#fff;border:none;border-radius:14px;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-pay:disabled{background:#ccc;cursor:not-allowed}
+.btn-pay:not(:disabled):hover{background:var(--green-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,107,74,.3)}
+.processing-overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,.93);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.processing-overlay.active{display:flex}
+.spinner{width:52px;height:52px;border:5px solid var(--sand);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.processing-overlay p{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--green)}
+.processing-overlay small{color:var(--muted);font-size:.85rem}
+
+/* ── Confirm ── */
+#page-confirm{background:var(--cream);padding:24px}
+.confirm-card{background:#fff;border-radius:24px;padding:36px 28px;max-width:460px;width:100%;text-align:center;box-shadow:var(--shadow-lg)}
+.confirm-icon{font-size:4rem;margin-bottom:14px}
+.confirm-card h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--green);margin-bottom:6px}
+.confirm-card p{color:var(--muted);font-size:.88rem;line-height:1.6;margin-bottom:20px}
+.confirm-code{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--green);letter-spacing:.1em;background:var(--sand);padding:10px 20px;border-radius:10px;display:inline-block;margin-bottom:20px}
+.confirm-summary{background:var(--green-pale);border-radius:12px;padding:14px 16px;text-align:left;margin-bottom:16px;font-size:.85rem;line-height:1.9}
 .confirm-summary strong{color:var(--green);font-weight:600}
-.confirm-code{
-  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
-  color:var(--green);letter-spacing:.1em;background:var(--sand);
-  padding:10px 20px;border-radius:10px;display:inline-block;margin-bottom:24px;
-}
-.btn-secondary{
-  width:100%;padding:13px;background:var(--green-pale);color:var(--green);
-  border:none;border-radius:12px;font-family:'Syne',sans-serif;
-  font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;
-}
+.confirm-items-list{margin-top:4px;padding-left:16px}
+.confirm-items-list li{font-size:.82rem;line-height:1.7}
+/* eco earned banner */
+.eco-earned-banner{background:var(--eco-pale);border:1.5px solid #a9dfbf;border-radius:12px;padding:14px 16px;margin-bottom:16px;text-align:center}
+.eco-earned-banner .eco-big{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--eco)}
+.eco-earned-banner p{font-size:.82rem;color:#1e8449;margin-top:4px;line-height:1.5}
+.btn-secondary{width:100%;padding:12px;background:var(--green-pale);color:var(--green);border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s}
 .btn-secondary:hover{background:var(--green);color:#fff}
 
-/* ── RESERVATIONS PAGE ───────────────────────────────── */
+/* ── Reservations ── */
 #page-reservations{background:var(--cream)}
-.reservations-header{
-  background:linear-gradient(135deg,var(--green),var(--green-light));
-  padding:28px 24px;color:#fff;
-}
-.reservations-header h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem}
-.reservations-header p{opacity:.8;font-size:.9rem;margin-top:4px}
-.res-list{padding:20px;display:flex;flex-direction:column;gap:14px;max-width:680px;margin:0 auto}
-.res-card{
-  background:#fff;border-radius:var(--radius);padding:16px 18px;
-  box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;
-}
-.res-emoji{font-size:2.2rem;flex-shrink:0}
+.res-header{background:linear-gradient(135deg,var(--green),var(--green-light));padding:26px 20px;color:#fff}
+.res-header h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem}
+.res-header p{opacity:.8;font-size:.88rem;margin-top:4px}
+.res-list{padding:18px;display:flex;flex-direction:column;gap:12px;max-width:680px;margin:0 auto}
+.res-card{background:#fff;border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:14px}
+.res-emoji{font-size:2rem;flex-shrink:0;margin-top:2px}
 .res-info{flex:1}
-.res-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem}
-.res-partner{font-size:.8rem;color:var(--green);font-weight:600;margin:2px 0}
-.res-meta{font-size:.78rem;color:var(--muted)}
-.res-code{font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.9rem;background:var(--green-pale);padding:2px 8px;border-radius:6px}
-.res-status{flex-shrink:0;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.res-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
+.res-partner{font-size:.77rem;color:var(--green);font-weight:600;margin:2px 0}
+.res-meta{font-size:.75rem;color:var(--muted)}
+.res-items-text{font-size:.73rem;color:var(--muted);margin-top:3px;font-style:italic}
+.res-code{font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.85rem;background:var(--green-pale);padding:2px 8px;border-radius:6px}
+.res-status{flex-shrink:0;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px}
 .res-status.pending{background:#fff3e0;color:#b25c00}
-.res-status.done{background:var(--green-pale);color:var(--green)}
-.no-res{text-align:center;padding:60px 20px;color:var(--muted)}
+.res-status.done{background:var(--eco-pale);color:var(--eco)}
+.res-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.btn-eco-validate{padding:7px 12px;background:var(--eco-pale);color:var(--eco);border:1.5px solid #a9dfbf;border-radius:20px;font-family:inherit;font-size:.75rem;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-eco-validate:hover{background:var(--eco);color:#fff}
+.eco-validated-badge{font-size:.72rem;font-weight:700;color:var(--eco);background:var(--eco-pale);padding:4px 10px;border-radius:20px;border:1px solid #a9dfbf;white-space:nowrap}
+.no-res{text-align:center;padding:50px 20px;color:var(--muted)}
 .no-res .icon{font-size:2.5rem;margin-bottom:10px}
 
-/* ── Bottom nav (mobile feel) ────────────────────────── */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:#fff;border-top:1px solid rgba(0,0,0,.08);
-  display:flex;justify-content:space-around;padding:8px 0 10px;
-  z-index:99;box-shadow:0 -4px 20px rgba(0,0,0,.06);
-}
-.bottom-nav button{
-  flex:1;border:none;background:none;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  font-size:.68rem;font-family:inherit;color:var(--muted);padding:4px;
-  transition:.2s;
-}
+/* ── Eco Wallet page ── */
+#page-wallet{background:var(--cream)}
+.wallet-hero{background:linear-gradient(135deg,var(--eco) 0%,#58d68d 100%);padding:28px 20px 24px;color:#fff;text-align:center}
+.wallet-hero .leaf-big{font-size:3.5rem;margin-bottom:8px}
+.wallet-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:4px}
+.wallet-hero p{opacity:.85;font-size:.88rem}
+.wallet-balance-card{margin:24px 18px 0;background:#fff;border-radius:20px;padding:28px 24px;box-shadow:var(--shadow-lg);text-align:center}
+.wallet-balance-label{font-size:.82rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.wallet-balance-num{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;color:var(--eco);line-height:1}
+.wallet-balance-unit{font-size:1rem;color:var(--eco);font-weight:600;margin-top:4px}
+.wallet-balance-value{font-size:.88rem;color:var(--muted);margin-top:8px}
+.wallet-progress-wrap{margin-top:16px}
+.wallet-progress-label{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:6px}
+.wallet-progress-bar{height:10px;background:var(--sand);border-radius:10px;overflow:hidden}
+.wallet-progress-fill{height:100%;background:linear-gradient(90deg,var(--eco),#58d68d);border-radius:10px;transition:.5s}
+
+.wallet-body{padding:20px 18px;max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px;padding-bottom:32px}
+.wallet-section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--bark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.how-it-works{background:#fff;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.how-step{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--sand)}
+.how-step:last-child{border-bottom:none}
+.how-step-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.how-step-text{font-size:.85rem;line-height:1.6;color:var(--text)}
+.how-step-text strong{color:var(--eco);font-weight:700}
+
+.eco-history-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.eco-history-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--sand)}
+.eco-history-item:last-child{border-bottom:none}
+.eco-history-icon{font-size:1.3rem;flex-shrink:0}
+.eco-history-info{flex:1}
+.eco-history-desc{font-size:.85rem;font-weight:600}
+.eco-history-date{font-size:.72rem;color:var(--muted)}
+.eco-history-pts{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem}
+.eco-history-pts.earn{color:var(--eco)}
+.eco-history-pts.spend{color:var(--orange)}
+.no-history{text-align:center;padding:30px;color:var(--muted);font-size:.88rem}
+
+.threshold-list{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.threshold-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--sand)}
+.threshold-row:last-child{border-bottom:none}
+.threshold-row.reached{background:var(--eco-pale)}
+.threshold-row.current{background:#fff9e6;border-left:3px solid var(--gold)}
+.th-icon{font-size:1.2rem;flex-shrink:0}
+.th-info{flex:1}
+.th-pts{font-weight:600;font-size:.85rem}
+.th-disc{font-size:.78rem;color:var(--muted)}
+.th-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--eco)}
+.th-remaining{font-size:.72rem;color:var(--orange);font-weight:600}
+
+/* ── Bottom nav ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-around;padding:8px 0 10px;z-index:99;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.bottom-nav button{flex:1;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.62rem;font-family:inherit;color:var(--muted);padding:4px;transition:.2s}
 .bottom-nav button .icon{font-size:1.3rem}
 .bottom-nav button.active{color:var(--green)}
-.bottom-nav button.active .icon{transform:scale(1.15)}
-
-/* ── Toast ──────────────────────────────────────────── */
-.toast{
-  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--bark);color:#fff;padding:12px 24px;border-radius:30px;
-  font-size:.88rem;font-weight:500;opacity:0;transition:.35s;z-index:999;white-space:nowrap;
-  pointer-events:none;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── Responsive ─────────────────────────────────────── */
-@media(max-width:480px){
-  .offers-grid{grid-template-columns:1fr;padding:16px}
-  .login-card{padding:36px 24px}
-}
-
-/* padding for bottom nav on interior pages */
 .has-bottom-nav{padding-bottom:72px}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bark);color:#fff;padding:11px 22px;border-radius:30px;font-size:.85rem;font-weight:500;opacity:0;transition:.35s;z-index:999;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* Acessibilidade: foco visível em todos os elementos interativos */
+button:focus-visible,input:focus-visible,a:focus-visible,label:focus-visible{outline:3px solid var(--green);outline-offset:2px;border-radius:4px}
+
+@media(max-width:480px){.partners-grid{grid-template-columns:1fr;padding:14px}.login-card{padding:36px 24px}.filter-bar{flex-wrap:wrap}}
+
+/* ── Backoffice Partner ── */
+#page-backoffice{background:var(--cream)}
+.bo-hero{background:linear-gradient(135deg,#1a3a5c 0%,#2471a3 100%);padding:28px 20px 24px;color:#fff}
+.bo-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:4px}
+.bo-hero p{opacity:.85;font-size:.88rem}
+.bo-nav{background:#fff;border-bottom:1px solid rgba(0,0,0,.08);display:flex;overflow-x:auto;padding:0 16px;gap:4px}
+.bo-nav-btn{flex-shrink:0;padding:12px 18px;border:none;background:none;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.bo-nav-btn.active{color:#2471a3;border-bottom-color:#2471a3}
+.bo-section{display:none;padding:20px 18px;max-width:760px;margin:0 auto;padding-bottom:40px}
+.bo-section.active{display:block}
+.bo-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.bo-card h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--bark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.bo-form-group{margin-bottom:14px}
+.bo-form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--bark);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.bo-form-group input,.bo-form-group select,.bo-form-group textarea{width:100%;padding:10px 13px;border:1.5px solid #e0ddd4;border-radius:10px;font-family:inherit;font-size:.9rem;background:var(--cream);transition:.2s}
+.bo-form-group input:focus,.bo-form-group select:focus,.bo-form-group textarea:focus{outline:none;border-color:#2471a3;background:#fff}
+.bo-form-group textarea{resize:vertical;min-height:80px}
+.bo-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bo-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn-bo-primary{padding:11px 22px;background:#2471a3;color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:.2s}
+.btn-bo-primary:hover{background:#1a5e8a;transform:translateY(-1px)}
+.btn-bo-secondary{padding:9px 18px;background:var(--sand);color:var(--bark);border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;transition:.2s}
+.btn-bo-secondary:hover{background:#e0ddd4}
+.btn-bo-danger{padding:7px 14px;background:#fdecea;color:var(--red);border:1.5px solid #f5c6c6;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s}
+.btn-bo-danger:hover{background:var(--red);color:#fff}
+.btn-bo-success{padding:7px 14px;background:var(--eco-pale);color:var(--eco);border:1.5px solid #a9dfbf;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s}
+.btn-bo-success:hover{background:var(--eco);color:#fff}
+
+/* Offers table */
+.bo-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.bo-table th{text-align:left;padding:8px 12px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--sand)}
+.bo-table td{padding:11px 12px;border-bottom:1px solid var(--sand);vertical-align:middle}
+.bo-table tr:last-child td{border-bottom:none}
+.bo-table tr:hover td{background:var(--cream)}
+.bo-stock-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
+.bo-stock-badge.ok{background:var(--eco-pale);color:var(--eco)}
+.bo-stock-badge.low{background:#fff3e0;color:#b25c00}
+.bo-stock-badge.out{background:#fdecea;color:var(--red)}
+.bo-stock-edit{display:flex;align-items:center;gap:6px}
+.bo-stock-input{width:56px;padding:4px 8px;border:1.5px solid #e0ddd4;border-radius:7px;font-family:inherit;font-size:.85rem;text-align:center}
+.bo-stock-input:focus{outline:none;border-color:#2471a3}
+
+/* Combos */
+.bo-combo-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;margin-bottom:12px;border-left:4px solid #2471a3}
+.bo-combo-card.inactive{border-left-color:#ccc;opacity:.7}
+.bo-combo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.bo-combo-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
+.bo-combo-toggle{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted)}
+.bo-combo-meta{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:10px}
+.bo-combo-meta span{display:flex;align-items:center;gap:3px}
+.bo-allergen-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.bo-allergen-chip{font-size:.7rem;padding:2px 8px;border-radius:10px;background:#fff3e0;color:#b25c00;font-weight:600}
+
+/* Validate code */
+.bo-validate-area{text-align:center;padding:20px 0}
+.bo-validate-input{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:.15em;text-align:center;width:100%;max-width:280px;padding:14px;border:2.5px solid #e0ddd4;border-radius:14px;background:var(--cream);text-transform:uppercase;transition:.2s}
+.bo-validate-input:focus{outline:none;border-color:#2471a3;background:#fff}
+.bo-validate-result{margin-top:20px;padding:16px 20px;border-radius:14px;font-size:.9rem;line-height:1.6;display:none}
+.bo-validate-result.success{background:var(--eco-pale);border:1.5px solid #a9dfbf;color:#1e6e3c;display:block}
+.bo-validate-result.error{background:#fdecea;border:1.5px solid #f5c6c6;color:var(--red);display:block}
+.bo-validate-result.warning{background:#fff3e0;border:1.5px solid #f5c6a0;color:#8a4500;display:block}
+
+/* Backoffice KPI row */
+.bo-kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.bo-kpi{background:#fff;border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);text-align:center}
+.bo-kpi-val{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#2471a3}
+.bo-kpi-label{font-size:.72rem;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+
+/* Toggle switch */
+.toggle-switch{position:relative;display:inline-block;width:42px;height:24px}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:24px;transition:.3s}
+.toggle-slider:before{position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+input:checked+.toggle-slider{background:#2471a3}
+input:checked+.toggle-slider:before{transform:translateX(18px)}
+
+/* Login tabs extended (partner role) */
+.role-selector{display:flex;gap:8px;margin-bottom:20px}
+.role-btn{flex:1;padding:9px;border:2px solid #e0ddd4;border-radius:10px;background:#fff;font-family:inherit;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;text-align:center}
+.role-btn.active{border-color:#2471a3;color:#2471a3;background:#eaf2f8}
+
+/* ── Admin Stats Page (US3.3) ── */
+#page-admin-stats{background:var(--cream)}
+.admin-hero{background:linear-gradient(135deg,#2c3e50 0%,#4a6741 100%);padding:28px 20px 24px;color:#fff}
+.admin-hero h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:4px}
+.admin-hero p{opacity:.85;font-size:.88rem}
+.admin-nav{background:#fff;border-bottom:1px solid rgba(0,0,0,.08);display:flex;overflow-x:auto;padding:0 16px;gap:4px}
+.admin-nav-btn{flex-shrink:0;padding:12px 18px;border:none;background:none;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap}
+.admin-nav-btn.active{color:#2c3e50;border-bottom-color:#2c3e50}
+.admin-section{display:none;padding:20px 18px;max-width:900px;margin:0 auto;padding-bottom:40px}
+.admin-section.active{display:block}
+.admin-kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.admin-kpi{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);text-align:center}
+.admin-kpi-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#2c3e50}
+.admin-kpi-label{font-size:.72rem;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.admin-kpi-sub{font-size:.75rem;color:var(--green);font-weight:600;margin-top:2px}
+.chart-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:20px}
+.chart-card h3{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--bark);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.chart-card p{font-size:.78rem;color:var(--muted);margin-bottom:16px}
+.chart-wrap{position:relative;height:280px}
+.chart-filter-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.chart-filter-btn{padding:5px 14px;border-radius:20px;border:1.5px solid #ddd;background:#fff;font-family:inherit;font-size:.78rem;cursor:pointer;color:var(--muted);transition:.2s}
+.chart-filter-btn.active{background:#2c3e50;border-color:#2c3e50;color:#fff;font-weight:600}
+
+/* ── Partner Stats (US3.5 + US3.6) inside backoffice ── */
+.bo-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:600px){.bo-stats-grid{grid-template-columns:1fr}}
+.bo-stat-big{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:#2471a3}
+.bo-stat-label{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+.bo-stat-sub{font-size:.82rem;color:var(--green);margin-top:4px;font-weight:600}
+.stars-row{display:flex;align-items:center;gap:6px;margin-top:6px}
+.star{font-size:1.3rem;color:#f0e0a0}
+.star.filled{color:var(--gold)}
+.benchmark-bar-wrap{margin-top:10px}
+.benchmark-bar-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:4px}
+.benchmark-bar-track{height:12px;background:var(--sand);border-radius:10px;overflow:hidden;position:relative}
+.benchmark-bar-fill{height:100%;border-radius:10px;transition:.6s}
+.benchmark-bar-fill.mine{background:linear-gradient(90deg,#2471a3,#5dade2)}
+.benchmark-bar-fill.avg{background:linear-gradient(90deg,#aaa,#ccc)}
+.benchmark-legend{display:flex;gap:14px;margin-top:8px;font-size:.75rem;color:var(--muted)}
+.benchmark-legend span{display:flex;align-items:center;gap:4px}
+.benchmark-legend .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.benchmark-legend .dot.mine{background:#2471a3}
+.benchmark-legend .dot.avg{background:#aaa}
+.top-products-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.top-product-row{display:flex;align-items:center;gap:10px}
+.top-product-rank{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#2471a3;min-width:24px;text-align:center}
+.top-product-bar-wrap{flex:1}
+.top-product-name{font-size:.82rem;font-weight:600;margin-bottom:3px}
+.top-product-bar{height:8px;border-radius:8px;background:linear-gradient(90deg,#2471a3,#85c1e9);transition:.5s}
+.top-product-count{font-size:.78rem;color:var(--muted);min-width:40px;text-align:right}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
-<!-- ══ LOGIN ════════════════════════════════════════════ -->
-<div class="page active" id="page-login">
+<!-- ══ LOGIN ════════════════════════ -->
+<div class="page" id="page-login">
   <div class="login-card">
-    <div class="login-brand">
-      <span class="logo-icon">🌿</span>
-      <h1>FreshSave</h1>
-      <p>Combate o desperdício. Poupa no bolso.</p>
-    </div>
-    <div class="login-tabs">
-      <button class="tab-btn active" onclick="switchTab('login')">Entrar</button>
-      <button class="tab-btn" onclick="switchTab('register')">Registar</button>
+    <div class="login-brand"><span class="logo-icon">🌿</span><h1>FreshSave</h1><p>Combate o desperdício. Poupa no bolso.</p></div>
+
+    <!-- Role selector -->
+    <div class="role-selector" id="role-selector">
+      <button class="role-btn active" id="role-btn-consumer" onclick="selectRole('consumer')">👤 Consumidor</button>
+      <button class="role-btn" id="role-btn-partner" onclick="selectRole('partner')">🏪 Parceiro</button>
+      <button class="role-btn" id="role-btn-admin" onclick="selectRole('admin')">🛡️ Admin</button>
     </div>
 
-    <!-- Login form -->
+    <div class="login-tabs">
+      <button class="tab-btn active" data-tab="login" onclick="switchTab('login')">Entrar</button>
+      <button class="tab-btn" id="tab-register-btn" data-tab="register" onclick="switchTab('register')">Registar</button>
+    </div>
     <div class="form-panel active" id="panel-login">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="login-email" placeholder="o.teu@email.com"/>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="••••••••"/>
-      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="o.teu@email.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"/></div>
       <button class="btn-primary" onclick="doLogin()">Entrar</button>
       <p class="login-error" id="login-error">Email ou password incorretos.</p>
-      <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:16px">
-        Demo: <strong>joao@demo.pt</strong> / <strong>1234</strong>
-      </p>
+      <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:14px" id="login-demo-hint">Demo consumidor: <strong>joao@demo.pt</strong> / <strong>1234</strong><br>Demo parceiro: <strong>parceiro@demo.pt</strong> / <strong>1234</strong></p>
     </div>
-
-    <!-- Register form -->
     <div class="form-panel" id="panel-register">
-      <div class="form-group">
-        <label>Nome completo</label>
-        <input type="text" id="reg-name" placeholder="O teu nome"/>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="reg-email" placeholder="o.teu@email.com"/>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="reg-password" placeholder="Mínimo 4 caracteres"/>
-      </div>
+      <div class="form-group"><label>Nome completo</label><input type="text" id="reg-name" placeholder="O teu nome"/></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="o.teu@email.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="reg-password" placeholder="Mínimo 4 caracteres"/></div>
+      <div class="form-group" id="reg-store-group" style="display:none"><label>Nome da Loja</label><input type="text" id="reg-store" placeholder="Nome do teu estabelecimento"/></div>
       <button class="btn-primary" onclick="doRegister()">Criar conta</button>
       <p class="login-error" id="reg-error">Preenche todos os campos.</p>
     </div>
   </div>
 </div>
 
-<!-- ══ OFFERS ════════════════════════════════════════════ -->
-<div class="page has-bottom-nav" id="page-offers">
-  <nav>
-    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+<!-- ══ HOME ══════════════════════════ -->
+<div class="page has-bottom-nav" id="page-home">
+  <nav class="top-nav">
+    <div class="nav-logo"><span>🌿</span> FreshSave</div>
     <div class="nav-user">
-      <strong id="nav-username">—</strong>
+      <div class="nav-eco-pill" onclick="showPage('wallet')" title="Os meus Eco-Créditos"><span class="leaf">🌱</span><span id="nav-eco-balance">0</span> pts</div>
+      <strong id="nav-username"></strong>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </nav>
-  <div class="offers-hero">
-    <h2>Boas ofertas perto de ti</h2>
-    <p>Rescue Combos a poucos minutos de expirar</p>
+  <div class="home-hero">
+    <h2>Parceiros perto de ti</h2>
+    <p>Escolhe um estabelecimento e compõe o teu Rescue Combo</p>
     <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Pesquisar restaurante ou produto…" oninput="renderOffers()"/>
-      <button onclick="renderOffers()">🔍 Pesquisar</button>
+      <input type="text" id="search-input" placeholder="Pesquisar restaurante…" oninput="renderPartners()"/>
+      <button onclick="renderPartners()" aria-label="Pesquisar parceiros">🔍</button>
     </div>
   </div>
-  <div class="filters" id="filters-bar"></div>
-  <div class="offers-grid" id="offers-grid"></div>
+  <div class="filter-bar">
+    <span class="filter-bar-label">Categoria:</span>
+    <div class="cat-chips" id="cat-chips"></div>
+    <div class="allergen-dropdown-wrap">
+      <button class="allergen-btn" id="allergen-btn" onclick="toggleAllergenPanel()" aria-expanded="false" aria-label="Filtrar por alergénios">⚠️ Alergénios <span id="allergen-count"></span> ▾</button>
+      <div class="allergen-panel" id="allergen-panel">
+        <h4>Excluir alergénios</h4>
+        <div class="allergen-list" id="allergen-list"></div>
+        <button class="allergen-clear" onclick="clearAllergens()">Limpar filtros</button>
+      </div>
+    </div>
+  </div>
+  <div class="partners-grid" id="partners-grid"></div>
 </div>
 
-<!-- ══ DETAIL ════════════════════════════════════════════ -->
-<div class="page has-bottom-nav" id="page-detail">
-  <nav>
-    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+<!-- ══ PARTNER PAGE ══════════════════ -->
+<div class="page has-bottom-nav" id="page-partner">
+  <nav class="top-nav">
+    <div class="nav-logo" onclick="showPage('home')"><span>🌿</span> FreshSave</div>
     <div class="nav-user">
-      <strong id="nav-username2">—</strong>
+      <div class="nav-eco-pill" onclick="showPage('wallet')"><span class="leaf">🌱</span><span id="nav-eco-balance2">0</span> pts</div>
+      <strong id="nav-username2"></strong>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </nav>
-  <div class="detail-hero">
-    <button class="btn-back" onclick="showPage('offers')">← Voltar</button>
-    <span class="detail-emoji" id="d-emoji"></span>
-    <div class="detail-partner" id="d-partner"></div>
-    <div class="detail-name" id="d-name"></div>
-    <div class="detail-loc" id="d-loc">📍 <span id="d-loc-text"></span></div>
+  <div class="partner-page-hero">
+    <button class="btn-back" onclick="showPage('home')">← Parceiros</button>
+    <span class="partner-page-emoji" id="pp-emoji"></span>
+    <div class="partner-page-name" id="pp-name"></div>
+    <div class="partner-page-cat" id="pp-cat"></div>
+    <div class="partner-page-loc" id="pp-loc"></div>
+    <div class="partner-page-pickup" id="pp-pickup"></div>
   </div>
-  <div class="detail-body">
-    <div class="detail-price-row">
-      <div>
-        <div class="detail-price-new" id="d-price-new"></div>
-        <div class="detail-price-old" id="d-price-old">valor original: <span id="d-price-orig"></span></div>
+  <div class="partner-page-body" id="partner-page-body"></div>
+</div>
+
+<!-- ══ CHECKOUT ════════════════════════ -->
+<div class="page has-bottom-nav" id="page-checkout">
+  <nav class="top-nav">
+    <div class="nav-logo" onclick="showPage('partner')"><span>🌿</span> FreshSave</div>
+    <div class="nav-user">
+      <div class="nav-eco-pill" onclick="showPage('wallet')"><span class="leaf">🌱</span><span id="nav-eco-balance3">0</span> pts</div>
+      <strong id="nav-username3"></strong>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </nav>
+  <div class="checkout-hero">
+    <button class="btn-back" onclick="showPage('partner')">← Voltar</button>
+    <h2>Finalizar pedido</h2>
+    <p id="ck-hero-sub"></p>
+  </div>
+  <div class="checkout-body">
+    <div class="checkout-card"><h3>🧾 Resumo do pedido</h3><div id="ck-summary"></div></div>
+
+    <!-- Eco-Credits discount -->
+    <div class="checkout-card" id="ck-eco-card">
+      <h3>🌱 Desconto Eco-Créditos</h3>
+      <div id="ck-eco-content"></div>
+    </div>
+
+    <!-- Payment method -->
+    <div class="checkout-card">
+      <h3>💳 Método de pagamento</h3>
+      <div class="payment-methods">
+        <label class="payment-option" id="opt-mbway" onclick="selectPayment('mbway')">
+          <input type="radio" name="payment" value="mbway"/>
+          <div class="payment-option-icon">📱</div>
+          <div class="payment-option-info"><div class="payment-option-name">MB WAY</div><div class="payment-option-desc">Pagamento imediato pelo telemóvel</div></div>
+        </label>
+        <div class="mbway-form" id="mbway-form">
+          <div class="card-input-group"><label>Número de telemóvel</label><input type="tel" id="mbway-phone" placeholder="9XX XXX XXX" maxlength="9" inputmode="numeric" autocomplete="tel-national"/></div>
+        </div>
+        <label class="payment-option" id="opt-card" onclick="selectPayment('card')">
+          <input type="radio" name="payment" value="card"/>
+          <div class="payment-option-icon">💳</div>
+          <div class="payment-option-info"><div class="payment-option-name">Cartão de crédito / débito</div><div class="payment-option-desc">Visa, Mastercard, American Express</div></div>
+        </label>
+        <div class="card-form" id="card-form">
+          <div class="card-input-group"><label>Número do cartão</label><input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" autocomplete="cc-number"/></div>
+          <div class="card-row">
+            <div class="card-input-group"><label>Validade</label><input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" inputmode="numeric" autocomplete="cc-exp"/></div>
+            <div class="card-input-group"><label>CVV</label><input type="text" id="card-cvv" placeholder="123" maxlength="3" inputmode="numeric" autocomplete="cc-csc"/></div>
+          </div>
+          <div class="card-input-group"><label>Nome no cartão</label><input type="text" id="card-name" placeholder="Nome completo" autocomplete="cc-name"/></div>
+        </div>
+        <label class="payment-option" id="opt-multibanco" onclick="selectPayment('multibanco')">
+          <input type="radio" name="payment" value="multibanco"/>
+          <div class="payment-option-icon">🏧</div>
+          <div class="payment-option-info"><div class="payment-option-name">Referência Multibanco</div><div class="payment-option-desc">Paga numa caixa ATM ou homebanking</div></div>
+        </label>
       </div>
-      <div class="detail-discount" id="d-discount"></div>
     </div>
 
-    <div class="detail-section">
-      <h3>📦 Descrição</h3>
-      <p class="detail-desc" id="d-desc"></p>
-    </div>
-
-    <div class="detail-section">
-      <h3>⚠️ Alergénios</h3>
-      <div class="allergy-list" id="d-allergies"></div>
-    </div>
-
-    <div class="detail-section">
-      <h3>🕐 Levantamento</h3>
-      <div class="pickup-info" id="d-pickup"></div>
-    </div>
-
-    <div class="detail-section">
-      <h3>🛒 Quantidade</h3>
-      <div class="qty-row">
-        <button class="qty-btn" onclick="changeQty(-1)">−</button>
-        <span class="qty-num" id="qty-num">1</span>
-        <button class="qty-btn" onclick="changeQty(1)">+</button>
-        <span class="qty-max" id="qty-max"></span>
-      </div>
-    </div>
-
-    <button class="btn-reserve" id="btn-reserve" onclick="doReserve()">Reservar Combo</button>
+    <button class="btn-pay" id="btn-pay" disabled onclick="processPay()">
+      <span>🔒</span><span id="btn-pay-label">Seleciona um método de pagamento</span>
+    </button>
+    <p style="text-align:center;font-size:.75rem;color:var(--muted)">Pagamento seguro · SSL/TLS · Dados encriptados</p>
   </div>
 </div>
 
-<!-- ══ CONFIRMATION ══════════════════════════════════════ -->
+<!-- ══ CONFIRM ═══════════════════════ -->
 <div class="page" id="page-confirm">
   <div class="confirm-card">
     <div class="confirm-icon">✅</div>
     <h2>Reserva confirmada!</h2>
-    <p>Apresenta o código abaixo no estabelecimento para levantar o teu combo.</p>
+    <p>Apresenta o código no estabelecimento para levantar o teu pedido.</p>
     <div class="confirm-code" id="confirm-code">FS-0000</div>
+    <div id="eco-earned-banner"></div>
     <div class="confirm-summary" id="confirm-summary"></div>
-    <button class="btn-primary" onclick="showPage('reservations')" style="margin-bottom:12px">Ver as minhas reservas</button>
-    <button class="btn-secondary" onclick="showPage('offers')">Continuar a explorar</button>
+    <button class="btn-primary" onclick="showPage('reservations')" style="margin-bottom:10px">Ver as minhas reservas</button>
+    <button class="btn-secondary" onclick="showPage('home')">Continuar a explorar</button>
   </div>
 </div>
 
-<!-- ══ RESERVATIONS ══════════════════════════════════════ -->
+<!-- ══ RESERVATIONS ══════════════════ -->
 <div class="page has-bottom-nav" id="page-reservations">
-  <nav>
-    <div class="nav-logo" onclick="showPage('offers')"><span>🌿</span> FreshSave</div>
+  <nav class="top-nav">
+    <div class="nav-logo" onclick="showPage('home')"><span>🌿</span> FreshSave</div>
     <div class="nav-user">
-      <strong id="nav-username3">—</strong>
+      <div class="nav-eco-pill" onclick="showPage('wallet')"><span class="leaf">🌱</span><span id="nav-eco-balance4">0</span> pts</div>
+      <strong id="nav-username4"></strong>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </nav>
-  <div class="reservations-header">
-    <h2>As minhas reservas</h2>
-    <p>Histórico de Rescue Combos reservados</p>
-  </div>
+  <div class="res-header"><h2>As minhas reservas</h2><p>Histórico de combos e sacos reservados</p></div>
   <div class="res-list" id="res-list"></div>
 </div>
 
-<!-- ── Bottom nav ──────────────────────────────────────── -->
+<!-- ══ ECO WALLET ════════════════════ -->
+<div class="page has-bottom-nav" id="page-wallet">
+  <nav class="top-nav">
+    <div class="nav-logo" onclick="showPage('home')"><span>🌿</span> FreshSave</div>
+    <div class="nav-user"><strong id="nav-username5"></strong><button class="btn-logout" onclick="doLogout()">Sair</button></div>
+  </nav>
+  <div class="wallet-hero">
+    <div class="leaf-big">🌱</div>
+    <h2>Os meus Eco-Créditos</h2>
+    <p>A tua jornada sustentável dentro da FreshSave</p>
+  </div>
+  <div class="wallet-balance-card">
+    <div class="wallet-balance-label">Pontos no ciclo atual</div>
+    <div class="wallet-balance-num" id="wallet-balance-num">0</div>
+    <div class="wallet-balance-unit">/ 1000 pts</div>
+    <div class="wallet-balance-value" id="wallet-balance-value">Desconto atual: 0%</div>
+    <div class="wallet-progress-wrap">
+      <div class="wallet-progress-label">
+        <span id="wallet-progress-label-left">Progresso no ciclo</span>
+        <span id="wallet-progress-pct">0%</span>
+      </div>
+      <div class="wallet-progress-bar"><div class="wallet-progress-fill" id="wallet-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="cycle-info" id="wallet-cycle-info"></div>
+  </div>
+  <div class="wallet-body">
+    <div>
+      <div class="wallet-section-title">♻️ Como ganhar Eco-Créditos</div>
+      <div class="how-it-works">
+        <div class="how-step"><div class="how-step-icon">🛒</div><div class="how-step-text"><strong>+10 pts</strong> por cada Rescue Combo reservado e pago.</div></div>
+        <div class="how-step"><div class="how-step-icon">🌿</div><div class="how-step-text"><strong>+15 pts</strong> ao validar Eco-Embalagem no levantamento — leva os teus recipientes próprios!</div></div>
+        <div class="how-step"><div class="how-step-icon">🎁</div><div class="how-step-text"><strong>+5 pts</strong> por cada Saco Surpresa reservado e pago.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="wallet-section-title">🎟️ Descontos disponíveis</div>
+      <div class="wallet-discounts-card" id="wallet-discounts-card"></div>
+    </div>
+    <div>
+      <div class="wallet-section-title">📊 Mapa de limiares do ciclo</div>
+      <div class="threshold-list" id="threshold-list"></div>
+    </div>
+    <div>
+      <div class="wallet-section-title">📋 Histórico</div>
+      <div class="eco-history-card" id="eco-history-card"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN STATS (US3.3) ═══════════ -->
+<div class="page" id="page-admin-stats">
+  <div class="admin-hero">
+    <h2>📊 Painel do Administrador</h2>
+    <p id="admin-hero-sub">Visão global da plataforma FreshSave</p>
+  </div>
+  <nav class="admin-nav">
+    <button class="admin-nav-btn active" onclick="showAdminSection('kpis')">🌐 KPIs Globais</button>
+    <button class="admin-nav-btn" onclick="showAdminSection('revenue')">💰 Receita</button>
+    <button class="admin-nav-btn" onclick="showAdminSection('incidents')">⚠️ Incidências</button>
+  </nav>
+
+  <!-- KPIs GLOBAIS -->
+  <div class="admin-section active" id="admin-section-kpis">
+    <div class="admin-kpi-row" id="admin-kpi-row"></div>
+    <div class="chart-card">
+      <h3>📦 Reservas por tipo</h3>
+      <p>Distribuição entre Rescue Combos e Sacos Surpresa</p>
+      <div class="chart-wrap"><canvas id="chart-reservations-type"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🏪 Top parceiros por reservas</h3>
+      <p>Estabelecimentos com mais pedidos confirmados</p>
+      <div class="chart-wrap"><canvas id="chart-top-partners"></canvas></div>
+    </div>
+  </div>
+
+  <!-- RECEITA POR CATEGORIA (US3.3) -->
+  <div class="admin-section" id="admin-section-revenue">
+    <div class="chart-filter-row" id="revenue-filter-row">
+      <button class="chart-filter-btn active" onclick="setRevenueFilter('all')">Todos</button>
+      <button class="chart-filter-btn" onclick="setRevenueFilter('week')">Esta semana</button>
+      <button class="chart-filter-btn" onclick="setRevenueFilter('month')">Este mês</button>
+    </div>
+    <div class="chart-card">
+      <h3>💰 Receita por categoria</h3>
+      <p>Volume de faturação gerado por cada categoria de parceiro</p>
+      <div class="chart-wrap"><canvas id="chart-revenue-category"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>📈 Evolução da receita (últimas 8 semanas)</h3>
+      <p>Tendência semanal de faturação total da plataforma</p>
+      <div class="chart-wrap"><canvas id="chart-revenue-trend"></canvas></div>
+    </div>
+  </div>
+
+  <!-- INCIDÊNCIAS (US3.3) -->
+  <div class="admin-section" id="admin-section-incidents">
+    <div class="chart-card">
+      <h3>⚠️ Evolução de incidências por semana</h3>
+      <p>Reservas canceladas, não levantadas ou com reclamação</p>
+      <div class="chart-wrap"><canvas id="chart-incidents-trend"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🔍 Tipos de incidência</h3>
+      <p>Distribuição por categoria de problema</p>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-incidents-type"></canvas></div>
+    </div>
+    <div class="bo-card" style="margin-top:0">
+      <h3>📋 Registo de incidências recentes</h3>
+      <div id="admin-incidents-list"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px 18px 40px">
+    <button class="btn-bo-secondary" onclick="doLogout()" style="padding:10px 28px">🚪 Terminar sessão</button>
+    <button class="btn-bo-danger" style="margin-left:10px;padding:10px 20px" onclick="adminResetData()">🗑️ Limpar dados de demo</button>
+  </div>
+</div>
+
+<!-- ══ BACKOFFICE PARCEIRO ═══════════ -->
+<div class="page" id="page-backoffice">
+  <div class="bo-hero">
+    <h2>🏪 Backoffice do Parceiro</h2>
+    <p id="bo-hero-sub">Gestão da tua loja · FreshSave</p>
+  </div>
+  <nav class="bo-nav">
+    <button class="bo-nav-btn active" onclick="showBoSection('dashboard')">📊 Dashboard</button>
+    <button class="bo-nav-btn" onclick="showBoSection('publish')">➕ Publicar Excedente</button>
+    <button class="bo-nav-btn" onclick="showBoSection('combos')">🔄 Rescue Combos</button>
+    <button class="bo-nav-btn" onclick="showBoSection('stock')">📦 Gerir Stock</button>
+    <button class="bo-nav-btn" onclick="showBoSection('validate')">✅ Validar Código</button>
+    <button class="bo-nav-btn" onclick="showBoSection('stats')">📊 Estatísticas</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div class="bo-section active" id="bo-section-dashboard">
+    <div class="bo-kpi-row" id="bo-kpi-row"></div>
+    <div class="bo-card">
+      <h3>📋 Reservas recentes</h3>
+      <div id="bo-recent-reservations"><p style="color:var(--muted);font-size:.85rem">Sem reservas ainda.</p></div>
+    </div>
+  </div>
+
+  <!-- PUBLICAR EXCEDENTE (US2.2) -->
+  <div class="bo-section" id="bo-section-publish">
+    <div class="bo-card">
+      <h3>➕ Publicar excedente do dia</h3>
+      <div class="bo-form-group">
+        <label>Nome do produto</label>
+        <input type="text" id="pub-name" placeholder="ex: Baguete integral, Sopa de legumes…"/>
+      </div>
+      <div class="bo-row">
+        <div class="bo-form-group">
+          <label>Preço (€)</label>
+          <input type="number" id="pub-price" placeholder="2.50" min="0.10" step="0.10"/>
+        </div>
+        <div class="bo-form-group">
+          <label>Quantidade disponível</label>
+          <input type="number" id="pub-qty" placeholder="5" min="1" step="1"/>
+        </div>
+      </div>
+      <div class="bo-row">
+        <div class="bo-form-group">
+          <label>Categoria</label>
+          <select id="pub-category">
+            <option value="Padaria">🥐 Padaria</option>
+            <option value="Restaurante">🍽️ Restaurante</option>
+            <option value="Vegetariano">🥗 Vegetariano</option>
+            <option value="Outro">📦 Outro</option>
+          </select>
+        </div>
+        <div class="bo-form-group">
+          <label>Emoji / ícone</label>
+          <input type="text" id="pub-emoji" placeholder="🥐" maxlength="4"/>
+        </div>
+      </div>
+      <div class="bo-form-group">
+        <label>Alergénios presentes</label>
+        <div id="pub-allergens-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"></div>
+      </div>
+      <div class="bo-form-group">
+        <label>Tags (opcional)</label>
+        <input type="text" id="pub-tags" placeholder="ex: Vegan, Sem glúten, Doce"/>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button class="btn-bo-primary" onclick="publishOffer()">✅ Publicar excedente</button>
+        <button class="btn-bo-secondary" onclick="clearPublishForm()">Limpar</button>
+      </div>
+      <p id="pub-error" style="color:var(--red);font-size:.82rem;margin-top:10px;display:none"></p>
+    </div>
+
+    <div class="bo-card">
+      <h3>📋 Excedentes publicados hoje</h3>
+      <div id="bo-offers-list"><p style="color:var(--muted);font-size:.85rem">Sem excedentes publicados.</p></div>
+    </div>
+  </div>
+
+  <!-- RESCUE COMBOS RECORRENTES (US2.3) -->
+  <div class="bo-section" id="bo-section-combos">
+    <div class="bo-card">
+      <h3>🔄 Criar Rescue Combo recorrente</h3>
+      <div class="bo-form-group">
+        <label>Nome do Combo</label>
+        <input type="text" id="combo-name" placeholder="ex: Combo Pão do Dia, Combo Vegetariano…"/>
+      </div>
+      <div class="bo-row">
+        <div class="bo-form-group">
+          <label>Horário de levantamento</label>
+          <input type="time" id="combo-pickup-start" title="Início do levantamento"/>
+        </div>
+        <div class="bo-form-group">
+          <label>Até</label>
+          <input type="time" id="combo-pickup-end" title="Fim do levantamento"/>
+        </div>
+      </div>
+      <div class="bo-form-group">
+        <label>Preço do combo (€)</label>
+        <input type="number" id="combo-price" placeholder="4.50" min="0.10" step="0.10"/>
+      </div>
+      <div class="bo-form-group">
+        <label>Descrição (opcional)</label>
+        <textarea id="combo-desc" placeholder="Descreve o que inclui geralmente este combo…"></textarea>
+      </div>
+      <div class="bo-form-group">
+        <label>Alergénios</label>
+        <div id="combo-allergens-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"></div>
+      </div>
+      <div class="bo-form-group">
+        <label>Ativo por defeito</label>
+        <label class="toggle-switch" style="margin-top:4px">
+          <input type="checkbox" id="combo-active" checked/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button class="btn-bo-primary" onclick="saveCombo()">💾 Guardar Combo</button>
+        <button class="btn-bo-secondary" onclick="clearComboForm()">Limpar</button>
+      </div>
+      <p id="combo-error" style="color:var(--red);font-size:.82rem;margin-top:10px;display:none"></p>
+    </div>
+
+    <div class="bo-card">
+      <h3>📋 Combos configurados</h3>
+      <div id="bo-combos-list"><p style="color:var(--muted);font-size:.85rem">Sem combos configurados.</p></div>
+    </div>
+  </div>
+
+  <!-- GERIR STOCK (US2.4) -->
+  <div class="bo-section" id="bo-section-stock">
+    <div class="bo-card">
+      <h3>📦 Atualizar stock em tempo real</h3>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Altera a quantidade disponível de cada excedente publicado. Reflete vendas presenciais imediatamente.</p>
+      <div id="bo-stock-table-wrap">
+        <p style="color:var(--muted);font-size:.85rem">Sem excedentes publicados.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALIDAR CÓDIGO (US2.5) -->
+  <div class="bo-section" id="bo-section-validate">
+    <div class="bo-card">
+      <h3>✅ Validar código de reserva</h3>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:20px">Introduz o código apresentado pelo consumidor para confirmar o levantamento.</p>
+      <div class="bo-validate-area">
+        <input type="text" class="bo-validate-input" id="bo-validate-code" placeholder="FS-0000" maxlength="7" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')validateReservationCode()"/>
+        <div style="margin-top:14px">
+          <button class="btn-bo-primary" onclick="validateReservationCode()" style="padding:12px 32px;font-size:1rem">Validar código</button>
+        </div>
+        <div class="bo-validate-result" id="bo-validate-result"></div>
+      </div>
+    </div>
+
+    <div class="bo-card">
+      <h3>📋 Levantamentos de hoje</h3>
+      <div id="bo-today-pickups"><p style="color:var(--muted);font-size:.85rem">Sem levantamentos registados hoje.</p></div>
+    </div>
+  </div>
+
+  <!-- ESTATÍSTICAS DO PARCEIRO (US3.5 + US3.6) -->
+  <div class="bo-section" id="bo-section-stats">
+    <!-- US3.5: Produtos mais vendidos + avaliação média -->
+    <div class="bo-card">
+      <h3>🏆 Os meus produtos mais vendidos</h3>
+      <div id="bo-top-products"></div>
+    </div>
+    <div class="bo-stats-grid">
+      <div class="bo-card" style="margin-bottom:0">
+        <h3>⭐ Avaliação média</h3>
+        <div id="bo-avg-rating"></div>
+      </div>
+      <div class="bo-card" style="margin-bottom:0">
+        <h3>📦 Total de reservas</h3>
+        <div id="bo-total-reservations-stat"></div>
+      </div>
+    </div>
+    <!-- US3.6: Benchmark anónimo -->
+    <div class="bo-card" style="margin-top:16px">
+      <h3>🔍 Benchmark anónimo vs. média da plataforma</h3>
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px">Comparação com a média global de parceiros. Os outros parceiros são apresentados de forma anónima.</p>
+      <div id="bo-benchmark"></div>
+    </div>
+    <div class="chart-card" style="margin-top:0">
+      <h3>📈 Evolução das minhas reservas</h3>
+      <p>Número de reservas por semana (últimas 8 semanas)</p>
+      <div class="chart-wrap"><canvas id="chart-partner-trend"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Logout -->
+  <div style="text-align:center;padding:20px 18px 40px">
+    <button class="btn-bo-secondary" onclick="doLogout()" style="padding:10px 28px">🚪 Terminar sessão</button>
+  </div>
+</div>
+
+<!-- ── Processing overlay ── -->
+<div class="processing-overlay" id="processing-overlay">
+  <div class="spinner"></div>
+  <p id="processing-msg">A processar pagamento…</p>
+  <small>Por favor aguarda</small>
+</div>
+
+<!-- ── Bottom nav ── -->
 <nav class="bottom-nav" id="bottom-nav" style="display:none">
-  <button id="bnav-offers" onclick="showPage('offers')">
-    <span class="icon">🏪</span>Ofertas
-  </button>
-  <button id="bnav-reservations" onclick="showPage('reservations')">
-    <span class="icon">🎫</span>Reservas
-  </button>
+  <button id="bnav-home" onclick="showPage('home')"><span class="icon">🏪</span>Parceiros</button>
+  <button id="bnav-reservations" onclick="navAway('reservations')"><span class="icon">🎫</span>Reservas</button>
+  <button id="bnav-wallet" onclick="navAway('wallet')"><span class="icon">🌱</span>Eco-Créditos</button>
 </nav>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<!-- ── Toast ───────────────────────────────────────────── -->
-<div class="toast" id="toast"></div>
-
-<!-- ══ JAVASCRIPT ════════════════════════════════════════ -->
+<!-- ══ JAVASCRIPT ════════════════════ -->
 <script>
-// ── Data ──────────────────────────────────────────────
-const OFFERS = [
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const ALL_ALLERGENS=['Glúten','Leite','Ovos','Peixe','Marisco','Soja','Frutos secos','Sésamo','Amendoins','Mostarda','Aipo','Tremoço','Sulfitos','Moluscos'];
+
+// PARTNER MOCK DATA (Épico 2)
+const PARTNER_USERS=[
   {
-    id:1, emoji:'🥐', name:'Saco Surpresa Padaria',
-    partner:'Padaria Central', category:'Padaria',
-    price:3.50, originalPrice:12.00,
-    location:'Rua do Ouro 14, Porto',
-    desc:'Saco com sortido de pão do dia, croissants, brioches e pastelaria variada. Produto do dia não vendido, em ótimo estado.',
-    allergies:['Glúten','Ovos','Leite'],
-    pickup:'Hoje, 19h00 – 20h30',
-    qty:5, tags:['Padaria','Doce']
-  },
-  {
-    id:2, emoji:'🍱', name:'Rescue Combo Almoço',
-    partner:'Restaurante Sol', category:'Restaurante',
-    price:4.00, originalPrice:11.50,
-    location:'Av. da República 87, Porto',
-    desc:'Refeição completa do dia (prato principal + sopa + sobremesa). Varia diariamente conforme o menu. Sem desperdício, com sabor!',
-    allergies:['Glúten','Peixe'],
-    pickup:'Hoje, 14h30 – 15h30',
-    qty:3, tags:['Almoço','Prato do dia']
-  },
-  {
-    id:3, emoji:'🍕', name:'Pizza do Fim do Dia',
-    partner:'Pizzaria Napoli', category:'Restaurante',
-    price:5.00, originalPrice:14.00,
-    location:'Rua das Flores 31, Porto',
-    desc:'2 metades de pizza variada — as que sobram ao fecho. Pode incluir Margherita, Pepperoni ou Vegetariana. Sempre fresquinha!',
-    allergies:['Glúten','Leite'],
-    pickup:'Hoje, 22h00 – 23h00',
-    qty:2, tags:['Jantar','Pizza'], urgent:true
-  },
-  {
-    id:4, emoji:'🥗', name:'Bowl Vegano',
-    partner:'Green Kitchen', category:'Vegetariano',
-    price:3.00, originalPrice:9.50,
-    location:'Praça da Batalha 5, Porto',
-    desc:'Bowl completo com quinoa, legumes salteados, grão e molho tahini. 100% plant-based, sem glúten.',
-    allergies:['Sésamo'],
-    pickup:'Hoje, 18h00 – 19h30',
-    qty:4, tags:['Vegan','Saudável','Sem glúten']
-  },
-  {
-    id:5, emoji:'🍰', name:'Caixa de Pastelaria',
-    partner:'Confeitaria Doce Lar', category:'Padaria',
-    price:4.50, originalPrice:16.00,
-    location:'Rua Formosa 22, Porto',
-    desc:'Caixa com 6 unidades de pastelaria sortida — bolos, tartes e bolachas artesanais do dia.',
-    allergies:['Glúten','Ovos','Leite','Frutos secos'],
-    pickup:'Hoje, 19h30 – 20h30',
-    qty:6, tags:['Pastelaria','Doce'], urgent:true
-  },
-  {
-    id:6, emoji:'🍜', name:'Sopa + Pão',
-    partner:'Tasca da Avó', category:'Restaurante',
-    price:2.00, originalPrice:5.50,
-    location:'Travessa do Carmo 9, Porto',
-    desc:'Tigela de sopa do dia (caldo verde, sopa de legumes ou canja) + fatia de pão rústico. Reconfortante e caseiro.',
-    allergies:['Glúten'],
-    pickup:'Hoje, 15h00 – 16h00',
-    qty:8, tags:['Sopa','Caseiro']
+    name:'Ana Costa',email:'parceiro@demo.pt',password:'1234',role:'partner',
+    storeId:'p1',storeName:'Padaria Central',
+    offers:[],combos:[]
   }
 ];
 
-const CATEGORIES = ['Todas','Padaria','Restaurante','Vegetariano'];
+// Mock incidents data for admin dashboard (US3.3)
+const MOCK_INCIDENTS=[
+  {id:'inc1',type:'Não levantado',date:'20/05/2025',partnerName:'Padaria Central',desc:'Reserva FS-1234 não levantada dentro do prazo.'},
+  {id:'inc2',type:'Reclamação',date:'19/05/2025',partnerName:'Restaurante Sol',desc:'Consumidor reportou produto em mau estado.'},
+  {id:'inc3',type:'Cancelamento',date:'18/05/2025',partnerName:'Pizzaria Napoli',desc:'Reserva cancelada pelo parceiro por falta de stock.'},
+  {id:'inc4',type:'Não levantado',date:'17/05/2025',partnerName:'Green Kitchen',desc:'Reserva FS-0987 não levantada.'},
+  {id:'inc5',type:'Reclamação',date:'15/05/2025',partnerName:'Tasca da Avó',desc:'Horário de levantamento não respeitado.'},
+  {id:'inc6',type:'Cancelamento',date:'14/05/2025',partnerName:'Padaria Central',desc:'Combo cancelado — produto esgotado antes da hora.'},
+];
 
-// ── State ─────────────────────────────────────────────
-let currentUser = null;
-let currentOffer = null;
-let currentQty   = 1;
-let activeFilter = 'Todas';
+// Mock partner ratings (simulated — US3.5)
+const MOCK_RATINGS={
+  'p1':4.3,'p2':4.1,'p3':3.8,'p4':4.7,'p5':4.5
+};
 
-// ── LocalStorage helpers ──────────────────────────────
-function lsGet(k){ try{return JSON.parse(localStorage.getItem(k))}catch{return null} }
-function lsSet(k,v){ localStorage.setItem(k, JSON.stringify(v)) }
+// Roles: 'consumer' | 'partner' | 'admin'
+// Extended user schema:
+// consumer: {name, email, password, role:'consumer', ecoCredits, ecoLifetimePts, ecoDiscounts[], ecoHistory[]}
+// partner:  {name, email, password, role:'partner', storeId, storeName, offers[], combos[]}
 
-function getUsers(){ return lsGet('fs_users') || [
-  {name:'João Silva', email:'joao@demo.pt', password:'1234'}
-]}
-function saveUsers(u){ lsSet('fs_users', u) }
-function getReservations(){ return lsGet('fs_reservations') || [] }
-function saveReservations(r){ lsSet('fs_reservations', r) }
+// ECO CREDIT RULES
+const ECO_PER_RESCUE   = 10;  // pts for booking rescue combo
+const ECO_PER_SURPRISE = 5;   // pts for booking surprise bag
+const ECO_PER_ECO_BAG  = 15;  // pts for validating eco-embalagem
+const ECO_CYCLE_MAX    = 1000; // pts at which cycle resets
+const ECO_DISCOUNT_VALIDITY_DAYS = 30;
 
-// ── Auth ──────────────────────────────────────────────
-function doLogin(){
-  const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-password').value;
-  const users = getUsers();
-  const user  = users.find(u => u.email===email && u.password===pass);
-  const err   = document.getElementById('login-error');
-  if(!user){ err.style.display='block'; return }
-  err.style.display='none';
-  currentUser = user;
-  lsSet('fs_session', user.email);
-  enterApp();
+// Thresholds: accumulated pts in current cycle → discount %
+const ECO_THRESHOLDS=[
+  {pts:100,  pct:5},
+  {pts:200,  pct:10},
+  {pts:300,  pct:15},
+  {pts:400,  pct:20},
+  {pts:500,  pct:25},
+  {pts:600,  pct:30},
+  {pts:700,  pct:35},
+  {pts:800,  pct:40},
+  {pts:900,  pct:45},
+  {pts:1000, pct:50},
+];
+
+// Prices adjusted: originals raised so eco-discounts have margin
+const PARTNERS=[
+  {
+    id:'p1',emoji:'🥐',name:'Padaria Central',category:'Padaria',
+    location:'Rua do Ouro 14, Porto',pickup:'19h00 – 20h30',
+    rescueItems:[
+      {id:'i01',emoji:'🥐',name:'Croissant manteiga',unitPrice:2.20,allergies:['Glúten','Leite','Ovos'],tags:['Doce'],qty:8},
+      {id:'i02',emoji:'🍞',name:'Pão de mistura',unitPrice:1.80,allergies:['Glúten'],tags:['Salgado'],qty:10},
+      {id:'i03',emoji:'🧁',name:'Muffin de mirtilo',unitPrice:2.50,allergies:['Glúten','Ovos','Leite'],tags:['Doce'],qty:5},
+      {id:'i04',emoji:'🥨',name:'Pretzel salgado',unitPrice:1.60,allergies:['Glúten'],tags:['Salgado'],qty:6},
+      {id:'i05',emoji:'🍩',name:'Bola de Berlim',unitPrice:2.00,allergies:['Glúten','Ovos','Leite'],tags:['Doce'],qty:4},
+      {id:'i06',emoji:'🫓',name:'Broa de milho',unitPrice:1.40,allergies:[],tags:['Salgado','Sem glúten'],qty:7},
+    ],
+    surpriseBags:[
+      {size:'S',emoji:'🎁',desc:'2–3 itens de padaria sortidos',allergies:['Glúten','Ovos','Leite'],price:2.50,originalPrice:9.00,qty:5},
+      {size:'M',emoji:'🎁',desc:'4–5 itens de padaria sortidos',allergies:['Glúten','Ovos','Leite'],price:3.50,originalPrice:13.00,qty:4},
+      {size:'L',emoji:'🎁',desc:'6–8 itens de padaria + pão',allergies:['Glúten','Ovos','Leite'],price:5.00,originalPrice:19.00,qty:3},
+    ],
+    maxRescueItems:3,bg:'linear-gradient(135deg,#ffecd2,#fcb69f)',hasUrgent:true
+  },
+  {
+    id:'p2',emoji:'🍽️',name:'Restaurante Sol',category:'Restaurante',
+    location:'Av. da República 87, Porto',pickup:'14h30 – 15h30',
+    rescueItems:[
+      {id:'i07',emoji:'🍲',name:'Sopa de legumes',unitPrice:2.00,allergies:[],tags:['Vegan','Sem glúten'],qty:6},
+      {id:'i08',emoji:'🍗',name:'Frango assado c/ batata',unitPrice:5.50,allergies:[],tags:['Sem glúten'],qty:4},
+      {id:'i09',emoji:'🐟',name:'Bacalhau à Brás',unitPrice:6.00,allergies:['Ovos','Peixe'],tags:[],qty:3},
+      {id:'i0a',emoji:'🥗',name:'Salada mista',unitPrice:2.50,allergies:[],tags:['Vegan','Sem glúten'],qty:8},
+      {id:'i0b',emoji:'🍮',name:'Pudim flan',unitPrice:2.00,allergies:['Ovos','Leite'],tags:['Doce'],qty:5},
+      {id:'i0c',emoji:'🫘',name:'Feijão guisado',unitPrice:3.00,allergies:[],tags:['Vegan','Sem glúten'],qty:4},
+    ],
+    surpriseBags:[
+      {size:'S',emoji:'🎁',desc:'Sopa + 1 prato principal',allergies:['Glúten','Ovos','Peixe'],price:3.00,originalPrice:11.00,qty:4},
+      {size:'M',emoji:'🎁',desc:'Sopa + 1 prato + sobremesa',allergies:['Glúten','Ovos','Peixe','Leite'],price:4.50,originalPrice:16.00,qty:3},
+      {size:'L',emoji:'🎁',desc:'2 pratos + sopa + sobremesa',allergies:['Glúten','Ovos','Peixe','Leite'],price:6.50,originalPrice:23.00,qty:2},
+    ],
+    maxRescueItems:3,bg:'linear-gradient(135deg,#d4fc79,#96e6a1)',hasUrgent:false
+  },
+  {
+    id:'p3',emoji:'🍕',name:'Pizzaria Napoli',category:'Restaurante',
+    location:'Rua das Flores 31, Porto',pickup:'22h00 – 23h00',
+    rescueItems:[
+      {id:'i0d',emoji:'🍕',name:'Fatia Margherita',unitPrice:4.00,allergies:['Glúten','Leite'],tags:[],qty:4},
+      {id:'i0e',emoji:'🍕',name:'Fatia Pepperoni',unitPrice:4.50,allergies:['Glúten','Leite'],tags:[],qty:3},
+      {id:'i0f',emoji:'🍕',name:'Fatia Vegetariana',unitPrice:4.00,allergies:['Glúten','Leite'],tags:['Vegetariano'],qty:2},
+      {id:'i0g',emoji:'🥗',name:'Salada Caesar',unitPrice:3.50,allergies:['Glúten','Leite','Ovos'],tags:[],qty:5},
+      {id:'i0h',emoji:'🍞',name:'Pão de alho',unitPrice:2.00,allergies:['Glúten','Leite'],tags:[],qty:6},
+    ],
+    surpriseBags:[
+      {size:'S',emoji:'🎁',desc:'2 fatias de pizza sortidas',allergies:['Glúten','Leite'],price:3.50,originalPrice:12.00,qty:5},
+      {size:'M',emoji:'🎁',desc:'3 fatias + pão de alho',allergies:['Glúten','Leite'],price:5.50,originalPrice:18.00,qty:3},
+      {size:'XL',emoji:'🎁',desc:'5 fatias sortidas + salada',allergies:['Glúten','Leite','Ovos'],price:8.00,originalPrice:27.00,qty:2},
+    ],
+    maxRescueItems:2,bg:'linear-gradient(135deg,#ff9a9e,#fad0c4)',hasUrgent:true
+  },
+  {
+    id:'p4',emoji:'🥗',name:'Green Kitchen',category:'Vegetariano',
+    location:'Praça da Batalha 5, Porto',pickup:'18h00 – 19h30',
+    rescueItems:[
+      {id:'i0i',emoji:'🥣',name:'Bowl de quinoa',unitPrice:4.00,allergies:['Sésamo'],tags:['Vegan','Sem glúten'],qty:4},
+      {id:'i0j',emoji:'🧆',name:'Falafel (3 unid.)',unitPrice:3.00,allergies:['Glúten','Sésamo'],tags:['Vegan'],qty:6},
+      {id:'i0k',emoji:'🥕',name:'Legumes grelhados',unitPrice:2.50,allergies:[],tags:['Vegan','Sem glúten'],qty:8},
+      {id:'i0l',emoji:'🍛',name:'Caril de grão',unitPrice:3.50,allergies:['Sésamo'],tags:['Vegan','Sem glúten'],qty:5},
+      {id:'i0m',emoji:'🍵',name:'Sopa de abóbora',unitPrice:2.00,allergies:[],tags:['Vegan','Sem glúten'],qty:7},
+      {id:'i0n',emoji:'🥙',name:'Wrap vegano',unitPrice:3.50,allergies:['Glúten','Sésamo'],tags:['Vegan'],qty:4},
+    ],
+    surpriseBags:[
+      {size:'S',emoji:'🎁',desc:'1 prato plant-based surpresa',allergies:['Sésamo','Glúten'],price:2.00,originalPrice:8.00,qty:6},
+      {size:'M',emoji:'🎁',desc:'2 pratos plant-based sortidos',allergies:['Sésamo','Glúten'],price:3.50,originalPrice:12.00,qty:4},
+      {size:'L',emoji:'🎁',desc:'3 pratos + sopa vegana',allergies:['Sésamo','Glúten'],price:5.00,originalPrice:17.00,qty:3},
+      {size:'XL',emoji:'🎁',desc:'Cabaz vegano completo (4–5 pratos)',allergies:['Sésamo','Glúten'],price:7.00,originalPrice:24.00,qty:2},
+    ],
+    maxRescueItems:3,bg:'linear-gradient(135deg,#a8edea,#fed6e3)',hasUrgent:false
+  },
+  {
+    id:'p5',emoji:'🍜',name:'Tasca da Avó',category:'Restaurante',
+    location:'Travessa do Carmo 9, Porto',pickup:'15h00 – 16h00',
+    rescueItems:[
+      {id:'i0o',emoji:'🍜',name:'Caldo verde',unitPrice:2.00,allergies:[],tags:['Sem glúten'],qty:8},
+      {id:'i0p',emoji:'🥩',name:'Carne de porco c/ ameijoas',unitPrice:6.50,allergies:['Moluscos'],tags:['Sem glúten'],qty:3},
+      {id:'i0q',emoji:'🐔',name:'Canja de galinha',unitPrice:2.50,allergies:[],tags:['Sem glúten'],qty:5},
+      {id:'i0r',emoji:'🫓',name:'Broa de milho',unitPrice:1.20,allergies:[],tags:['Sem glúten'],qty:10},
+      {id:'i0s',emoji:'🍮',name:'Arroz doce',unitPrice:1.80,allergies:['Leite','Ovos'],tags:['Doce'],qty:6},
+    ],
+    surpriseBags:[
+      {size:'S',emoji:'🎁',desc:'Sopa do dia + pão',allergies:['Glúten'],price:2.00,originalPrice:7.00,qty:6},
+      {size:'M',emoji:'🎁',desc:'Sopa + prato do dia',allergies:['Glúten','Moluscos','Leite'],price:4.00,originalPrice:14.00,qty:4},
+    ],
+    maxRescueItems:2,bg:'linear-gradient(135deg,#ffeaa7,#dfe6e9)',hasUrgent:false
+  },
+];
+const CATEGORIES_BASE=['Todas','Padaria','Restaurante','Vegetariano'];
+// CATEGORIES é calculado dinamicamente para incluir categorias de parceiros dinâmicos
+function getCategories(){
+  const users=lsGet('fs_users')||[];
+  const dynCats=users
+    .filter(u=>u.role==='partner'&&u.offers&&u.offers.length>0)
+    .filter(u=>!PARTNERS.find(p=>p.id===u.storeId)) // apenas parceiros sem entrada estática
+    .map(()=>'Outro');
+  return [...new Set([...CATEGORIES_BASE,...dynCats])];
 }
 
-function doRegister(){
-  const name  = document.getElementById('reg-name').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const pass  = document.getElementById('reg-password').value;
-  const err   = document.getElementById('reg-error');
-  if(!name||!email||pass.length<4){ err.style.display='block'; err.textContent='Preenche todos os campos (password ≥ 4 caracteres).'; return }
-  const users = getUsers();
-  if(users.find(u=>u.email===email)){ err.style.display='block'; err.textContent='Email já registado.'; return }
-  const newUser = {name, email, password:pass};
-  users.push(newUser);
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let currentUser=null;
+let selectedRole='consumer'; // 'consumer' | 'partner'
+let activeCategory='Todas';
+let excludedAllergens=new Set();
+let currentPartner=null;
+let selectedItems={};
+let selectedBag=null;
+let surpriseQty=1;
+let pendingOrder=null;
+let selectedPayment=null;
+let selectedEcoDiscount=null; // {id, pct} of chosen discount coupon
+
+// ─────────────────────────────────────────────
+// LOCAL STORAGE
+// ─────────────────────────────────────────────
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}}
+function lsSet(k,v){
+  try{localStorage.setItem(k,JSON.stringify(v));}
+  catch(e){
+    // QuotaExceededError em abas anónimas ou armazenamento cheio
+    console.warn('FreshSave: localStorage.setItem falhou para chave "'+k+'"',e);
+  }
+}
+
+// Seed default users on first load (consumers + partner demo)
+function seedDefaultUsers(){
+  const existing=lsGet('fs_users');
+  if(existing&&existing.length) return; // already seeded
+  const defaults=[
+    {name:'João Silva',email:'joao@demo.pt',password:'1234',role:'consumer',
+     ecoCredits:75,ecoLifetimePts:75,ecoDiscounts:[],ecoHistory:[
+       {date:'01/06/2025',desc:'Rescue Combo reservado',pts:10,type:'earn'},
+       {date:'01/06/2025',desc:'Eco-Embalagem validada',pts:15,type:'earn'}
+     ]},
+    {name:'Ana Costa',email:'parceiro@demo.pt',password:'1234',role:'partner',
+     storeId:'p1',storeName:'Padaria Central',
+     offers:[],combos:[]},
+    {name:'Admin FreshSave',email:'admin@demo.pt',password:'admin',role:'admin'}
+  ];
+  lsSet('fs_users',defaults);
+}
+
+function getUsers(){
+  const u=lsGet('fs_users');
+  if(u&&u.length) return u;
+  seedDefaultUsers();
+  return lsGet('fs_users')||[];
+}
+function saveUsers(u){lsSet('fs_users',u)}
+function getReservations(){return lsGet('fs_reservations')||[]}
+function saveReservations(r){lsSet('fs_reservations',r)}
+
+// Partner-specific helpers
+function getPartnerOffers(partnerEmail){
+  const users=lsGet('fs_users')||[];
+  const u=users.find(u=>u.email===partnerEmail);
+  return (u&&u.offers)||[];
+}
+function savePartnerOffers(partnerEmail,offers){
+  const users=lsGet('fs_users')||[];
+  const idx=users.findIndex(u=>u.email===partnerEmail);
+  if(idx<0)return;
+  users[idx].offers=offers;
   saveUsers(users);
-  err.style.display='none';
-  currentUser = newUser;
-  lsSet('fs_session', email);
-  showToast('Conta criada com sucesso! Bem-vindo/a 🌿');
-  enterApp();
+  if(currentUser&&currentUser.email===partnerEmail) currentUser=users[idx];
+  // Sync: se o catálogo do consumidor estiver visível, atualiza
+  if(document.getElementById('page-home').classList.contains('active')) renderPartners();
+}
+function getPartnerCombos(partnerEmail){
+  const users=lsGet('fs_users')||[];
+  const u=users.find(u=>u.email===partnerEmail);
+  return (u&&u.combos)||[];
+}
+function savePartnerCombos(partnerEmail,combos){
+  const users=lsGet('fs_users')||[];
+  const idx=users.findIndex(u=>u.email===partnerEmail);
+  if(idx<0)return;
+  users[idx].combos=combos;
+  saveUsers(users);
+  if(currentUser&&currentUser.email===partnerEmail) currentUser=users[idx];
 }
 
+// eco helpers
+function getUserEcoCredits(){
+  const users=getUsers();
+  const u=users.find(u=>u.email===currentUser?.email);
+  return u?u.ecoCredits||0:0;
+}
+function getUserEcoDiscounts(){
+  const users=getUsers();
+  const u=users.find(u=>u.email===currentUser?.email);
+  const now=Date.now();
+  return ((u&&u.ecoDiscounts)||[]).filter(d=>!d.used && d.expiresAt>now);
+}
+function addEcoCredits(pts,desc){
+  const users=getUsers();
+  const idx=users.findIndex(u=>u.email===currentUser?.email);
+  if(idx<0)return;
+  const u=users[idx];
+  const prevPts=u.ecoCredits||0;
+  let newPts=prevPts+pts;
+  if(!u.ecoHistory) u.ecoHistory=[];
+  if(!u.ecoDiscounts) u.ecoDiscounts=[];
+  if(!u.ecoLifetimePts) u.ecoLifetimePts=0;
+  u.ecoHistory.unshift({date:new Date().toLocaleDateString('pt-PT'),desc,pts,type:'earn'});
+
+  // detect thresholds crossed
+  const newDiscounts=[];
+  ECO_THRESHOLDS.forEach(t=>{
+    const wasBelow=prevPts<t.pts;
+    const nowAtOrAbove=newPts>=t.pts;
+    if(wasBelow&&nowAtOrAbove){
+      const expDate=new Date();
+      expDate.setDate(expDate.getDate()+ECO_DISCOUNT_VALIDITY_DAYS);
+      const disc={
+        id:'d'+Date.now()+Math.random().toString(36).slice(2,6),
+        pct:t.pct,
+        earnedAt:Date.now(),
+        expiresAt:expDate.getTime(),
+        expiresLabel:expDate.toLocaleDateString('pt-PT'),
+        used:false
+      };
+      u.ecoDiscounts.push(disc);
+      newDiscounts.push(disc);
+      u.ecoHistory.unshift({date:new Date().toLocaleDateString('pt-PT'),desc:`🎉 Desconto de ${t.pct}% desbloqueado!`,pts:0,type:'unlock'});
+    }
+  });
+
+  // Reset ao atingir ECO_CYCLE_MAX (1000 pts).
+  // IMPORTANTE — ordem das operações é intencional:
+  //   1. Os limiares são detetados ANTES do reset, usando newPts pré-reset.
+  //      Isto significa que, na mesma adição que ultrapassa 1000, os cupões
+  //      são emitidos corretamente com base nos pontos acumulados nesse ciclo.
+  //   2. Só depois se subtrai ECO_CYCLE_MAX, fazendo carry-over do excesso
+  //      (ex: 990 pts + 25 pts → emite cupão de 1000 → fica com 15 pts).
+  //   Se alguma vez alterares a ordem (reset antes dos limiares), os cupões
+  //   do ciclo atual deixarão de ser emitidos nesse ciclo.
+  if(newPts>=ECO_CYCLE_MAX){
+    newPts=newPts-ECO_CYCLE_MAX; // carry over excess
+    u.ecoHistory.unshift({date:new Date().toLocaleDateString('pt-PT'),desc:'♻️ Ciclo completo — pontos reiniciados',pts:0,type:'reset'});
+  }
+  u.ecoCredits=newPts;
+  u.ecoLifetimePts=(u.ecoLifetimePts||0)+pts;
+  users[idx]=u;
+  saveUsers(users);
+  currentUser=users[idx];
+  refreshEcoBadges();
+  // notify unlocked discounts
+  newDiscounts.forEach(d=>showToast(`🎉 Desconto de ${d.pct}% desbloqueado! Válido 30 dias.`));
+}
+function useEcoDiscount(discountId){
+  const users=getUsers();
+  const idx=users.findIndex(u=>u.email===currentUser?.email);
+  if(idx<0)return;
+  const u=users[idx];
+  const di=u.ecoDiscounts.findIndex(d=>d.id===discountId);
+  if(di<0)return;
+  const d=u.ecoDiscounts[di];
+  u.ecoDiscounts[di].used=true;
+  if(!u.ecoHistory) u.ecoHistory=[];
+  u.ecoHistory.unshift({date:new Date().toLocaleDateString('pt-PT'),desc:`Desconto de ${d.pct}% utilizado`,pts:0,type:'spend'});
+  users[idx]=u;
+  saveUsers(users);
+  currentUser=users[idx];
+  refreshEcoBadges();
+}
+function refreshEcoBadges(){
+  const pts=getUserEcoCredits();
+  ['nav-eco-balance','nav-eco-balance2','nav-eco-balance3','nav-eco-balance4'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=pts;
+  });
+}
+
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
+function selectRole(role){
+  selectedRole=role;
+  ['consumer','partner','admin'].forEach(r=>{
+    const btn=document.getElementById('role-btn-'+r);
+    if(btn) btn.classList.toggle('active',r===role);
+  });
+  // show/hide store name field on register
+  const storeGroup=document.getElementById('reg-store-group');
+  if(storeGroup) storeGroup.style.display=role==='partner'?'block':'none';
+  // hide register tab for partners and admins
+  const tabReg=document.getElementById('tab-register-btn');
+  if(tabReg) tabReg.style.display=(role==='partner'||role==='admin')?'none':'';
+  if(role==='partner'||role==='admin') switchTab('login');
+  // update demo hint
+  const hint=document.getElementById('login-demo-hint');
+  if(hint){
+    const hints={
+      consumer:'Demo consumidor: <strong>joao@demo.pt</strong> / <strong>1234</strong>',
+      partner:'Demo parceiro: <strong>parceiro@demo.pt</strong> / <strong>1234</strong>',
+      admin:'Demo admin: <strong>admin@demo.pt</strong> / <strong>admin</strong>'
+    };
+    hint.innerHTML=hints[role]||hints.consumer;
+  }
+}
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-password').value;
+  const users=lsGet('fs_users')||[];
+  const user=users.find(u=>u.email===email&&u.password===pass);
+  const err=document.getElementById('login-error');
+  if(!user){err.style.display='block';return}
+  // Validate role matches
+  const userRole=user.role||'consumer';
+  if(userRole!==selectedRole){
+    err.style.display='block';
+    const msgs={
+      partner:'Esta conta não é de parceiro.',
+      admin:'Esta conta não é de administrador.',
+      consumer:'Esta é uma conta de parceiro ou admin. Usa o separador correto.'
+    };
+    err.textContent=msgs[selectedRole]||'Role incorreto.';
+    return;
+  }
+  err.style.display='none';
+  err.textContent='Email ou password incorretos.';
+  currentUser=user; lsSet('fs_session',user.email); enterApp();
+}
+function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pass=document.getElementById('reg-password').value;
+  const err=document.getElementById('reg-error');
+  if(!name||!email||pass.length<4){err.style.display='block';err.textContent='Preenche todos os campos (password ≥ 4 caracteres).';return}
+  const users=lsGet('fs_users')||[];
+  if(users.find(u=>u.email===email)){err.style.display='block';err.textContent='Email já registado.';return}
+  let newUser;
+  if(selectedRole==='partner'){
+    const storeName=document.getElementById('reg-store').value.trim();
+    if(!storeName){err.style.display='block';err.textContent='Indica o nome da loja.';return}
+    newUser={name,email,password:pass,role:'partner',
+             storeId:'p_'+Date.now(),storeName,offers:[],combos:[]};
+  } else {
+    newUser={name,email,password:pass,role:'consumer',
+             ecoCredits:0,ecoLifetimePts:0,ecoDiscounts:[],ecoHistory:[]};
+  }
+  users.push(newUser); saveUsers(users);
+  err.style.display='none';
+  currentUser=newUser; lsSet('fs_session',email);
+  showToast('Conta criada! Bem-vindo/a 🌿'); enterApp();
+}
 function doLogout(){
-  currentUser = null;
-  localStorage.removeItem('fs_session');
+  currentUser=null; localStorage.removeItem('fs_session');
   document.getElementById('bottom-nav').style.display='none';
+  selectedRole='consumer';
+  selectRole('consumer');
   showPage('login');
 }
-
 function enterApp(){
-  ['nav-username','nav-username2','nav-username3'].forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.textContent = currentUser.name.split(' ')[0];
-  });
-  document.getElementById('bottom-nav').style.display='flex';
-  buildFilters();
-  renderOffers();
-  showPage('offers');
+  const isPartner=currentUser.role==='partner';
+  const isAdmin=currentUser.role==='admin';
+  if(isAdmin){
+    document.getElementById('bottom-nav').style.display='none';
+    renderAdminStats();
+    showPage('admin-stats');
+  } else if(isPartner){
+    document.getElementById('bo-hero-sub').textContent=currentUser.storeName+' · Backoffice';
+    document.getElementById('bottom-nav').style.display='none';
+    renderBackoffice();
+    showPage('backoffice');
+  } else {
+    const names=['nav-username','nav-username2','nav-username3','nav-username4','nav-username5'];
+    names.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=currentUser.name.split(' ')[0];});
+    document.getElementById('bottom-nav').style.display='flex';
+    refreshEcoBadges();
+    buildCatChips(); buildAllergenList(); renderPartners();
+    showPage('home');
+  }
 }
 
-// ── Page nav ──────────────────────────────────────────
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  // bottom nav highlight
   document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
-  const nb = document.getElementById('bnav-'+name);
-  if(nb) nb.classList.add('active');
-  // hide bottom nav on login/confirm
-  const noNav = ['login','confirm'];
-  document.getElementById('bottom-nav').style.display = noNav.includes(name) ? 'none' : (currentUser?'flex':'none');
+  // partner e checkout fazem parte do fluxo de compra — mantém bnav-home ativo
+  const navName=['partner','checkout'].includes(name)?'home':name;
+  const nb=document.getElementById('bnav-'+navName);
+  if(nb)nb.classList.add('active');
+  const noNav=['login','confirm','backoffice','admin-stats'];
+  document.getElementById('bottom-nav').style.display=noNav.includes(name)?'none':(currentUser?'flex':'none');
   window.scrollTo(0,0);
+  if(name==='reservations') renderReservations();
+  if(name==='wallet') renderWallet();
+  if(name==='home') setTimeout(startUrgencyTimers,0);
+  if(name==='backoffice') renderBackoffice();
+  if(name==='admin-stats') renderAdminStats();
 }
 
-// ── Filters ───────────────────────────────────────────
-function buildFilters(){
-  const bar = document.getElementById('filters-bar');
-  bar.innerHTML = CATEGORIES.map(c=>`
-    <button class="filter-chip ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>
-  `).join('');
+// ─────────────────────────────────────────────
+// BACKOFFICE
+// ─────────────────────────────────────────────
+function showBoSection(name){
+  document.querySelectorAll('.bo-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.bo-nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bo-section-'+name).classList.add('active');
+  const btns=document.querySelectorAll('.bo-nav-btn');
+  const sectionNames=['dashboard','publish','combos','stock','validate','stats'];
+  const idx=sectionNames.indexOf(name);
+  if(btns[idx]) btns[idx].classList.add('active');
+  if(name==='publish') renderBoOffersList();
+  if(name==='combos') renderBoCombosList();
+  if(name==='stock') renderBoStockTable();
+  if(name==='validate') renderBoTodayPickups();
+  if(name==='stats') renderPartnerStats();
 }
 
-function setFilter(cat){
-  activeFilter = cat;
-  buildFilters();
-  renderOffers();
+function renderBackoffice(){
+  if(!currentUser||currentUser.role!=='partner') return;
+  buildBoAllergenCheckboxes('pub-allergens-list','pub-allergen-cb-');
+  buildBoAllergenCheckboxes('combo-allergens-list','combo-allergen-cb-');
+  renderBoDashboard();
 }
 
-// ── Offers list ───────────────────────────────────────
-function renderOffers(){
-  const q = (document.getElementById('search-input')?.value||'').toLowerCase();
-  const grid = document.getElementById('offers-grid');
-  let filtered = OFFERS.filter(o=>{
-    const matchCat = activeFilter==='Todas' || o.category===activeFilter;
-    const matchQ   = !q || o.name.toLowerCase().includes(q) || o.partner.toLowerCase().includes(q);
-    return matchCat && matchQ;
+function buildBoAllergenCheckboxes(containerId, prefix){
+  const wrap=document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.innerHTML=ALL_ALLERGENS.map(a=>`
+    <label style="display:flex;align-items:center;gap:4px;font-size:.78rem;background:var(--sand);padding:4px 9px;border-radius:20px;cursor:pointer">
+      <input type="checkbox" id="${prefix}${a}" value="${a}" style="accent-color:#2471a3;cursor:pointer"/>
+      ${a}
+    </label>`).join('');
+}
+
+function getCheckedAllergens(prefix){
+  return ALL_ALLERGENS.filter(a=>{
+    const el=document.getElementById(prefix+a);
+    return el&&el.checked;
   });
+}
 
-  if(!filtered.length){
-    grid.innerHTML=`<div class="empty-state"><div class="icon">🌿</div><p>Nenhuma oferta encontrada.<br>Tenta outra pesquisa.</p></div>`;
+function renderBoDashboard(){
+  const allRes=getReservations();
+  const myStoreId=currentUser.storeId;
+  const myRes=allRes.filter(r=>r.partnerId===myStoreId);
+  const todayStr=new Date().toLocaleDateString('pt-PT');
+  const todayRes=myRes.filter(r=>r.date===todayStr);
+  const totalRevenue=myRes.reduce((s,r)=>s+parseFloat(r.total||0),0);
+  const pending=myRes.filter(r=>r.status==='pending').length;
+  const offers=getPartnerOffers(currentUser.email);
+  const combos=getPartnerCombos(currentUser.email);
+
+  // KPIs
+  document.getElementById('bo-kpi-row').innerHTML=`
+    <div class="bo-kpi"><div class="bo-kpi-val">${myRes.length}</div><div class="bo-kpi-label">Total reservas</div></div>
+    <div class="bo-kpi"><div class="bo-kpi-val">${todayRes.length}</div><div class="bo-kpi-label">Hoje</div></div>
+    <div class="bo-kpi"><div class="bo-kpi-val">${totalRevenue.toFixed(2)}€</div><div class="bo-kpi-label">Receita total</div></div>
+    <div class="bo-kpi"><div class="bo-kpi-val">${pending}</div><div class="bo-kpi-label">Pendentes</div></div>
+    <div class="bo-kpi"><div class="bo-kpi-val">${offers.length}</div><div class="bo-kpi-label">Excedentes</div></div>
+    <div class="bo-kpi"><div class="bo-kpi-val">${combos.filter(c=>c.active).length}</div><div class="bo-kpi-label">Combos ativos</div></div>`;
+
+  // Recent reservations
+  const recentEl=document.getElementById('bo-recent-reservations');
+  if(!myRes.length){recentEl.innerHTML='<p style="color:var(--muted);font-size:.85rem">Sem reservas ainda.</p>';return;}
+  const recent=myRes.slice().reverse().slice(0,8);
+  recentEl.innerHTML=`<table class="bo-table">
+    <thead><tr><th>Código</th><th>Tipo</th><th>Data</th><th>Total</th><th>Estado</th></tr></thead>
+    <tbody>${recent.map(r=>`
+      <tr>
+        <td><strong>${r.code}</strong></td>
+        <td>${r.type==='rescue'?'🌿 Rescue':'🎁 Surpresa '+r.bagSize}</td>
+        <td>${r.date}</td>
+        <td>${r.total}€</td>
+        <td><span class="res-status ${r.status==='done'?'done':'pending'}" style="display:inline-block">${r.status==='done'?'Levantado':'Pendente'}</span></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function renderBoOffersList(){
+  const offers=getPartnerOffers(currentUser.email);
+  const el=document.getElementById('bo-offers-list');
+  if(!offers.length){el.innerHTML='<p style="color:var(--muted);font-size:.85rem">Sem excedentes publicados.</p>';return;}
+  el.innerHTML=`<table class="bo-table">
+    <thead><tr><th>Produto</th><th>Preço</th><th>Stock</th><th>Categoria</th><th>Ações</th></tr></thead>
+    <tbody>${offers.map((o,i)=>`
+      <tr>
+        <td>${o.emoji} ${o.name}</td>
+        <td>${parseFloat(o.price).toFixed(2)}€</td>
+        <td><span class="bo-stock-badge ${o.qty>5?'ok':o.qty>0?'low':'out'}">${o.qty>0?o.qty+' un.':'Esgotado'}</span></td>
+        <td>${o.category}</td>
+        <td><button class="btn-bo-danger" onclick="removeOffer(${i})">Remover</button></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function renderBoCombosList(){
+  const combos=getPartnerCombos(currentUser.email);
+  const el=document.getElementById('bo-combos-list');
+  if(!combos.length){el.innerHTML='<p style="color:var(--muted);font-size:.85rem">Sem combos configurados.</p>';return;}
+  el.innerHTML=combos.map((c,i)=>`
+    <div class="bo-combo-card ${c.active?'':'inactive'}">
+      <div class="bo-combo-header">
+        <div class="bo-combo-name">${c.name}</div>
+        <div class="bo-combo-toggle">
+          <span>${c.active?'Ativo':'Inativo'}</span>
+          <label class="toggle-switch">
+            <input type="checkbox" ${c.active?'checked':''} onchange="toggleCombo(${i})"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="bo-combo-meta">
+        <span>🕐 ${c.pickupStart}–${c.pickupEnd}</span>
+        <span>💶 ${parseFloat(c.price).toFixed(2)}€</span>
+        ${c.desc?`<span>📝 ${c.desc}</span>`:''}
+      </div>
+      ${c.allergens.length?`<div class="bo-allergen-chips">${c.allergens.map(a=>`<span class="bo-allergen-chip">⚠️ ${a}</span>`).join('')}</div>`:''}
+      <div style="margin-top:10px"><button class="btn-bo-danger" onclick="removeCombo(${i})">Remover</button></div>
+    </div>`).join('');
+}
+
+function renderBoStockTable(){
+  const offers=getPartnerOffers(currentUser.email);
+  const el=document.getElementById('bo-stock-table-wrap');
+  if(!offers.length){el.innerHTML='<p style="color:var(--muted);font-size:.85rem">Sem excedentes publicados.</p>';return;}
+  el.innerHTML=`<table class="bo-table">
+    <thead><tr><th>Produto</th><th>Categoria</th><th>Stock atual</th><th>Atualizar</th></tr></thead>
+    <tbody>${offers.map((o,i)=>`
+      <tr>
+        <td>${o.emoji} ${o.name}</td>
+        <td>${o.category}</td>
+        <td><span class="bo-stock-badge ${o.qty>5?'ok':o.qty>0?'low':'out'}">${o.qty>0?o.qty+' un.':'Esgotado'}</span></td>
+        <td>
+          <div class="bo-stock-edit">
+            <input type="number" class="bo-stock-input" id="stock-input-${i}" value="${o.qty}" min="0" step="1"/>
+            <button class="btn-bo-success" onclick="updateStock(${i})">Guardar</button>
+          </div>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function renderBoTodayPickups(){
+  const allRes=getReservations();
+  const myStoreId=currentUser.storeId;
+  const todayStr=new Date().toLocaleDateString('pt-PT');
+  const todayRes=allRes.filter(r=>r.partnerId===myStoreId&&r.date===todayStr).reverse();
+  const el=document.getElementById('bo-today-pickups');
+  if(!todayRes.length){el.innerHTML='<p style="color:var(--muted);font-size:.85rem">Sem levantamentos registados hoje.</p>';return;}
+  el.innerHTML=`<table class="bo-table">
+    <thead><tr><th>Código</th><th>Tipo</th><th>Total</th><th>Estado</th></tr></thead>
+    <tbody>${todayRes.map(r=>`
+      <tr>
+        <td><strong>${r.code}</strong></td>
+        <td>${r.type==='rescue'?'🌿 Rescue':'🎁 Surpresa'}</td>
+        <td>${r.total}€</td>
+        <td><span class="res-status ${r.status==='done'?'done':'pending'}" style="display:inline-block">${r.status==='done'?'✅ Levantado':'⏳ Pendente'}</span></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function publishOffer(){
+  const name=document.getElementById('pub-name').value.trim();
+  const price=parseFloat(document.getElementById('pub-price').value);
+  const qty=parseInt(document.getElementById('pub-qty').value,10);
+  const category=document.getElementById('pub-category').value;
+  const emoji=document.getElementById('pub-emoji').value.trim()||'📦';
+  const tagsRaw=document.getElementById('pub-tags').value.trim();
+  const err=document.getElementById('pub-error');
+  if(!name||isNaN(price)||price<=0||isNaN(qty)||qty<1){
+    err.style.display='block';err.textContent='Preenche nome, preço e quantidade corretamente.';return;
+  }
+  const allergens=getCheckedAllergens('pub-allergen-cb-');
+  const tags=tagsRaw?tagsRaw.split(',').map(t=>t.trim()).filter(Boolean):[];
+  const offer={
+    id:'o'+Date.now(),name,price,qty,category,emoji,allergens,tags,
+    publishedAt:new Date().toLocaleDateString('pt-PT')
+  };
+  const offers=getPartnerOffers(currentUser.email);
+  offers.push(offer);
+  savePartnerOffers(currentUser.email,offers);
+  showToast('✅ Excedente publicado com sucesso!');
+  err.style.display='none';
+  clearPublishForm();
+  renderBoOffersList();
+}
+
+function clearPublishForm(){
+  ['pub-name','pub-price','pub-qty','pub-emoji','pub-tags'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  ALL_ALLERGENS.forEach(a=>{const el=document.getElementById('pub-allergen-cb-'+a);if(el)el.checked=false;});
+  document.getElementById('pub-category').value='Padaria';
+}
+
+function removeOffer(idx){
+  if(!confirm('Remover este excedente?'))return;
+  const offers=getPartnerOffers(currentUser.email);
+  offers.splice(idx,1);
+  savePartnerOffers(currentUser.email,offers);
+  renderBoOffersList();
+  renderBoStockTable();
+  showToast('Excedente removido.');
+}
+
+function saveCombo(){
+  const name=document.getElementById('combo-name').value.trim();
+  const pickupStart=document.getElementById('combo-pickup-start').value;
+  const pickupEnd=document.getElementById('combo-pickup-end').value;
+  const price=parseFloat(document.getElementById('combo-price').value);
+  const desc=document.getElementById('combo-desc').value.trim();
+  const active=document.getElementById('combo-active').checked;
+  const err=document.getElementById('combo-error');
+  if(!name||!pickupStart||!pickupEnd||isNaN(price)||price<=0){
+    err.style.display='block';err.textContent='Preenche nome, horário e preço corretamente.';return;
+  }
+  const allergens=getCheckedAllergens('combo-allergen-cb-');
+  const combo={id:'c'+Date.now(),name,pickupStart,pickupEnd,price,desc,allergens,active};
+  const combos=getPartnerCombos(currentUser.email);
+  combos.push(combo);
+  savePartnerCombos(currentUser.email,combos);
+  showToast('💾 Combo guardado com sucesso!');
+  err.style.display='none';
+  clearComboForm();
+  renderBoCombosList();
+}
+
+function clearComboForm(){
+  ['combo-name','combo-pickup-start','combo-pickup-end','combo-price','combo-desc'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  ALL_ALLERGENS.forEach(a=>{const el=document.getElementById('combo-allergen-cb-'+a);if(el)el.checked=false;});
+  document.getElementById('combo-active').checked=true;
+}
+
+function removeCombo(idx){
+  if(!confirm('Remover este combo?'))return;
+  const combos=getPartnerCombos(currentUser.email);
+  combos.splice(idx,1);
+  savePartnerCombos(currentUser.email,combos);
+  renderBoCombosList();
+  showToast('Combo removido.');
+}
+
+function toggleCombo(idx){
+  const combos=getPartnerCombos(currentUser.email);
+  combos[idx].active=!combos[idx].active;
+  savePartnerCombos(currentUser.email,combos);
+  renderBoCombosList();
+}
+
+function updateStock(idx){
+  const input=document.getElementById('stock-input-'+idx);
+  if(!input)return;
+  const newQty=parseInt(input.value,10);
+  if(isNaN(newQty)||newQty<0){showToast('Quantidade inválida');return;}
+  const offers=getPartnerOffers(currentUser.email);
+  offers[idx].qty=newQty;
+  savePartnerOffers(currentUser.email,offers);
+  showToast('📦 Stock atualizado: '+newQty+' un.');
+  renderBoStockTable();
+}
+
+function validateReservationCode(){
+  const code=document.getElementById('bo-validate-code').value.trim().toUpperCase();
+  const resultEl=document.getElementById('bo-validate-result');
+  resultEl.className='bo-validate-result';
+  if(!code||!code.startsWith('FS-')||code.length<6){
+    resultEl.className='bo-validate-result error';
+    resultEl.innerHTML='⚠️ Formato inválido. O código deve ser <strong>FS-XXXX</strong>.';
     return;
   }
+  const allRes=getReservations();
+  const myStoreId=currentUser.storeId;
+  const idx=allRes.findIndex(r=>r.code===code&&r.partnerId===myStoreId);
+  if(idx<0){
+    resultEl.className='bo-validate-result error';
+    resultEl.innerHTML='❌ Código não encontrado ou não pertence à tua loja.';
+    return;
+  }
+  const r=allRes[idx];
+  if(r.status==='done'){
+    resultEl.className='bo-validate-result warning';
+    resultEl.innerHTML=`⚠️ Este código já foi <strong>validado</strong> em ${r.date}. Levantamento já confirmado.`;
+    return;
+  }
+  // Confirm pickup
+  allRes[idx].status='done';
+  saveReservations(allRes);
+  const itemsList=r.type==='rescue'&&r.items.length
+    ?'<br><strong>Itens:</strong> '+r.items.map(i=>i.emoji+' '+i.name).join(', ')
+    :'';
+  resultEl.className='bo-validate-result success';
+  resultEl.innerHTML=`✅ <strong>Levantamento confirmado!</strong><br>
+    <strong>Código:</strong> ${r.code}<br>
+    <strong>Tipo:</strong> ${r.type==='rescue'?'🌿 Rescue Combo':'🎁 Saco Surpresa '+r.bagSize}<br>
+    <strong>Total:</strong> ${r.total}€${itemsList}<br>
+    <strong>Data:</strong> ${r.date}`;
+  document.getElementById('bo-validate-code').value='';
+  renderBoTodayPickups();
+  renderBoDashboard();
+  showToast('✅ Levantamento confirmado!');
+}
+  const hasCart=Object.keys(selectedItems).length>0||!!pendingOrder;
+  if(hasCart&&!confirm('Tens itens no carrinho. Se saíres perdes a seleção. Continuar?'))return;
+  if(hasCart){selectedItems={};pendingOrder=null;}
+  showPage(dest);
+}
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
+  // partner e checkout fazem parte do fluxo de compra — mantém bnav-home ativo
+  const navName=['partner','checkout'].includes(name)?'home':name;
+  const nb=document.getElementById('bnav-'+navName);
+  if(nb)nb.classList.add('active');
+  const noNav=['login','confirm'];
+  document.getElementById('bottom-nav').style.display=noNav.includes(name)?'none':(currentUser?'flex':'none');
+  window.scrollTo(0,0);
+  if(name==='reservations') renderReservations();
+  if(name==='wallet') renderWallet();
+  if(name==='home') setTimeout(startUrgencyTimers,0);
+}
 
-  grid.innerHTML = filtered.map(o=>{
-    const disc = Math.round((1 - o.price/o.originalPrice)*100);
-    const bg = categoryBg(o.category);
+// ─────────────────────────────────────────────
+// FILTERS
+// ─────────────────────────────────────────────
+function buildCatChips(){
+  const cats=getCategories();
+  document.getElementById('cat-chips').innerHTML=cats.map(c=>
+    `<button class="chip ${c===activeCategory?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+}
+function setCat(c){activeCategory=c;buildCatChips();renderPartners();}
+function buildAllergenList(){
+  document.getElementById('allergen-list').innerHTML=ALL_ALLERGENS.map(a=>`
+    <label class="allergen-item">
+      <input type="checkbox" value="${a}" ${excludedAllergens.has(a)?'checked':''}
+             onchange="toggleAllergen('${a}')"/>
+      <span>${a}</span>
+    </label>`).join('');
+}
+function toggleAllergenPanel(){const p=document.getElementById('allergen-panel');p.classList.toggle('open');document.getElementById('allergen-btn').setAttribute('aria-expanded',p.classList.contains('open'));}
+function toggleAllergen(a){
+  if(excludedAllergens.has(a))excludedAllergens.delete(a);else excludedAllergens.add(a);
+  updateAllergenBtn(); renderPartners();
+}
+function clearAllergens(){excludedAllergens.clear();buildAllergenList();updateAllergenBtn();renderPartners();}
+function updateAllergenBtn(){
+  const n=excludedAllergens.size;
+  document.getElementById('allergen-btn').classList.toggle('has-filter',n>0);
+  document.getElementById('allergen-count').textContent=n>0?`(${n})`:'';
+}
+document.addEventListener('click',e=>{
+  const wrap=document.querySelector('.allergen-dropdown-wrap');
+  if(wrap&&!wrap.contains(e.target))document.getElementById('allergen-panel').classList.remove('open');
+});
+
+// ─────────────────────────────────────────────
+// PARTNER LIST — com integração de ofertas dinâmicas (Épico 2)
+// ─────────────────────────────────────────────
+function partnerMatchesFilters(p){
+  const q=(document.getElementById('search-input')?.value||'').toLowerCase();
+  if(activeCategory!=='Todas'&&p.category!==activeCategory)return false;
+  if(q&&!p.name.toLowerCase().includes(q)&&!p.category.toLowerCase().includes(q))return false;
+  if(excludedAllergens.size>0){
+    const safe=p.rescueItems.some(i=>[...excludedAllergens].every(a=>!i.allergies.includes(a)))
+              ||p.surpriseBags.some(b=>[...excludedAllergens].every(a=>!b.allergies.includes(a)));
+    if(!safe)return false;
+  }
+  return true;
+}
+
+// Constrói o catálogo combinado: parceiros estáticos + excedentes publicados por parceiros dinâmicos
+function buildCombinedPartners(){
+  const users=lsGet('fs_users')||[];
+  const partnerUsers=users.filter(u=>u.role==='partner'&&u.offers&&u.offers.length>0);
+
+  // Merge dynamic offers into existing PARTNERS entries (by storeId = partner id)
+  const merged=PARTNERS.map(p=>{
+    const partnerUser=partnerUsers.find(u=>u.storeId===p.id);
+    if(!partnerUser) return p;
+    // Convert published offers to rescueItems format and merge (avoid duplicates by id)
+    const dynamicItems=partnerUser.offers
+      .filter(o=>o.qty>0)
+      .map(o=>({
+        id:o.id,emoji:o.emoji||'📦',name:o.name,
+        unitPrice:parseFloat(o.price)||0,
+        allergies:o.allergens||[],
+        tags:o.tags||[],qty:o.qty,
+        _dynamic:true // marca para UI
+      }));
+    // Convert active Rescue Combos to surpriseBags-style entries
+    const dynamicComboBags=(partnerUser.combos||[])
+      .filter(c=>c.active)
+      .map(c=>({
+        size:'Combo',emoji:'🌿',
+        desc:c.name+(c.desc?' · '+c.desc:''),
+        allergies:c.allergens||[],
+        price:parseFloat(c.price)||0,
+        originalPrice:+(parseFloat(c.price)*2.2).toFixed(2),
+        qty:10,pickupStart:c.pickupStart,pickupEnd:c.pickupEnd,
+        _dynamic:true
+      }));
+    // Merge: manter itens estáticos + adicionar dinâmicos que não existam já
+    const existingIds=new Set(p.rescueItems.map(i=>i.id));
+    const newItems=[...p.rescueItems,...dynamicItems.filter(i=>!existingIds.has(i.id))];
+    // Merge surprise bags: keep static + add dynamic combos
+    const newBags=[...p.surpriseBags,...dynamicComboBags];
+    return {...p,rescueItems:newItems,surpriseBags:newBags};
+  });
+
+  // Add new partner users that don't have a PARTNERS entry yet
+  partnerUsers.forEach(u=>{
+    if(!merged.find(p=>p.id===u.storeId)){
+      const dynItems=u.offers.filter(o=>o.qty>0).map(o=>({
+        id:o.id,emoji:o.emoji||'📦',name:o.name,
+        unitPrice:parseFloat(o.price)||0,
+        allergies:o.allergens||[],
+        tags:o.tags||[],qty:o.qty,_dynamic:true
+      }));
+      if(!dynItems.length) return;
+      const dynCombos=u.combos.filter(c=>c.active).map(c=>({
+        size:'Combo',emoji:'🌿',
+        desc:c.name+(c.desc?' · '+c.desc:''),
+        allergies:c.allergens||[],
+        price:parseFloat(c.price)||0,
+        originalPrice:(parseFloat(c.price)||0)*2.2,
+        qty:5
+      }));
+      merged.push({
+        id:u.storeId,emoji:'🏪',name:u.storeName,
+        category:'Outro',location:'Consulta a loja',
+        pickup:dynCombos[0]?dynCombos[0].pickupStart+' – '+dynCombos[0].pickupEnd:'A definir',
+        rescueItems:dynItems,
+        surpriseBags:dynCombos.length?dynCombos:[],
+        maxRescueItems:3,bg:'linear-gradient(135deg,#e0f7fa,#b2ebf2)',
+        hasUrgent:false,_dynamic:true
+      });
+    }
+  });
+
+  return merged;
+}
+
+function renderPartners(){
+  const allPartners=buildCombinedPartners();
+  const grid=document.getElementById('partners-grid');
+  const filtered=allPartners.filter(partnerMatchesFiltersDyn);
+  if(!filtered.length){
+    const isAllergenFilter=excludedAllergens.size>0;
+    grid.innerHTML=isAllergenFilter
+      ?`<div class="empty-state"><div class="icon">⚠️</div><p>Nenhum parceiro com alternativas seguras para os alergénios selecionados.</p><button class="chip" style="margin-top:12px" onclick="clearAllergens()">Limpar filtros</button></div>`
+      :`<div class="empty-state"><div class="icon">🌿</div><p>Nenhum parceiro encontrado.</p></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(p=>{
+    const availItems=p.rescueItems.filter(i=>i.qty>0);
+    const minRescue=availItems.length?Math.min(...availItems.map(i=>i.unitPrice)):0;
+    const newBadge=p._dynamic?'<span class="p-badge" style="background:#e8f8f5;color:#1a6b4a">🆕 Novo</span>':'';
     return `
-    <div class="offer-card" onclick="showDetail(${o.id})">
-      <div class="offer-img" style="background:${bg}">
-        ${o.emoji}
-        ${o.urgent ? '<span class="offer-badge">Urgente!</span>' : ''}
-        ${!o.urgent && disc>=60 ? '<span class="offer-badge soon">-'+disc+'%</span>' : ''}
-      </div>
-      <div class="offer-body">
-        <div class="offer-partner">${o.partner}</div>
-        <div class="offer-name">${o.name}</div>
-        <div class="offer-meta">
-          <div class="offer-price">
-            <span class="new">${o.price.toFixed(2)}€</span>
-            <span class="old">${o.originalPrice.toFixed(2)}€</span>
-          </div>
-          <span class="offer-qty">Restam: ${o.qty}</span>
-        </div>
-        <div class="offer-tags">
-          ${o.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
-          ${o.allergies.slice(0,2).map(a=>`<span class="tag allergy">⚠️ ${a}</span>`).join('')}
+    <div class="partner-card" onclick="openPartnerDyn('${p.id}')">
+      <div class="partner-hero" style="background:${p.bg}">${p.emoji}</div>
+      <div class="partner-body">
+        <div class="partner-category">${p.category}</div>
+        <div class="partner-name">${p.name}</div>
+        <div class="partner-meta"><span>🕐 ${p.pickup}</span><span>${availItems.length?'Rescue desde '+minRescue.toFixed(2)+'€':'Ver ofertas'}</span></div>
+        <div class="partner-location">📍 ${p.location}</div>
+        <div class="partner-badges">
+          <span class="p-badge rescue">🌿 Rescue (${availItems.length} disp.)</span>
+          ${p.surpriseBags.length?`<span class="p-badge surprise">🎁 Sacos (${p.surpriseBags.length} tam.)</span>`:''}
+          ${p.hasUrgent?`<span class="p-badge urgent" id="urgency-${p.id}">⚡ Urgente</span>`:''}
+          ${newBadge}
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function categoryBg(cat){
-  const m={Padaria:'linear-gradient(135deg,#ffecd2,#fcb69f)',Restaurante:'linear-gradient(135deg,#d4fc79,#96e6a1)',Vegetariano:'linear-gradient(135deg,#a8edea,#fed6e3)'};
-  return m[cat]||'linear-gradient(135deg,#e0f7fa,#b2ebf2)';
-}
-
-// ── Detail ────────────────────────────────────────────
-function showDetail(id){
-  currentOffer = OFFERS.find(o=>o.id===id);
-  if(!currentOffer) return;
-  const o = currentOffer;
-  const disc = Math.round((1 - o.price/o.originalPrice)*100);
-
-  document.getElementById('d-emoji').textContent   = o.emoji;
-  document.getElementById('d-partner').textContent = o.partner;
-  document.getElementById('d-name').textContent    = o.name;
-  document.getElementById('d-loc-text').textContent= o.location;
-  document.getElementById('d-price-new').textContent = o.price.toFixed(2)+'€';
-  document.getElementById('d-price-orig').textContent= o.originalPrice.toFixed(2)+'€';
-  document.getElementById('d-discount').textContent  = '-'+disc+'%';
-  document.getElementById('d-desc').textContent   = o.desc;
-  document.getElementById('d-pickup').innerHTML   = `<strong>⏰ Hoje</strong> — ${o.pickup}<br>📍 ${o.location}`;
-
-  const aList = document.getElementById('d-allergies');
-  if(o.allergies.length){
-    aList.innerHTML = o.allergies.map(a=>`<span class="allergy-pill">${a}</span>`).join('');
-  } else {
-    aList.innerHTML = '<span class="allergy-pill none">✅ Sem alergénios declarados</span>';
+// Versão de filtro que aceita parceiro combinado (dinâmico ou estático)
+function partnerMatchesFiltersDyn(p){
+  const q=(document.getElementById('search-input')?.value||'').toLowerCase();
+  if(activeCategory!=='Todas'&&p.category!==activeCategory)return false;
+  if(q&&!p.name.toLowerCase().includes(q)&&!p.category.toLowerCase().includes(q))return false;
+  if(excludedAllergens.size>0){
+    const safe=p.rescueItems.some(i=>[...excludedAllergens].every(a=>!i.allergies.includes(a)))
+              ||p.surpriseBags.some(b=>[...excludedAllergens].every(a=>!b.allergies.includes(a)));
+    if(!safe)return false;
   }
-
-  currentQty = 1;
-  document.getElementById('qty-num').textContent = 1;
-  document.getElementById('qty-max').textContent = `máx. ${o.qty} disponíveis`;
-  document.getElementById('btn-reserve').disabled = o.qty === 0;
-
-  showPage('detail');
+  return true;
 }
 
-function changeQty(delta){
-  if(!currentOffer) return;
-  currentQty = Math.max(1, Math.min(currentOffer.qty, currentQty+delta));
-  document.getElementById('qty-num').textContent = currentQty;
+// openPartner dinâmico — usa buildCombinedPartners para encontrar o parceiro (estático ou dinâmico)
+function openPartnerDyn(id){
+  const allPartners=buildCombinedPartners();
+  currentPartner=allPartners.find(p=>p.id===id);
+  if(!currentPartner){showToast('Parceiro não encontrado');return;}
+  selectedItems={}; selectedBag=null; surpriseQty=1;
+  const p=currentPartner;
+  document.getElementById('pp-emoji').textContent=p.emoji;
+  document.getElementById('pp-name').textContent=p.name;
+  document.getElementById('pp-cat').textContent=p.category;
+  document.getElementById('pp-loc').textContent='📍 '+p.location;
+  document.getElementById('pp-pickup').textContent='🕐 Levantamento hoje: '+p.pickup;
+  renderPartnerBody();
+  showPage('partner');
 }
 
-// ── Reserve ───────────────────────────────────────────
-function doReserve(){
-  if(!currentOffer||!currentUser) return;
-  const o = currentOffer;
-  const code = 'FS-'+Math.floor(1000+Math.random()*9000);
-  const total = (o.price * currentQty).toFixed(2);
+// ─────────────────────────────────────────────
+// PARTNER PAGE
+// ─────────────────────────────────────────────
+function openPartner(id){
+  openPartnerDyn(id); // redireciona para a versão dinâmica
+}
+function renderPartnerBody(){
+  document.getElementById('partner-page-body').innerHTML=buildRescueSection(currentPartner)+buildSurpriseSection(currentPartner);
+}
+function buildRescueSection(p){
+  const visibleItems=p.rescueItems.map(item=>{
+    const selected=!!selectedItems[item.id];
+    const oos=item.qty===0;
+    const allergenBlocked=excludedAllergens.size>0&&[...excludedAllergens].some(a=>item.allergies.includes(a));
+    return `
+    <div class="montra-item ${selected?'selected':''} ${oos?'out-of-stock':''} ${allergenBlocked&&!oos?'allergen-blocked':''}" id="mi-${item.id}" onclick="toggleItem('${item.id}')" style="${allergenBlocked&&!oos?'opacity:.5;cursor:not-allowed;':''} ">
+      <div class="mi-emoji">${item.emoji}</div>
+      <div class="mi-info">
+        <div class="mi-name">${item.name}${oos?' <span style="color:var(--red);font-size:.7rem">· esgotado</span>':''}${allergenBlocked&&!oos?' <span style="color:var(--orange);font-size:.7rem">· contém alergénio</span>':''}${item._dynamic?' <span style="font-size:.65rem;background:#e8f8f5;color:#1a6b4a;padding:1px 6px;border-radius:8px;font-weight:700">novo</span>':''}</div>
+        <div class="mi-tags">${item.tags.map(t=>`<span class="mi-tag">${t}</span>`).join('')}${item.allergies.map(a=>`<span class="mi-tag allergy">⚠️ ${a}</span>`).join('')}</div>
+      </div>
+      <div class="mi-price">${item.unitPrice.toFixed(2)}€</div>
+      <div class="mi-check">${selected?'✓':''}</div>
+    </div>`;
+  }).join('');
+  const selCount=Object.keys(selectedItems).length;
+  const total=Object.values(selectedItems).reduce((s,i)=>s+i.unitPrice,0);
+  return `
+  <div class="offer-type-section">
+    <div class="offer-type-header"><div class="type-icon">🌿</div><div><h3>Rescue Combo — Montra Digital</h3><p>Escolhe até ${p.maxRescueItems} itens · preço = soma dos selecionados</p></div></div>
+    <div class="eco-notice-partner"><span>🌱</span><span>Ao levar os teus recipientes próprios no levantamento, o comerciante valida a tua <strong>Eco-Embalagem</strong> e ganhas <strong>+15 Eco-Créditos</strong> extra!</span></div>
+    <div class="rescue-builder">
+      <div class="rescue-builder-top"><div class="rescue-slots-info">Selecionados: <strong>${selCount} / ${p.maxRescueItems}</strong>${selCount>0?` · Total: <strong style="color:var(--green)">${total.toFixed(2)}€</strong>`:''}</div></div>
+      <div class="montra-items">${visibleItems}</div>
+      <div class="combo-total-bar">
+        <div>
+          <div class="combo-total-label">${selCount===0?'Seleciona itens':'Total Rescue Combo'}</div>
+          <div class="combo-total-price">${selCount>0?total.toFixed(2)+'€':'—'}</div>
+        </div>
+        <button class="btn-reserve-combo" ${selCount===0?'disabled':''} onclick="doRescueReserve()">
+          ${selCount===0?'Seleciona itens':'Reservar Combo →'}
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+function buildSurpriseSection(p){
+  if(!p.surpriseBags||!p.surpriseBags.length) return '';
+  const bagsHtml=p.surpriseBags.map((bag,idx)=>{
+    const isSel=selectedBag&&selectedBag.size===bag.size&&selectedBag._idx===idx;
+    const disc=bag.originalPrice>bag.price?Math.round((1-bag.price/bag.originalPrice)*100):0;
+    const isCombo=bag.size==='Combo';
+    const pickupInfo=isCombo&&bag.pickupStart?`🕐 ${bag.pickupStart}–${bag.pickupEnd}`:'';
+    const dynamicBadge=bag._dynamic?'<span style="font-size:.7rem;background:#e8f8f5;color:#1a6b4a;padding:1px 7px;border-radius:8px;font-weight:700">🌿 Rescue Combo</span>':'';
+    return `
+    <div class="surprise-bag-card ${isSel?'selected':''}" onclick="selectBag(${idx})">
+      <div class="surprise-bag-icon">${bag.emoji}</div>
+      <div class="surprise-bag-info">
+        <div class="surprise-bag-size">${isCombo?'Rescue Combo':'Saco '+bag.size} ${dynamicBadge}</div>
+        <div class="surprise-bag-desc">${bag.desc}</div>
+        ${pickupInfo?`<div style="font-size:.75rem;color:var(--muted);margin-top:2px">${pickupInfo}</div>`:''}
+        <div class="surprise-bag-allergies">${bag.allergies.length?'⚠️ Pode conter: '+bag.allergies.join(', '):'✅ Sem alergénios declarados'}</div>
+      </div>
+      <div class="surprise-bag-right">
+        <div class="surprise-bag-price">${bag.price.toFixed(2)}€</div>
+        ${disc>0?`<div class="surprise-bag-original">${bag.originalPrice.toFixed(2)}€</div><div class="surprise-bag-discount">-${disc}%</div>`:''}
+        <div class="surprise-bag-qty">${bag.qty} disp.</div>
+      </div>
+    </div>`;
+  }).join('');
+  const qtyHtml=selectedBag?`
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeSurpriseQty(-1)" aria-label="Diminuir quantidade">−</button>
+      <span class="qty-num">${surpriseQty}</span>
+      <button class="qty-btn" onclick="changeSurpriseQty(1)" aria-label="Aumentar quantidade">+</button>
+      <span style="font-size:.78rem;color:var(--muted)">máx. ${selectedBag.qty}</span>
+    </div>
+    <button class="btn-reserve-surprise" onclick="doSurpriseReserve()">
+      Reservar ${selectedBag.size==='Combo'?'Rescue Combo':'Saco '+selectedBag.size} · ${(selectedBag.price*surpriseQty).toFixed(2)}€
+    </button>`:'<button class="btn-reserve-surprise" disabled>Seleciona um tamanho</button>';
+  return `
+  <div class="offer-type-section">
+    <div class="offer-type-header"><div class="type-icon">🎁</div><div><h3>Sacos Surpresa & Rescue Combos</h3><p>Mais económico · Vários tamanhos e formatos</p></div></div>
+    <div class="surprise-notice">🎁 Os Sacos Surpresa têm conteúdo surpresa. Os Rescue Combos são pré-configurados pelo parceiro.</div>
+    <div class="surprise-bags-grid">${bagsHtml}</div>
+    <div style="margin-top:14px">${qtyHtml}</div>
+  </div>`;
+}
+function toggleItem(itemId){
+  const item=currentPartner.rescueItems.find(i=>i.id===itemId);
+  const allergenBlocked=excludedAllergens.size>0&&[...excludedAllergens].some(a=>item&&item.allergies.includes(a));
+  if(!item||item.qty===0||allergenBlocked)return;
+  if(selectedItems[itemId])delete selectedItems[itemId];
+  else{
+    if(Object.keys(selectedItems).length>=currentPartner.maxRescueItems){showToast(`Máx. ${currentPartner.maxRescueItems} itens`);return;}
+    selectedItems[itemId]={...item}; // clone para evitar referência partilhada ao objeto de PARTNERS
+  }
+  renderPartnerBody();
+}
+function selectBag(idx){selectedBag={...currentPartner.surpriseBags[idx],_idx:idx};surpriseQty=1;renderPartnerBody();}
+function changeSurpriseQty(delta){if(!selectedBag)return;surpriseQty=Math.max(1,Math.min(selectedBag.qty,surpriseQty+delta));renderPartnerBody();}
 
-  const reservation = {
-    id: Date.now(),
-    code, offerId:o.id,
-    offerName:o.name, offerEmoji:o.emoji,
-    partner:o.partner, pickup:o.pickup,
-    qty:currentQty, total,
-    userEmail:currentUser.email,
-    date: new Date().toLocaleDateString('pt-PT'),
-    status:'pending'
-  };
-  const reservations = getReservations();
-  reservations.push(reservation);
-  saveReservations(reservations);
-
-  // show confirm
-  document.getElementById('confirm-code').textContent = code;
-  document.getElementById('confirm-summary').innerHTML =
-    `<strong>Produto:</strong> ${o.emoji} ${o.name}<br>
-     <strong>Parceiro:</strong> ${o.partner}<br>
-     <strong>Quantidade:</strong> ${currentQty} combo(s)<br>
-     <strong>Total:</strong> ${total}€<br>
-     <strong>Levantamento:</strong> ${o.pickup}<br>
-     <strong>Local:</strong> ${o.location}`;
-
-  showPage('confirm');
-  document.getElementById('bottom-nav').style.display='none';
+function doRescueReserve(){
+  if(!currentUser||!currentPartner)return;
+  const items=Object.values(selectedItems);
+  if(items.length===0){showToast('Seleciona pelo menos 1 item');return;}
+  const total=items.reduce((s,i)=>s+i.unitPrice,0);
+  pendingOrder={type:'rescue',partner:currentPartner,items:items.map(i=>({emoji:i.emoji,name:i.name,price:i.unitPrice})),qty:1,total:total.toFixed(2),rawTotal:total};
+  openCheckout();
+}
+function doSurpriseReserve(){
+  if(!currentUser||!currentPartner||!selectedBag)return;
+  const total=selectedBag.price*surpriseQty;
+  pendingOrder={type:'surprise',partner:currentPartner,bag:{size:selectedBag.size,desc:selectedBag.desc,price:selectedBag.price},qty:surpriseQty,total:total.toFixed(2),rawTotal:total};
+  openCheckout();
 }
 
-// ── Reservations list ─────────────────────────────────
-function renderReservations(){
-  const all   = getReservations();
-  const mine  = all.filter(r=>r.userEmail===currentUser?.email).reverse();
-  const list  = document.getElementById('res-list');
-  if(!mine.length){
-    list.innerHTML=`<div class="no-res"><div class="icon">🎫</div><p>Ainda não tens reservas.<br>Explora as ofertas disponíveis!</p></div>`;
+// ─────────────────────────────────────────────
+// CHECKOUT
+// ─────────────────────────────────────────────
+function openCheckout(){
+  if(!pendingOrder){showToast('Seleciona primeiro um combo para reservar 🛒');showPage('home');return;}
+  selectedPayment=null; selectedEcoDiscount=null;
+  document.querySelectorAll('.payment-option').forEach(el=>el.classList.remove('selected'));
+  document.querySelectorAll('input[name=payment]').forEach(r=>r.checked=false);
+  document.getElementById('card-form').classList.remove('visible');
+  document.getElementById('mbway-form').classList.remove('visible');
+  document.getElementById('btn-pay').disabled=true;
+  document.getElementById('btn-pay-label').textContent='Seleciona um método de pagamento';
+  const o=pendingOrder;
+  document.getElementById('ck-hero-sub').textContent=o.type==='rescue'
+    ?`🌿 Rescue Combo · ${o.partner.name}`
+    :`🎁 Saco Surpresa ${o.bag.size} · ${o.partner.name}`;
+  buildCheckoutEcoSection();
+  buildCheckoutSummary();
+  const el=document.getElementById('nav-username3');
+  if(el&&currentUser) el.textContent=currentUser.name.split(' ')[0];
+  showPage('checkout');
+}
+
+function buildCheckoutEcoSection(){
+  const validDiscounts=getUserEcoDiscounts();
+  const pts=getUserEcoCredits();
+  const el=document.getElementById('ck-eco-content');
+  const nextThreshold=ECO_THRESHOLDS.find(t=>pts<t.pts);
+
+  if(!validDiscounts.length){
+    const msg=nextThreshold
+      ?`Ainda não tens descontos disponíveis. Faltam <strong>${nextThreshold.pts-pts} pts</strong> para desbloqueares ${nextThreshold.pct}% de desconto!`
+      :`Continua a acumular para desbloquear descontos!`;
+    el.innerHTML=`<div class="eco-no-discounts">🌱 ${msg}<br><span style="font-size:.75rem;color:var(--muted)">Tens ${pts} pts no ciclo atual.</span></div>`;
+    selectedEcoDiscount=null;
     return;
   }
-  list.innerHTML = mine.map(r=>`
-    <div class="res-card">
-      <div class="res-emoji">${r.offerEmoji}</div>
-      <div class="res-info">
-        <div class="res-name">${r.offerName}</div>
-        <div class="res-partner">${r.partner}</div>
-        <div class="res-meta">${r.date} · ${r.qty}x · ${r.total}€<br>
-          <span class="res-code">${r.code}</span>
-        </div>
+
+  const now=Date.now();
+  const urgentDays=7;
+  const discHtml=validDiscounts.map(d=>{
+    const daysLeft=Math.ceil((d.expiresAt-now)/(1000*60*60*24));
+    const isUrgent=daysLeft<=urgentDays;
+    const isSel=selectedEcoDiscount&&selectedEcoDiscount.id===d.id;
+    return `
+    <div class="eco-discount-option ${isSel?'selected':''}" onclick="selectEcoDiscount('${d.id}')">
+      <input type="radio" name="eco-disc" value="${d.id}" ${isSel?'checked':''}/>
+      <div class="eco-disc-pct">${d.pct}%</div>
+      <div class="eco-disc-info">
+        <div class="eco-disc-label">${d.pct}% de desconto sobre o total</div>
+        <div class="eco-disc-expiry ${isUrgent?'urgent':''}">Expira em ${daysLeft} dia${daysLeft===1?'':'s'} (${d.expiresLabel})${isUrgent?' ⚠️':''}</div>
       </div>
-      <span class="res-status ${r.status}">${r.status==='pending'?'Pendente':'Levantado'}</span>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
+
+  el.innerHTML=`
+    <div class="eco-discount-list">${discHtml}</div>
+    <div class="eco-none-option ${!selectedEcoDiscount?'selected':''}" onclick="selectEcoDiscount(null)">
+      <input type="radio" name="eco-disc" value="none" ${!selectedEcoDiscount?'checked':''}/>
+      <label>Não aplicar desconto agora</label>
+    </div>`;
 }
 
-// ── Tab switching (login) ─────────────────────────────
+function selectEcoDiscount(id){
+  const validDiscounts=getUserEcoDiscounts();
+  selectedEcoDiscount=id?validDiscounts.find(d=>d.id===id)||null:null;
+  buildCheckoutEcoSection();
+  buildCheckoutSummary();
+}
+
+function buildCheckoutSummary(){
+  const o=pendingOrder;
+  const discPct=selectedEcoDiscount?selectedEcoDiscount.pct:0;
+  const discAmt=discPct>0?(o.rawTotal*discPct/100):0;
+  const finalTotal=Math.max(0,o.rawTotal-discAmt);
+  let html='';
+  if(o.type==='rescue'){
+    const itemsHtml=o.items.map(i=>`<li>${i.emoji} ${i.name} — ${i.price.toFixed(2)}€</li>`).join('');
+    html=`
+      <div class="ck-summary-line"><span>Tipo</span><span>🌿 Rescue Combo</span></div>
+      <div class="ck-summary-line"><span>Parceiro</span><span>${o.partner.name}</span></div>
+      <div class="ck-summary-line"><span>Itens (${o.items.length})</span><span></span></div>
+      <ul class="ck-items-list">${itemsHtml}</ul>
+      <div class="ck-summary-line"><span>Subtotal</span><span>${o.rawTotal.toFixed(2)}€</span></div>
+      ${discPct>0?`<div class="ck-summary-line discount-line"><span>🌱 Desconto Eco (${discPct}%)</span><span>-${discAmt.toFixed(2)}€</span></div>`:''}
+      <div class="ck-summary-line"><span>Levantamento</span><span>${o.partner.pickup}</span></div>
+      <div class="ck-summary-line total"><span>Total</span><span>${finalTotal.toFixed(2)}€</span></div>`;
+  } else {
+    html=`
+      <div class="ck-summary-line"><span>Tipo</span><span>🎁 Saco Surpresa — Tam. ${o.bag.size}</span></div>
+      <div class="ck-summary-line"><span>Parceiro</span><span>${o.partner.name}</span></div>
+      <div class="ck-summary-line"><span>Descrição</span><span style="text-align:right;max-width:55%">${o.bag.desc}</span></div>
+      <div class="ck-summary-line"><span>Quantidade</span><span>${o.qty}x</span></div>
+      <div class="ck-summary-line"><span>Subtotal</span><span>${o.rawTotal.toFixed(2)}€</span></div>
+      ${discPct>0?`<div class="ck-summary-line discount-line"><span>🌱 Desconto Eco (${discPct}%)</span><span>-${discAmt.toFixed(2)}€</span></div>`:''}
+      <div class="ck-summary-line"><span>Levantamento</span><span>${o.partner.pickup}</span></div>
+      <div class="ck-summary-line total"><span>Total</span><span>${finalTotal.toFixed(2)}€</span></div>`;
+  }
+  document.getElementById('ck-summary').innerHTML=html;
+  if(selectedPayment) updatePayBtnLabel();
+}
+
+function updatePayBtnLabel(){
+  if(!selectedPayment)return;
+  const o=pendingOrder;
+  const discPct=selectedEcoDiscount?selectedEcoDiscount.pct:0;
+  const finalTotal=Math.max(0,o.rawTotal*(1-discPct/100));
+  const labels={mbway:'Pagar com MB WAY',card:'Pagar com Cartão',multibanco:'Gerar Referência Multibanco'};
+  document.getElementById('btn-pay-label').textContent=`${labels[selectedPayment]} · ${finalTotal.toFixed(2)}€`;
+}
+function selectPayment(method){
+  selectedPayment=method;
+  // cache de referências para evitar múltiplas pesquisas no DOM
+  const elMbway=document.getElementById('opt-mbway');
+  const elCard=document.getElementById('opt-card');
+  const elMultibanco=document.getElementById('opt-multibanco');
+  const elCardForm=document.getElementById('card-form');
+  const elMbwayForm=document.getElementById('mbway-form');
+  const elBtnPay=document.getElementById('btn-pay');
+  if(elMbway) elMbway.classList.toggle('selected',method==='mbway');
+  if(elCard) elCard.classList.toggle('selected',method==='card');
+  if(elMultibanco) elMultibanco.classList.toggle('selected',method==='multibanco');
+  document.querySelectorAll('input[name=payment]').forEach(r=>{r.checked=r.value===method});
+  if(elCardForm) elCardForm.classList.toggle('visible',method==='card');
+  if(elMbwayForm) elMbwayForm.classList.toggle('visible',method==='mbway');
+  if(elBtnPay) elBtnPay.disabled=false;
+  updatePayBtnLabel();
+}
+function luhnCheck(num){
+  let sum=0,alt=false;
+  for(let i=num.length-1;i>=0;i--){
+    let n=parseInt(num[i],10);
+    if(alt){n*=2;if(n>9)n-=9;}
+    sum+=n;alt=!alt;
+  }
+  return sum%10===0;
+}
+function processPay(){
+  if(!selectedPayment||!pendingOrder)return;
+  if(selectedPayment==='card'){
+    // cache dos elementos para evitar múltiplas pesquisas no DOM
+    const num=(document.getElementById('card-number').value||'').replace(/\s/g,'');
+    const exp=(document.getElementById('card-expiry').value||'');
+    const cvv=(document.getElementById('card-cvv').value||'');
+    const name=(document.getElementById('card-name').value||'').trim();
+    if(!name){showToast('Introduz o nome do titular do cartão');return;}
+    if(num.length<16||!luhnCheck(num)){showToast('Número de cartão inválido');return;}
+    const parts=exp.split('/');
+    const mm=parseInt(parts[0],10), yy=parseInt(parts[1],10);
+    const now=new Date(), curYY=now.getFullYear()%100, curMM=now.getMonth()+1;
+    if(!mm||mm<1||mm>12||!yy){showToast('Validade inválida (MM/AA)');return;}
+    if(yy<curYY||(yy===curYY&&mm<curMM)){showToast('Cartão expirado');return;}
+    if(cvv.length<3){showToast('CVV inválido');return;}
+  }
+  if(selectedPayment==='mbway'){
+    const phone=document.getElementById('mbway-phone').value.replace(/\s/g,'');
+    if(phone.length<9){showToast('Introduz um número de telemóvel válido');return;}
+  }
+  const msgs={mbway:'A aguardar confirmação MB WAY…',card:'A processar pagamento…',multibanco:'A gerar referência Multibanco…'};
+  document.getElementById('processing-msg').textContent=msgs[selectedPayment];
+  document.getElementById('processing-overlay').classList.add('active');
+  setTimeout(()=>{document.getElementById('processing-overlay').classList.remove('active');finalizeOrder();},1800);
+}
+function finalizeOrder(){
+  const o=pendingOrder;
+  const p=o.partner;
+  const code='FS-'+Math.floor(1000+Math.random()*9000);
+  const discPct=selectedEcoDiscount?selectedEcoDiscount.pct:0;
+  const discAmt=discPct>0?(o.rawTotal*discPct/100):0;
+  const finalTotal=Math.max(0,o.rawTotal-discAmt).toFixed(2);
+
+  // use the chosen discount coupon
+  if(selectedEcoDiscount) useEcoDiscount(selectedEcoDiscount.id);
+
+  // award eco credits for booking
+  const earnedPts=o.type==='rescue'?ECO_PER_RESCUE:ECO_PER_SURPRISE;
+  addEcoCredits(earnedPts, o.type==='rescue'?'Rescue Combo reservado':'Saco Surpresa reservado');
+
+  let res;
+  if(o.type==='rescue'){
+    res={id:Date.now(),code,type:'rescue',partnerId:p.id,partnerName:p.name,partnerEmoji:p.emoji,category:p.category||'Outro',pickup:p.pickup,items:o.items,qty:1,total:finalTotal,paymentMethod:selectedPayment,ecoValidated:false,userEmail:currentUser.email,date:new Date().toLocaleDateString('pt-PT'),status:'pending'};
+    const itemsHtml=o.items.map(i=>`<li>${i.emoji} ${i.name} — ${i.price.toFixed(2)}€</li>`).join('');
+    document.getElementById('confirm-summary').innerHTML=`
+      <strong>Tipo:</strong> 🌿 Rescue Combo<br>
+      <strong>Parceiro:</strong> ${p.name}<br>
+      <strong>Itens:</strong><ul class="confirm-items-list">${itemsHtml}</ul>
+      <strong>Subtotal:</strong> ${o.rawTotal.toFixed(2)}€<br>
+      ${discPct>0?`<strong>Desconto Eco (${discPct}%):</strong> -${discAmt.toFixed(2)}€<br>`:''}
+      <strong>Total pago:</strong> ${finalTotal}€<br>
+      <strong>Pagamento:</strong> ${paymentLabel(selectedPayment)}<br>
+      <strong>Levantamento:</strong> ${p.pickup}<br>
+      <strong>Local:</strong> ${p.location}`;
+  } else {
+    res={id:Date.now(),code,type:'surprise',partnerId:p.id,partnerName:p.name,partnerEmoji:'🎁',category:p.category||'Outro',pickup:p.pickup,bagSize:o.bag.size,items:[],qty:o.qty,total:finalTotal,paymentMethod:selectedPayment,ecoValidated:false,userEmail:currentUser.email,date:new Date().toLocaleDateString('pt-PT'),status:'pending'};
+    document.getElementById('confirm-summary').innerHTML=`
+      <strong>Tipo:</strong> 🎁 Saco Surpresa — Tam. ${o.bag.size}<br>
+      <strong>Parceiro:</strong> ${p.name}<br>
+      <strong>Quantidade:</strong> ${o.qty}x<br>
+      <strong>Subtotal:</strong> ${o.rawTotal.toFixed(2)}€<br>
+      ${discPct>0?`<strong>Desconto Eco (${discPct}%):</strong> -${discAmt.toFixed(2)}€<br>`:''}
+      <strong>Total pago:</strong> ${finalTotal}€<br>
+      <strong>Pagamento:</strong> ${paymentLabel(selectedPayment)}<br>
+      <strong>Levantamento:</strong> ${p.pickup}<br>
+      <strong>Local:</strong> ${p.location}`;
+  }
+
+  const all=getReservations(); all.push(res); saveReservations(all);
+
+  // banner
+  const bannerEl=document.getElementById('eco-earned-banner');
+  const pts=getUserEcoCredits();
+  const nextT=ECO_THRESHOLDS.find(t=>pts<t.pts);
+  const bonusNote=o.type==='rescue'?' Leva eco-embalagem e ganha +15 pts!':'';
+  const nextNote=nextT?` Faltam ${nextT.pts-pts} pts para ${nextT.pct}% de desconto.`:'';
+  bannerEl.innerHTML=`
+    <div class="eco-earned-banner">
+      <div class="eco-big">+${earnedPts} 🌱</div>
+      <p>Ganhaste <strong>${earnedPts} Eco-Créditos</strong>!${bonusNote}${nextNote}</p>
+    </div>`;
+
+  document.getElementById('confirm-code').textContent=code;
+  pendingOrder=null; selectedPayment=null; selectedEcoDiscount=null;
+  showPage('confirm');
+}
+function paymentLabel(m){return{mbway:'📱 MB WAY',card:'💳 Cartão',multibanco:'🏧 Multibanco'}[m]||m;}
+
+// ─────────────────────────────────────────────
+// RESERVATIONS
+// ─────────────────────────────────────────────
+function renderReservations(){
+  const all=getReservations();
+  const mine=all.filter(r=>r.userEmail===currentUser?.email).reverse();
+  const list=document.getElementById('res-list');
+  if(!mine.length){list.innerHTML=`<div class="no-res"><div class="icon">🎫</div><p>Ainda não tens reservas.</p></div>`;return;}
+  list.innerHTML=mine.map(r=>`
+    <div class="res-card">
+      <div class="res-emoji">${r.partnerEmoji}</div>
+      <div class="res-info">
+        <div class="res-name">${r.partnerName} ${r.type==='rescue'?'· 🌿 Rescue':'· 🎁 Surpresa '+r.bagSize}</div>
+        <div class="res-partner">${r.pickup}</div>
+        ${r.type==='rescue'&&r.items.length?`<div class="res-items-text">${r.items.map(i=>i.emoji+' '+i.name).join(' · ')}</div>`:''}
+        <div class="res-meta">${r.date} · ${r.total}€ · <span class="res-code">${r.code}</span></div>
+      </div>
+      <div class="res-right">
+        <span class="res-status ${r.status==='done'?'done':'pending'}">${r.status==='done'?'Levantado':'Pendente'}</span>
+        ${r.type==='rescue'&&r.status==='pending'&&!r.ecoValidated
+          ?`<button class="btn-eco-validate" onclick="validateEcoBag('${r.id}')">🌱 Eco-Embalagem</button>`
+          :r.ecoValidated?`<span class="eco-validated-badge">✅ Eco-Créditos</span>`:''}
+      </div>
+    </div>`).join('');
+}
+function validateEcoBag(resId){
+  const all=getReservations();
+  const idx=all.findIndex(r=>String(r.id)===String(resId));
+  if(idx<0)return;
+  all[idx].ecoValidated=true;
+  all[idx].status='done';
+  saveReservations(all);
+  addEcoCredits(ECO_PER_ECO_BAG,'Eco-Embalagem validada no levantamento');
+  showToast(`+${ECO_PER_ECO_BAG} Eco-Créditos pela tua Eco-Embalagem! 🌱`);
+  renderReservations();
+}
+
+// ─────────────────────────────────────────────
+// ECO WALLET
+// ─────────────────────────────────────────────
+function renderWallet(){
+  const pts=getUserEcoCredits();
+  const now=Date.now();
+
+  // balance card
+  document.getElementById('wallet-balance-num').textContent=pts;
+  const currentThreshold=ECO_THRESHOLDS.slice().reverse().find(t=>pts>=t.pts);
+  const currentPct=currentThreshold?currentThreshold.pct:0;
+  document.getElementById('wallet-balance-value').textContent=`Desconto atual desbloqueado: ${currentPct}%`;
+  const pct=Math.round(pts/ECO_CYCLE_MAX*100);
+  document.getElementById('wallet-progress-fill').style.width=pct+'%';
+  document.getElementById('wallet-progress-pct').textContent=pct+'%';
+  const nextT=ECO_THRESHOLDS.find(t=>pts<t.pts);
+  document.getElementById('wallet-progress-label-left').textContent=nextT
+    ?`Próximo: ${nextT.pct}% (faltam ${nextT.pts-pts} pts)`
+    :'Ciclo completo — aguarda reinício';
+  const cycleInfo=document.getElementById('wallet-cycle-info');
+  cycleInfo.innerHTML=nextT
+    ?`🎯 Próximo desconto: <strong>${nextT.pct}%</strong> ao atingir <strong>${nextT.pts} pts</strong>. Faltam <strong>${nextT.pts-pts} pts</strong>.`
+    :`🏆 Atingiste o máximo! O ciclo reinicia ao chegar aos 1000 pts.`;
+
+  // available discounts
+  const users=getUsers();
+  const u=users.find(u=>u.email===currentUser?.email);
+  const allDiscounts=(u&&u.ecoDiscounts)||[];
+  const discCard=document.getElementById('wallet-discounts-card');
+  if(!allDiscounts.length){
+    discCard.innerHTML=`<div class="no-discounts-msg">🌱 Ainda sem descontos emitidos. Acumula Eco-Créditos para desbloquear!</div>`;
+  } else {
+    discCard.innerHTML=allDiscounts.slice().reverse().map(d=>{
+      const daysLeft=Math.ceil((d.expiresAt-now)/(1000*60*60*24));
+      const expired=d.expiresAt<=now;
+      let statusCls,statusLabel;
+      if(d.used){statusCls='used';statusLabel='Utilizado';}
+      else if(expired){statusCls='expired';statusLabel='Expirado';}
+      else{statusCls='available';statusLabel='Disponível';}
+      const expText=d.used?`Usado em ${d.expiresLabel}`
+        :(expired?`Expirou em ${d.expiresLabel}`:`Expira em ${daysLeft} dia${daysLeft===1?'':'s'} (${d.expiresLabel})`);
+      return `
+      <div class="wallet-disc-item">
+        <div class="wallet-disc-pct">${d.pct}%</div>
+        <div class="wallet-disc-info">
+          <div class="wallet-disc-label">${d.pct}% de desconto sobre o total</div>
+          <div class="wallet-disc-expiry ${statusCls==='available'?(daysLeft<=7?'urgent':'valid'):(statusCls==='expired'?'expired':'')}">${expText}</div>
+        </div>
+        <div class="wallet-disc-status ${statusCls}">${statusLabel}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // threshold map
+  const thEl=document.getElementById('threshold-list');
+  thEl.innerHTML=ECO_THRESHOLDS.map(t=>{
+    const reached=pts>=t.pts;
+    const isCurrent=currentThreshold&&currentThreshold.pts===t.pts;
+    const isNext=nextT&&nextT.pts===t.pts;
+    return `
+    <div class="threshold-row ${reached?'reached':''} ${isNext?'current':''}">
+      <div class="th-icon">${reached?'✅':(isNext?'⭐':'🔒')}</div>
+      <div class="th-info">
+        <div class="th-pts">${t.pts} pts</div>
+        <div class="th-disc">Desconto desbloqueado</div>
+      </div>
+      <div class="th-pct">${t.pct}%</div>
+      ${isNext?`<div class="th-remaining">faltam ${t.pts-pts}</div>`:''}
+    </div>`;
+  }).join('');
+
+  // history
+  const history=(u&&u.ecoHistory)||[];
+  const histCard=document.getElementById('eco-history-card');
+  if(!history.length){histCard.innerHTML=`<div class="no-history">Ainda sem movimentos.</div>`;return;}
+  const iconMap={earn:'🌱',spend:'💸',unlock:'🎉',reset:'♻️'};
+  const HIST_PAGE=25;
+  const visible=history.slice(0,HIST_PAGE);
+  const remaining=history.length-HIST_PAGE;
+  const itemsHtml=visible.map(h=>`
+    <div class="eco-history-item">
+      <div class="eco-history-icon">${iconMap[h.type]||'🌱'}</div>
+      <div class="eco-history-info">
+        <div class="eco-history-desc">${h.desc}</div>
+        <div class="eco-history-date">${h.date}</div>
+      </div>
+      <div class="eco-history-pts ${h.type==='earn'?'earn':(h.type==='spend'?'spend':'')}">
+        ${h.pts>0?(h.type==='earn'?'+':'')+h.pts+' pts':''}
+      </div>
+    </div>`).join('');
+  const moreHtml=remaining>0
+    ?`<div style="text-align:center;padding:12px 0;color:var(--muted);font-size:.82rem">+${remaining} movimento${remaining>1?'s':''} anteriores não mostrados</div>`
+    :'';
+  histCard.innerHTML=itemsHtml+moreHtml;
+}
+
+// ─────────────────────────────────────────────
+// CHART REGISTRY — destroy before recreate
+// ─────────────────────────────────────────────
+const _charts={};
+function destroyChart(id){if(_charts[id]){_charts[id].destroy();delete _charts[id];}}
+function createChart(id,config){
+  destroyChart(id);
+  const canvas=document.getElementById(id);
+  if(!canvas)return;
+  _charts[id]=new Chart(canvas,config);
+}
+
+// ─────────────────────────────────────────────
+// ADMIN STATS (US3.3)
+// ─────────────────────────────────────────────
+let _revenueFilter='all';
+
+function showAdminSection(name){
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('admin-section-'+name).classList.add('active');
+  const sectionNames=['kpis','revenue','incidents'];
+  const idx=sectionNames.indexOf(name);
+  const btns=document.querySelectorAll('.admin-nav-btn');
+  if(btns[idx]) btns[idx].classList.add('active');
+  if(name==='kpis') renderAdminKpiCharts();
+  if(name==='revenue') renderAdminRevenueCharts();
+  if(name==='incidents') renderAdminIncidentsCharts();
+}
+
+function setRevenueFilter(f){
+  _revenueFilter=f;
+  document.querySelectorAll('.chart-filter-btn').forEach(b=>b.classList.remove('active'));
+  const map={all:0,week:1,month:2};
+  const btns=document.querySelectorAll('#revenue-filter-row .chart-filter-btn');
+  if(btns[map[f]]) btns[map[f]].classList.add('active');
+  renderAdminRevenueCharts();
+}
+
+function buildMockReservations(){
+  // Enrich real reservations + generate synthetic ones for demo richness
+  const real=getReservations();
+  const synthetic=[];
+  const partnerPool=buildCombinedPartners().length?buildCombinedPartners():PARTNERS;
+  const now=new Date();
+  // Use a stable pseudo-random so charts don't flicker on re-render
+  let seed=42;
+  const seededRand=()=>{seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/0xffffffff;};
+  for(let w=0;w<8;w++){
+    const count=Math.floor(8+seededRand()*14);
+    for(let i=0;i<count;i++){
+      const p=partnerPool[Math.floor(seededRand()*partnerPool.length)];
+      const d=new Date(now);
+      d.setDate(d.getDate()-(w*7+Math.floor(seededRand()*7)));
+      const type=seededRand()>0.4?'rescue':'surprise';
+      const total=(type==='rescue'?(4+seededRand()*8):(2+seededRand()*5)).toFixed(2);
+      synthetic.push({
+        type,partnerId:p.id,partnerName:p.name,category:p.category,
+        total,date:d.toLocaleDateString('pt-PT'),
+        status:seededRand()>0.15?'done':'pending',
+        _synthetic:true,_week:w,_dateObj:d
+      });
+    }
+  }
+  return [...real,...synthetic];
+}
+
+function adminResetData(){
+  if(!confirm('Limpar todas as reservas e dados de teste? Os utilizadores demo serão mantidos.')) return;
+  localStorage.removeItem('fs_reservations');
+  showToast('✅ Dados de reservas limpos.');
+  renderAdminStats();
+}
+
+function renderAdminStats(){
+  // Update hero with admin name
+  if(currentUser) document.getElementById('admin-hero-sub').textContent=
+    'Sessão: '+currentUser.name+' · Painel Global FreshSave';
+  // KPIs
+  const allRes=buildMockReservations();
+  const totalRevenue=allRes.reduce((s,r)=>s+parseFloat(r.total||0),0);
+  const uniquePartners=new Set(allRes.map(r=>r.partnerId)).size;
+  const aov=allRes.length?totalRevenue/allRes.length:0;
+
+  document.getElementById('admin-kpi-row').innerHTML=`
+    <div class="admin-kpi"><div class="admin-kpi-val">${allRes.length}</div><div class="admin-kpi-label">Total transações</div><div class="admin-kpi-sub">+12% vs mês ant.</div></div>
+    <div class="admin-kpi"><div class="admin-kpi-val">${aov.toFixed(2)}€</div><div class="admin-kpi-label">AOV médio</div><div class="admin-kpi-sub">Valor médio por reserva</div></div>
+    <div class="admin-kpi"><div class="admin-kpi-val">${uniquePartners}</div><div class="admin-kpi-label">Parceiros ativos</div><div class="admin-kpi-sub">Na plataforma</div></div>
+    <div class="admin-kpi"><div class="admin-kpi-val">${totalRevenue.toFixed(0)}€</div><div class="admin-kpi-label">Receita total</div><div class="admin-kpi-sub">Acumulado</div></div>
+    <div class="admin-kpi"><div class="admin-kpi-val">${MOCK_INCIDENTS.length}</div><div class="admin-kpi-label">Incidências</div><div class="admin-kpi-sub">Últimos 30 dias</div></div>`;
+
+  // Default to kpis section
+  renderAdminKpiCharts();
+}
+
+function renderAdminKpiCharts(){
+  const allRes=buildMockReservations();
+
+  // Donut: rescue vs surprise
+  const rescueCount=allRes.filter(r=>r.type==='rescue').length;
+  const surpriseCount=allRes.filter(r=>r.type==='surprise').length;
+  createChart('chart-reservations-type',{
+    type:'doughnut',
+    data:{
+      labels:['🌿 Rescue Combo','🎁 Saco Surpresa'],
+      datasets:[{data:[rescueCount,surpriseCount],backgroundColor:['#1a6b4a','#2471a3'],borderWidth:0,hoverOffset:8}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:12},padding:16}}}}
+  });
+
+  // Bar: top partners
+  const partnerCounts={};
+  allRes.forEach(r=>{partnerCounts[r.partnerName]=(partnerCounts[r.partnerName]||0)+1;});
+  const sorted=Object.entries(partnerCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  createChart('chart-top-partners',{
+    type:'bar',
+    data:{
+      labels:sorted.map(([name])=>name.length>16?name.substring(0,14)+'…':name),
+      datasets:[{label:'Reservas',data:sorted.map(([,c])=>c),backgroundColor:'rgba(26,107,74,.75)',borderRadius:8,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}
+  });
+}
+
+function filterResByPeriod(allRes){
+  const now=new Date();
+  return allRes.filter(r=>{
+    if(_revenueFilter==='all') return true;
+    const d=r._dateObj||(()=>{const parts=(r.date||'').split('/');return parts.length===3?new Date(+parts[2],+parts[1]-1,+parts[0]):null})();
+    if(!d) return false;
+    const diffDays=(now-d)/(1000*60*60*24);
+    if(_revenueFilter==='week') return diffDays<=7;
+    if(_revenueFilter==='month') return diffDays<=30;
+    return true;
+  });
+}
+
+function renderAdminRevenueCharts(){
+  const allRes=buildMockReservations();
+  const filtered=filterResByPeriod(allRes);
+
+  // Bar: revenue by category
+  const catRevenue={};
+  filtered.forEach(r=>{
+    const cat=r.category||buildCombinedPartners().find(p=>p.id===r.partnerId)?.category||'Outro';
+    catRevenue[cat]=(catRevenue[cat]||0)+parseFloat(r.total||0);
+  });
+  const catLabels=Object.keys(catRevenue);
+  const catColors=['#1a6b4a','#2471a3','#e67e22','#8e44ad','#c0392b'];
+  createChart('chart-revenue-category',{
+    type:'bar',
+    data:{
+      labels:catLabels,
+      datasets:[{label:'Receita (€)',data:catLabels.map(c=>+catRevenue[c].toFixed(2)),backgroundColor:catColors.slice(0,catLabels.length),borderRadius:10,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'},ticks:{callback:v=>v+'€'}},x:{grid:{display:false}}}}
+  });
+
+  // Line: weekly revenue trend (last 8 weeks)
+  const weekLabels=[];
+  const weekData=[];
+  const allForTrend=buildMockReservations();
+  for(let w=7;w>=0;w--){
+    const label=`S-${w===0?'atual':w}`;
+    weekLabels.push(label);
+    const rev=allForTrend.filter(r=>(r._week===w)||(!r._synthetic&&true)).reduce((s,r,_,arr)=>{
+      // for real reservations, spread them across weeks roughly
+      return s;
+    },0);
+    // Use synthetic week sums
+    const wRev=allForTrend.filter(r=>r._week===w).reduce((s,r)=>s+parseFloat(r.total||0),0);
+    weekData.push(+wRev.toFixed(2));
+  }
+  createChart('chart-revenue-trend',{
+    type:'line',
+    data:{
+      labels:weekLabels,
+      datasets:[{label:'Receita (€)',data:weekData,borderColor:'#1a6b4a',backgroundColor:'rgba(26,107,74,.08)',tension:.4,fill:true,pointBackgroundColor:'#1a6b4a',pointRadius:5,pointHoverRadius:7}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.05)'},ticks:{callback:v=>v+'€'}},x:{grid:{display:false}}}}
+  });
+}
+
+function renderAdminIncidentsCharts(){
+  // Line: weekly incident trend (mocked)
+  const weekLabels=['S-7','S-6','S-5','S-4','S-3','S-2','S-1','Atual'];
+  const weekIncidents=[3,2,5,4,3,6,4,MOCK_INCIDENTS.length];
+  createChart('chart-incidents-trend',{
+    type:'line',
+    data:{
+      labels:weekLabels,
+      datasets:[{label:'Incidências',data:weekIncidents,borderColor:'#e67e22',backgroundColor:'rgba(230,126,34,.08)',tension:.4,fill:true,pointBackgroundColor:'#e67e22',pointRadius:5,pointHoverRadius:7}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}
+  });
+
+  // Doughnut: incident types
+  const typeCounts={};
+  MOCK_INCIDENTS.forEach(i=>{typeCounts[i.type]=(typeCounts[i.type]||0)+1;});
+  createChart('chart-incidents-type',{
+    type:'doughnut',
+    data:{
+      labels:Object.keys(typeCounts),
+      datasets:[{data:Object.values(typeCounts),backgroundColor:['#e67e22','#c0392b','#2471a3'],borderWidth:0,hoverOffset:6}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:12},padding:12}}}}
+  });
+
+  // Table: incident list
+  const el=document.getElementById('admin-incidents-list');
+  if(el){
+    el.innerHTML=`<table class="bo-table">
+      <thead><tr><th>Tipo</th><th>Data</th><th>Parceiro</th><th>Descrição</th></tr></thead>
+      <tbody>${MOCK_INCIDENTS.map(i=>`
+        <tr>
+          <td><span class="bo-stock-badge ${i.type==='Reclamação'?'out':i.type==='Cancelamento'?'low':'ok'}">${i.type}</span></td>
+          <td>${i.date}</td><td>${i.partnerName}</td><td style="font-size:.78rem;color:var(--muted)">${i.desc}</td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  }
+}
+
+// ─────────────────────────────────────────────
+// PARTNER STATS (US3.5 + US3.6)
+// ─────────────────────────────────────────────
+function renderPartnerStats(){
+  if(!currentUser||currentUser.role!=='partner') return;
+  const allRes=getReservations();
+  const myStoreId=currentUser.storeId;
+  const myRes=allRes.filter(r=>r.partnerId===myStoreId);
+
+  // US3.5 — Top products
+  const itemCounts={};
+  myRes.filter(r=>r.type==='rescue').forEach(r=>{
+    (r.items||[]).forEach(item=>{
+      const key=item.emoji+' '+item.name;
+      itemCounts[key]=(itemCounts[key]||0)+1;
+    });
+  });
+  const topProducts=Object.entries(itemCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxCount=topProducts[0]?topProducts[0][1]:1;
+  const topEl=document.getElementById('bo-top-products');
+  if(topEl){
+    if(!topProducts.length){
+      topEl.innerHTML='<p style="color:var(--muted);font-size:.85rem">Ainda sem dados suficientes. Publica ofertas e valida reservas para ver aqui os teus produtos mais vendidos.</p>';
+    } else {
+      topEl.innerHTML=`<div class="top-products-list">${topProducts.map(([name,count],i)=>`
+        <div class="top-product-row">
+          <div class="top-product-rank">#${i+1}</div>
+          <div class="top-product-bar-wrap">
+            <div class="top-product-name">${name}</div>
+            <div class="top-product-bar" style="width:${Math.round(count/maxCount*100)}%"></div>
+          </div>
+          <div class="top-product-count">${count}x</div>
+        </div>`).join('')}</div>`;
+    }
+  }
+
+  // US3.5 — Avaliação média (mocked per store)
+  const myRating=MOCK_RATINGS[myStoreId]||4.0;
+  const ratingEl=document.getElementById('bo-avg-rating');
+  if(ratingEl){
+    const fullStars=Math.floor(myRating);
+    const starsHtml=Array.from({length:5},(_,i)=>`<span class="star ${i<fullStars?'filled':''}">★</span>`).join('');
+    ratingEl.innerHTML=`
+      <div class="bo-stat-big">${myRating.toFixed(1)}</div>
+      <div class="stars-row">${starsHtml}</div>
+      <div class="bo-stat-label">Avaliação dos consumidores</div>
+      <div class="bo-stat-sub">Baseada em ${Math.floor(myRes.length*0.7+5)} avaliações</div>`;
+  }
+
+  // Total reservations
+  const totalEl=document.getElementById('bo-total-reservations-stat');
+  const totalRevenue=myRes.reduce((s,r)=>s+parseFloat(r.total||0),0);
+  if(totalEl){
+    totalEl.innerHTML=`
+      <div class="bo-stat-big">${myRes.length}</div>
+      <div class="bo-stat-label">Total de reservas</div>
+      <div class="bo-stat-sub">${totalRevenue.toFixed(2)}€ receita gerada</div>`;
+  }
+
+  // US3.6 — Benchmark anónimo vs média global
+  const benchEl=document.getElementById('bo-benchmark');
+  if(benchEl){
+    // Compute global averages across all partners (mock)
+    const allResAll=buildMockReservations();
+    const partnerTotals={};
+    allResAll.forEach(r=>{
+      if(!partnerTotals[r.partnerId]) partnerTotals[r.partnerId]={count:0,revenue:0};
+      partnerTotals[r.partnerId].count++;
+      partnerTotals[r.partnerId].revenue+=parseFloat(r.total||0);
+    });
+    const values=Object.values(partnerTotals);
+    const avgCount=values.length?values.reduce((s,v)=>s+v.count,0)/values.length:0;
+    const avgRevenue=values.length?values.reduce((s,v)=>s+v.revenue,0)/values.length:0;
+    const avgRating=Object.values(MOCK_RATINGS).reduce((s,r)=>s+r,0)/Object.values(MOCK_RATINGS).length;
+    const myCount=myRes.length;
+    const myRevenue=totalRevenue;
+    const maxCountVal=Math.max(myCount,avgCount,1);
+    const maxRevenueVal=Math.max(myRevenue,avgRevenue,1);
+    const metrics=[
+      {label:'Reservas',mine:myCount,avg:avgCount,unit:'',maxVal:maxCountVal},
+      {label:'Receita (€)',mine:myRevenue,avg:avgRevenue,unit:'€',maxVal:maxRevenueVal},
+      {label:'Avaliação',mine:myRating,avg:avgRating,unit:'⭐',maxVal:5},
+    ];
+    benchEl.innerHTML=metrics.map(m=>`
+      <div style="margin-bottom:16px">
+        <div class="benchmark-bar-label"><span>${m.label}</span><span>Tu: <strong>${typeof m.mine==='number'&&m.unit==='€'?m.mine.toFixed(2)+m.unit:m.mine.toFixed?m.mine.toFixed(1)+m.unit:m.mine+m.unit}</strong> · Média: ${typeof m.avg==='number'&&m.unit==='€'?m.avg.toFixed(2)+m.unit:m.avg.toFixed(1)+m.unit}</span></div>
+        <div class="benchmark-bar-track">
+          <div class="benchmark-bar-fill mine" style="width:${Math.min(100,m.mine/m.maxVal*100).toFixed(1)}%"></div>
+        </div>
+        <div class="benchmark-bar-track" style="margin-top:4px">
+          <div class="benchmark-bar-fill avg" style="width:${Math.min(100,m.avg/m.maxVal*100).toFixed(1)}%"></div>
+        </div>
+        <div class="benchmark-legend">
+          <span><span class="dot mine"></span>A tua loja</span>
+          <span><span class="dot avg"></span>Média anónima da plataforma</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // Weekly trend chart — based on real reservations + stable seed for remainder
+  const weekLabels=['S-7','S-6','S-5','S-4','S-3','S-2','S-1','Atual'];
+  let seed2=myStoreId.split('').reduce((s,c)=>s+c.charCodeAt(0),0)||7;
+  const seededR=()=>{seed2=(seed2*1664525+1013904223)&0xffffffff;return(seed2>>>0)/0xffffffff;};
+  const allResMock=buildMockReservations();
+  const weekData=weekLabels.map((_,i)=>{
+    // real data for weeks where we have synthetic records
+    const wIdx=7-i;
+    const realCount=allResMock.filter(r=>r._week===wIdx&&r.partnerId===myStoreId).length;
+    return realCount>0?realCount:Math.max(0,Math.floor(myRes.length/8+seededR()*3-1));
+  });
+  createChart('chart-partner-trend',{
+    type:'bar',
+    data:{
+      labels:weekLabels,
+      datasets:[{label:'Reservas',data:weekData,backgroundColor:'rgba(36,113,163,.7)',borderRadius:8,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}
+  });
+}
+
+// ─────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────
 function switchTab(tab){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register')));
-  document.getElementById('panel-login').classList.toggle('active', tab==='login');
-  document.getElementById('panel-register').classList.toggle('active', tab==='register');
-  document.getElementById('login-error').style.display='none';
-  document.getElementById('reg-error').style.display='none';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.getElementById('panel-login').classList.toggle('active',tab==='login');
+  document.getElementById('panel-register').classList.toggle('active',tab==='register');
+  ['login-error','reg-error'].forEach(id=>document.getElementById(id).style.display='none');
 }
-
-// ── Toast ─────────────────────────────────────────────
+function parsePickupEnd(pickupStr){
+  // e.g. '19h00 – 20h30'  →  Date object for today at 20:30
+  const match=pickupStr.match(/(\d{1,2})h(\d{2})\s*[–-]\s*(\d{1,2})h(\d{2})/);
+  if(!match)return null;
+  const d=new Date();
+  d.setHours(parseInt(match[3],10),parseInt(match[4],10),0,0);
+  return d;
+}
+function urgencyLabel(pickupStr){
+  const end=parsePickupEnd(pickupStr);
+  if(!end)return '⚡ Urgente';
+  const diffMs=end-Date.now();
+  if(diffMs<=0)return '⚡ Encerrado';
+  const h=Math.floor(diffMs/3600000);
+  const m=Math.floor((diffMs%3600000)/60000);
+  return h>0?`🔥 Termina em ${h}h${String(m).padStart(2,'0')}`:`🔥 Termina em ${m}min`;
+}
+function startUrgencyTimers(){
+  buildCombinedPartners().filter(p=>p.hasUrgent).forEach(p=>{
+    const el=document.getElementById('urgency-'+p.id);
+    if(!el)return;
+    el.textContent=urgencyLabel(p.pickup);
+    const iv=setInterval(()=>{
+      const lbl=urgencyLabel(p.pickup);
+      if(el.isConnected){el.textContent=lbl;}else{clearInterval(iv);}
+    },30000);
+  });
+}
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
+  setTimeout(()=>t.classList.remove('show'),3200);
 }
+document.addEventListener('input',e=>{
+  if(e.target.id==='card-number'){let v=e.target.value.replace(/\D/g,'').substring(0,16);e.target.value=v.replace(/(.{4})/g,'$1 ').trim();}
+  if(e.target.id==='card-expiry'){let v=e.target.value.replace(/\D/g,'').substring(0,4);if(v.length>2)v=v.substring(0,2)+'/'+v.substring(2);e.target.value=v;}
+  if(e.target.id==='mbway-phone'){e.target.value=e.target.value.replace(/\D/g,'').substring(0,9);}
+});
 
-// ── Page observer for reservations render ─────────────
-const origShow = showPage;
-window.showPage = function(name){
-  origShow(name);
-  if(name==='reservations') renderReservations();
-};
-
-// ── Init: restore session ─────────────────────────────
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
 (function init(){
-  const email = lsGet('fs_session');
+  seedDefaultUsers(); // ensure demo users exist
+  const email=lsGet('fs_session');
   if(email){
-    const user = getUsers().find(u=>u.email===email);
-    if(user){ currentUser=user; enterApp(); return; }
+    const users=lsGet('fs_users')||[];
+    const user=users.find(u=>u.email===email);
+    if(user){
+      currentUser=user;
+      selectedRole=user.role||'consumer';
+      enterApp();
+      return;
+    }
   }
   showPage('login');
 })();
