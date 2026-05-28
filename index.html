@@ -1751,26 +1751,13 @@ function validateReservationCode(){
   renderBoDashboard();
   showToast('✅ Levantamento confirmado!');
 }
+function navAway(dest){
   const hasCart=Object.keys(selectedItems).length>0||!!pendingOrder;
   if(hasCart&&!confirm('Tens itens no carrinho. Se saíres perdes a seleção. Continuar?'))return;
   if(hasCart){selectedItems={};pendingOrder=null;}
   showPage(dest);
 }
-function showPage(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
-  // partner e checkout fazem parte do fluxo de compra — mantém bnav-home ativo
-  const navName=['partner','checkout'].includes(name)?'home':name;
-  const nb=document.getElementById('bnav-'+navName);
-  if(nb)nb.classList.add('active');
-  const noNav=['login','confirm'];
-  document.getElementById('bottom-nav').style.display=noNav.includes(name)?'none':(currentUser?'flex':'none');
-  window.scrollTo(0,0);
-  if(name==='reservations') renderReservations();
-  if(name==='wallet') renderWallet();
-  if(name==='home') setTimeout(startUrgencyTimers,0);
-}
+// [duplicate showPage removed]
 
 // ─────────────────────────────────────────────
 // FILTERS
@@ -2761,7 +2748,7 @@ function renderPartnerStats(){
     // real data for weeks where we have synthetic records
     const wIdx=7-i;
     const realCount=allResMock.filter(r=>r._week===wIdx&&r.partnerId===myStoreId).length;
-    return realCount>0?realCount:Math.max(0,Math.floor(myRes.length/8+seededR()*3-1));
+    return realCount>0?realCount:Math.max(0,Math.floor(myRes.length/8+Math.random()*3-1));
   });
   createChart('chart-partner-trend',{
     type:'bar',
