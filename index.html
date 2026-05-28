@@ -1373,21 +1373,8 @@ function doLogin(){
   const users=lsGet('fs_users')||[];
   const user=users.find(u=>u.email===email&&u.password===pass);
   const err=document.getElementById('login-error');
-  if(!user){err.style.display='block';return}
-  // Validate role matches
-  const userRole=user.role||'consumer';
-  if(userRole!==selectedRole){
-    err.style.display='block';
-    const msgs={
-      partner:'Esta conta não é de parceiro.',
-      admin:'Esta conta não é de administrador.',
-      consumer:'Esta é uma conta de parceiro ou admin. Usa o separador correto.'
-    };
-    err.textContent=msgs[selectedRole]||'Role incorreto.';
-    return;
-  }
+  if(!user){err.style.display='block';err.textContent='Email ou password incorretos.';return;}
   err.style.display='none';
-  err.textContent='Email ou password incorretos.';
   currentUser=user; lsSet('fs_session',user.email); enterApp();
 }
 function doRegister(){
